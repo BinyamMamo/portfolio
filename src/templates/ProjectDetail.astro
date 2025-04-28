@@ -1,9 +1,10 @@
 ---
+import { FaArrowLeft, FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
+
 import { Footer } from '@/partials/Footer';
 import { Navbar } from '@/partials/Navbar';
 import Base from '@/templates/Base.astro';
 import { AppConfig } from '@/utils/AppConfig';
-import { FaGithub, FaExternalLinkAlt, FaArrowLeft } from 'react-icons/fa';
 
 export interface Props {
   project: {
@@ -30,33 +31,40 @@ export interface Props {
 const { project } = Astro.props;
 ---
 
-<Base head={{ title: `${project.name} - ${AppConfig.site_name}`, description: project.description }}>
+<Base
+  head={{
+    title: `${project.name} - ${AppConfig.site_name}`,
+    description: project.description,
+  }}
+>
   <Navbar client:load />
 
-  <main class="bg-neutral-900 min-h-screen pt-20">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <main class='min-h-screen bg-neutral-900 pt-20'>
+    <div class='container mx-auto px-4 py-12 sm:px-6 lg:px-8'>
       <!-- Back Button -->
-      <a 
-        href="/#projects-section" 
-        class="inline-flex items-center text-emerald-400 hover:text-emerald-300 mb-8 transition-colors duration-200"
+      <a
+        href='/#projects-section'
+        class='mb-8 inline-flex items-center text-emerald-400 transition-colors duration-200 hover:text-emerald-300'
       >
-        <FaArrowLeft className="mr-2" />
+        <FaArrowLeft className='mr-2' />
         Back to Projects
       </a>
 
       <!-- Project Header -->
-      <div class="mb-12">
-        <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">{project.name}</h1>
-        <p class="text-xl text-gray-300 mb-6">{project.description}</p>
-        
-        <div class="flex space-x-4">
+      <div class='mb-12'>
+        <h1 class='mb-4 text-4xl font-bold text-white sm:text-5xl'>
+          {project.name}
+        </h1>
+        <p class='mb-6 text-xl text-gray-300'>{project.description}</p>
+
+        <div class='flex space-x-4'>
           <a
             href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors duration-200"
+            target='_blank'
+            rel='noopener noreferrer'
+            class='inline-flex items-center rounded-lg bg-emerald-600 px-6 py-3 text-white transition-colors duration-200 hover:bg-emerald-700'
           >
-            <FaExternalLinkAlt className="mr-2" />
+            <FaExternalLinkAlt className='mr-2' />
             Live Demo
           </a>
           {project.repoLink && (
@@ -64,7 +72,7 @@ const { project } = Astro.props;
               href={project.repoLink}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center px-6 py-3 bg-neutral-800 hover:bg-neutral-700 text-white rounded-lg border border-neutral-700 transition-colors duration-200"
+              class="inline-flex items-center rounded-lg border border-neutral-700 bg-neutral-800 px-6 py-3 text-white transition-colors duration-200 hover:bg-neutral-700"
             >
               <FaGithub className="mr-2" />
               View Code
@@ -74,34 +82,38 @@ const { project } = Astro.props;
       </div>
 
       <!-- Main Content -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <div class='grid grid-cols-1 gap-12 lg:grid-cols-3'>
         <!-- Left Column - Project Details -->
-        <div class="lg:col-span-2 space-y-12">
+        <div class='space-y-12 lg:col-span-2'>
           <!-- Hero Image -->
-          <div class="rounded-xl overflow-hidden border border-neutral-700">
-            <img 
-              src={project.img.src} 
+          <div class='overflow-hidden rounded-xl border border-neutral-700'>
+            <img
+              src={project.img.src}
               alt={project.img.alt}
-              class="w-full h-auto"
+              class='h-auto w-full'
             />
           </div>
 
           <!-- Full Description -->
           {project.fullDescription && (
-            <div class="prose prose-invert prose-emerald max-w-none">
-              <h2 class="text-2xl font-bold text-white mb-4">About the Project</h2>
-              <p class="text-gray-300 whitespace-pre-line">{project.fullDescription}</p>
+            <div class="prose prose-emerald prose-invert max-w-none">
+              <h2 class="mb-4 text-2xl font-bold text-white">
+                About the Project
+              </h2>
+              <p class="whitespace-pre-line text-gray-300">
+                {project.fullDescription}
+              </p>
             </div>
           )}
 
           <!-- Features -->
           {project.features && project.features.length > 0 && (
             <div>
-              <h2 class="text-2xl font-bold text-white mb-4">Key Features</h2>
+              <h2 class="mb-4 text-2xl font-bold text-white">Key Features</h2>
               <ul class="space-y-3">
                 {project.features.map((feature) => (
                   <li class="flex items-start">
-                    <span class="text-emerald-400 mr-2">•</span>
+                    <span class="mr-2 text-emerald-400">•</span>
                     <span class="text-gray-300">{feature}</span>
                   </li>
                 ))}
@@ -112,14 +124,14 @@ const { project } = Astro.props;
           <!-- Additional Images -->
           {project.images && project.images.length > 0 && (
             <div>
-              <h2 class="text-2xl font-bold text-white mb-4">Screenshots</h2>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <h2 class="mb-4 text-2xl font-bold text-white">Screenshots</h2>
+              <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                 {project.images.map((image) => (
-                  <div class="rounded-lg overflow-hidden border border-neutral-700">
-                    <img 
-                      src={image.src} 
+                  <div class="overflow-hidden rounded-lg border border-neutral-700">
+                    <img
+                      src={image.src}
                       alt={image.alt}
-                      class="w-full h-auto"
+                      class="h-auto w-full"
                     />
                   </div>
                 ))}
@@ -130,11 +142,13 @@ const { project } = Astro.props;
           <!-- Challenges & Solutions -->
           {project.challenges && project.challenges.length > 0 && (
             <div>
-              <h2 class="text-2xl font-bold text-white mb-4">Challenges & Solutions</h2>
+              <h2 class="mb-4 text-2xl font-bold text-white">
+                Challenges & Solutions
+              </h2>
               <ul class="space-y-3">
                 {project.challenges.map((challenge) => (
                   <li class="flex items-start">
-                    <span class="text-emerald-400 mr-2">•</span>
+                    <span class="mr-2 text-emerald-400">•</span>
                     <span class="text-gray-300">{challenge}</span>
                   </li>
                 ))}
@@ -145,11 +159,13 @@ const { project } = Astro.props;
           <!-- Lessons Learned -->
           {project.lessons && project.lessons.length > 0 && (
             <div>
-              <h2 class="text-2xl font-bold text-white mb-4">Lessons Learned</h2>
+              <h2 class="mb-4 text-2xl font-bold text-white">
+                Lessons Learned
+              </h2>
               <ul class="space-y-3">
                 {project.lessons.map((lesson) => (
                   <li class="flex items-start">
-                    <span class="text-emerald-400 mr-2">•</span>
+                    <span class="mr-2 text-emerald-400">•</span>
                     <span class="text-gray-300">{lesson}</span>
                   </li>
                 ))}
@@ -159,14 +175,18 @@ const { project } = Astro.props;
         </div>
 
         <!-- Right Column - Project Info -->
-        <div class="lg:col-span-1">
-          <div class="sticky top-24 space-y-8">
+        <div class='lg:col-span-1'>
+          <div class='sticky top-24 space-y-8'>
             <!-- Technologies -->
-            <div class="bg-neutral-800/50 rounded-xl p-6 border border-neutral-700">
-              <h3 class="text-xl font-bold text-white mb-4">Technologies Used</h3>
-              <div class="flex flex-wrap gap-2">
+            <div
+              class='rounded-xl border border-neutral-700 bg-neutral-800/50 p-6'
+            >
+              <h3 class='mb-4 text-xl font-bold text-white'>
+                Technologies Used
+              </h3>
+              <div class='flex flex-wrap gap-2'>
                 {project.technologies.map((tech) => (
-                  <span class="px-3 py-1 bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 rounded-full text-sm">
+                  <span class="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-sm text-emerald-300">
                     {tech}
                   </span>
                 ))}
@@ -174,16 +194,18 @@ const { project } = Astro.props;
             </div>
 
             <!-- Project Links -->
-            <div class="bg-neutral-800/50 rounded-xl p-6 border border-neutral-700">
-              <h3 class="text-xl font-bold text-white mb-4">Project Links</h3>
-              <div class="space-y-3">
+            <div
+              class='rounded-xl border border-neutral-700 bg-neutral-800/50 p-6'
+            >
+              <h3 class='mb-4 text-xl font-bold text-white'>Project Links</h3>
+              <div class='space-y-3'>
                 <a
                   href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="flex items-center text-gray-300 hover:text-emerald-400 transition-colors duration-200"
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  class='flex items-center text-gray-300 transition-colors duration-200 hover:text-emerald-400'
                 >
-                  <FaExternalLinkAlt className="mr-2" />
+                  <FaExternalLinkAlt className='mr-2' />
                   Live Demo
                 </a>
                 {project.repoLink && (
@@ -191,7 +213,7 @@ const { project } = Astro.props;
                     href={project.repoLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="flex items-center text-gray-300 hover:text-emerald-400 transition-colors duration-200"
+                    class="flex items-center text-gray-300 transition-colors duration-200 hover:text-emerald-400"
                   >
                     <FaGithub className="mr-2" />
                     Source Code

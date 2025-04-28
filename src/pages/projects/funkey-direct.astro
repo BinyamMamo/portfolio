@@ -1,0 +1,53 @@
+---
+import { Footer } from '@/partials/Footer';
+import { Navbar } from '@/partials/Navbar';
+import Base from '@/templates/Base.astro';
+import { AppConfig } from '@/utils/AppConfig';
+import { FaGithub, FaExternalLinkAlt, FaArrowLeft } from 'react-icons/fa';
+
+const project = {
+  name: "Funkey",
+  description: "Learn Typing having the most fun. Explore features like lyrics typing, piano typing and practice typing with AI generated contents that sound familiar.",
+  link: "/",
+  repoLink: "https://github.com/yourusername/funkey",
+  img: {
+    src: "/assets/images/browse.gif",
+    alt: "Funkey typing interface"
+  },
+  technologies: ["Bootstrap", "MongoDB", "Express", "TypeScript"]
+};
+---
+
+<Base head={{ title: `${project.name} - ${AppConfig.site_name}`, description: project.description }}>
+  <Navbar client:load />
+
+  <main class="bg-neutral-900 min-h-screen pt-20">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <!-- Back Button -->
+      <a 
+        href="/#projects-section" 
+        class="inline-flex items-center text-emerald-400 hover:text-emerald-300 mb-8 transition-colors duration-200"
+      >
+        <FaArrowLeft className="mr-2" />
+        Back to Projects
+      </a>
+
+      <!-- Project Header -->
+      <div class="mb-12">
+        <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">{project.name}</h1>
+        <p class="text-xl text-gray-300 mb-6">{project.description}</p>
+      </div>
+
+      <!-- Hero Image -->
+      <div class="rounded-xl overflow-hidden border border-neutral-700">
+        <img 
+          src={project.img.src} 
+          alt={project.img.alt}
+          class="w-full h-auto"
+        />
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Base>

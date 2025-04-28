@@ -1,0 +1,37 @@
+---
+import { Footer } from '@/partials/Footer';
+import { Navbar } from '@/partials/Navbar';
+import Base from '@/templates/Base.astro';
+import { AppConfig } from '@/utils/AppConfig';
+import { getAllProjects } from '@/utils/Projects';
+import AllProjects from '@/components/AllProjects';
+
+const projects = getAllProjects();
+---
+
+<Base head={{ title: `Projects - ${AppConfig.site_name}`, description: "Explore my portfolio of projects across various technologies and categories" }}>
+  <Navbar client:load />
+
+  <main class="bg-neutral-900 min-h-screen pt-20">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="flex items-center justify-between mb-8">
+        <h1 class="text-3xl sm:text-4xl font-bold text-white">
+          All <span class="bg-gradient-to-r from-emerald-500 to-emerald-700 bg-clip-text text-transparent">Projects</span>
+        </h1>
+        <a 
+          href="/#projects-section" 
+          class="text-emerald-400 hover:text-emerald-300 transition-colors duration-200 flex items-center"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+          </svg>
+          Back to Featured
+        </a>
+      </div>
+
+      <AllProjects client:load projects={projects} />
+    </div>
+  </main>
+
+  <Footer />
+</Base>

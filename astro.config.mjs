@@ -1,20 +1,28 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
-import sitemap from '@astrojs/sitemap';
-import robotsTxt from 'astro-robots-txt';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
-// https://astro.build/config
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 export default defineConfig({
-  // base: '.', // Set a path prefix.
-  site: 'https://example.com/', // Use to generate your sitemap and canonical URLs in your final build.
-  trailingSlash: 'always', // Use to always append '/' at end of url
-  markdown: {
-    shikiConfig: {
-      // Choose from Shiki's built-in themes (or add your own)
-      // https://github.com/shikijs/shiki/blob/main/docs/themes.md
-      theme: 'monokai',
-    },
+  // Enable React support
+  integrations: [react(), tailwind()],
+  
+  // Site configuration
+  site: 'https://your-website.com',
+  
+  // Set up aliases for clearer imports
+  vite: {
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src'),
+        '@components': path.resolve(__dirname, './src/components'),
+        '@templates': path.resolve(__dirname, './src/templates'),
+        '@partials': path.resolve(__dirname, './src/partials'),
+        '@utils': path.resolve(__dirname, './src/utils'),
+      },
+    }
   },
-  integrations: [react(), tailwind({}), sitemap(), robotsTxt()],
 });

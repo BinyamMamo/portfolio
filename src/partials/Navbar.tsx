@@ -44,10 +44,10 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed inset-x-0  top-0 z-50 border-neutral-800 py-1.5 transition ease-in-out ${
+        className={`fixed inset-x-0  top-0 z-50 border-neutral-800 py-1.5 shadow-xl transition ease-in-out ${
           isScrolled
-            ? 'border-b bg-neutral-900/95 backdrop-blur-md'
-            : 'border-0'
+            ? 'bg-neutral-900/95 shadow-neutral-900'
+            : 'border-0 shadow-neutral-800/0'
         }`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-10">

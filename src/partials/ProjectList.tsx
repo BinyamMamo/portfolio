@@ -1,7 +1,9 @@
 import { ColorTags, Section } from 'astro-boilerplate-components';
 import React from 'react';
+import { GrProjects } from 'react-icons/gr';
 
 import Project from '../components/Project';
+import { getFeaturedProjects } from '../utils/Projects';
 
 // Custom Tag component with better styling
 const Tag = ({
@@ -35,101 +37,85 @@ const Tag = ({
   );
 };
 
-const ProjectList = () => (
-  <div
-    className="flex min-h-screen flex-col justify-center px-4 pb-0 sm:px-6 md:pb-12 lg:px-8"
-    id="projects-section"
-  >
-    <Section>
-      <div className="mb-8">
-        <h2 className="text-center text-2xl font-bold sm:text-left sm:text-3xl">
-          Recent{' '}
-          <span className="bg-gradient-to-r from-emerald-500 to-emerald-700 bg-clip-text text-transparent">
-            Projects
-          </span>
-        </h2>
-      </div>
+const ProjectList = () => {
+  const featuredProjects = getFeaturedProjects();
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
-        <Project
-          name="Funkey"
-          description="Learn Typing having the most fun. Explore features like lyrics typing, piano typing and practice typing with AI generated contents that sound familiar."
-          link="/"
-          repoLink="https://github.com/yourusername/funkey"
-          detailLink="/projects/funkey"
-          img={{
-            src: '/assets/images/browse.gif',
-            alt: 'Project Web Design',
-          }}
-          category={
-            <>
-              <Tag color={ColorTags.FUCHSIA}>Bootstrap</Tag>
-              <Tag color={ColorTags.LIME}>MongoDB</Tag>
-              <Tag color={ColorTags.SKY}>Express</Tag>
-              <Tag color={ColorTags.ROSE}>TypeScript</Tag>
-            </>
-          }
-        />
-        <Project
-          name="E-Commerce Platform"
-          description="A full-stack e-commerce solution with real-time inventory management, payment processing, and advanced analytics dashboard."
-          link="/"
-          repoLink="https://github.com/yourusername/ecommerce"
-          detailLink="/projects/ecommerce"
-          img={{ src: '/assets/images/piano.gif', alt: 'E-Commerce Platform' }}
-          category={
-            <>
-              <Tag color={ColorTags.VIOLET}>Next.js</Tag>
-              <Tag color={ColorTags.EMERALD}>Stripe</Tag>
-              <Tag color={ColorTags.YELLOW}>JavaScript</Tag>
-            </>
-          }
-        />
-        <Project
-          name="AI Chat Assistant"
-          description="An intelligent chat assistant powered by machine learning that can understand context and provide relevant responses."
-          link="/"
-          repoLink="https://github.com/yourusername/ai-chat"
-          detailLink="/projects/ai-chat"
-          img={{ src: '/assets/images/practice.gif', alt: 'AI Chat Assistant' }}
-          category={
-            <>
-              <Tag color={ColorTags.FUCHSIA}>Python</Tag>
-              <Tag color={ColorTags.INDIGO}>TensorFlow</Tag>
-              <Tag color={ColorTags.ROSE}>React</Tag>
-            </>
-          }
-        />
-      </div>
-      <div className="absolute bottom-1 left-1/2 hidden -translate-x-1/2 animate-bounce md:flex">
-        <button
-          onClick={() => {
-            const footer = document.querySelector('#hero-section');
-            if (footer) {
-              footer.scrollIntoView({ behavior: 'smooth' });
-            }
-          }}
-          className="rounded-full border border-neutral-700/50 bg-neutral-800/50 p-2 transition-all duration-200 hover:border-emerald-700/50 hover:bg-neutral-700/50"
-          aria-label="Scroll to footer"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 text-neutral-400 hover:text-emerald-400"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+  return (
+    <div
+      className="flex min-h-screen flex-col justify-center px-4 pb-0 sm:px-6 md:pb-12 lg:px-8"
+      id="projects-section"
+    >
+      <Section>
+        <div className="mb-8 flex items-center justify-between">
+          <h2 className="text-center text-2xl font-bold sm:text-left sm:text-3xl">
+            Featured{' '}
+            <span className="bg-gradient-to-r from-emerald-500 to-emerald-700 bg-clip-text text-transparent">
+              Projects
+            </span>
+          </h2>
+
+          <a
+            href="/projects"
+            className="group flex items-center gap-2.5 rounded-lg   px-5 py-2 text-neutral-300 transition-all duration-200 hover:bg-neutral-700/50 hover:text-emerald-400 md:bg-neutral-800/75"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M5 15l7-7 7 7"
+            <GrProjects className="text-base transition-all duration-200 group-hover:font-bold md:text-sm" />
+            <span className="hidden md:flex">View All</span>
+          </a>
+        </div>
+
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
+          {featuredProjects.map((project) => (
+            <Project
+              key={project.id}
+              name={project.name}
+              description={project.description}
+              link={project.link}
+              repoLink={project.repoLink}
+              detailLink={`/projects/${project.id}`}
+              img={project.img}
+              category={
+                <>
+                  {project.tags.map((tag, index) => (
+                    <Tag key={index} color={tag.color}>
+                      {tag.text}
+                    </Tag>
+                  ))}
+                </>
+              }
             />
-          </svg>
-        </button>
-      </div>
-    </Section>
-  </div>
-);
+          ))}
+        </div>
+
+        <div className="absolute bottom-1 left-1/2 hidden -translate-x-1/2 animate-bounce md:flex">
+          <button
+            onClick={() => {
+              const footer = document.querySelector('#hero-section');
+              if (footer) {
+                footer.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            className="rounded-full border border-neutral-700/50 bg-neutral-800/50 p-2 transition-all duration-200 hover:border-emerald-700/50 hover:bg-neutral-700/50"
+            aria-label="Scroll to footer"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 text-neutral-400 hover:text-emerald-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 15l7-7 7 7"
+              />
+            </svg>
+          </button>
+        </div>
+      </Section>
+    </div>
+  );
+};
 
 export { ProjectList };

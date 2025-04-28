@@ -103,16 +103,45 @@ const {
         border-color: rgba(203, 213, 225, 0.5) !important;
       }
 
-      html.light-mode .text-gray-300 {
+      html.dark-mode .text-gray-300,
+      html.dark-mode .text-neutral-300,
+      html.dark-mode .text-neutral-400 {
+        color: #d1d5db !important;
+      }
+
+      html.light-mode .text-gray-300,
+      html.light-mode .text-neutral-300,
+      html.light-mode .text-neutral-400 {
         color: #475569 !important;
       }
 
-      html.light-mode .text-neutral-300 {
-        color: #475569 !important;
+      html.dark-mode .text-white {
+        color: #f8fafc !important;
       }
 
       html.light-mode .text-white {
         color: var(--text-color) !important;
+      }
+
+      /* Navbar specific light mode styles */
+      html.light-mode .navbar-light {
+        background-color: rgba(248, 250, 252, 0.95) !important;
+        border-color: #e2e8f0 !important;
+      }
+
+      html.light-mode .navbar-light .border-neutral-700\/50 {
+        border-color: rgba(203, 213, 225, 0.5) !important;
+      }
+
+      /* Card styles for light mode */
+      html.light-mode .card-light {
+        background-color: white !important;
+        border-color: #e2e8f0 !important;
+      }
+
+      html.light-mode .card-hover:hover {
+        background-color: #f1f5f9 !important;
+        border-color: #cbd5e1 !important;
       }
 
       /* Transitions for all interactive elements */
@@ -173,5 +202,46 @@ const {
         backdrop-filter: blur(8px);
       }
     </style>
+
+    <script>
+      // Persistent theme management
+      document.addEventListener('DOMContentLoaded', () => {
+        // Check for saved theme preference or use default (dark)
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.className = savedTheme + '-mode';
+
+        // Initialize theme toggle buttons if they exist
+        const themeToggles = document.querySelectorAll('[data-theme-toggle]');
+        themeToggles.forEach((toggle) => {
+          toggle.setAttribute(
+            'aria-pressed',
+            savedTheme === 'light' ? 'true' : 'false'
+          );
+        });
+      });
+
+      // Make theme toggle available globally so it can be used by components
+      window.toggleTheme = function () {
+        const html = document.documentElement;
+        const currentTheme = html.classList.contains('dark-mode')
+          ? 'dark'
+          : 'light';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        html.className = newTheme + '-mode';
+        localStorage.setItem('theme', newTheme);
+
+        // Update toggle buttons
+        const themeToggles = document.querySelectorAll('[data-theme-toggle]');
+        themeToggles.forEach((toggle) => {
+          toggle.setAttribute(
+            'aria-pressed',
+            newTheme === 'light' ? 'true' : 'false'
+          );
+        });
+
+        return newTheme;
+      };
+    </script>
   </body>
 </html>

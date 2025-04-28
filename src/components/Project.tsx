@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaArrowRight, FaGithub } from 'react-icons/fa';
+import { FaGithub, FaInfoCircle } from 'react-icons/fa';
 import { MdSlowMotionVideo } from 'react-icons/md';
 import { VscPreview } from 'react-icons/vsc';
 
@@ -87,13 +87,13 @@ const Project: React.FC<ProjectProps> = ({
         {/* Tags */}
         <div className="mb-4 flex flex-wrap gap-2">{category}</div>
 
-        {/* Learn More Link */}
+        {/* View Details Button - replacing "Learn more" link */}
         <a
           href={detailLink}
-          className="group/learn inline-flex items-center text-emerald-400 transition-colors duration-200 hover:text-emerald-300"
+          className="group/details mt-2 flex w-full items-center justify-center rounded-lg border border-neutral-700/30 bg-neutral-800/25 px-4 py-2 font-medium text-emerald-400 backdrop-blur-sm transition-all duration-200 hover:border-emerald-600/25 hover:bg-neutral-800 hover:text-emerald-300"
         >
-          Learn more
-          <FaArrowRight className="ml-2 h-3 w-3 transition-transform duration-200 group-hover/learn:translate-x-1" />
+          <FaInfoCircle className="mr-2 h-4 w-4 transition-all duration-200" />
+          Project Details
         </a>
       </div>
 

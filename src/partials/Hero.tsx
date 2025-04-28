@@ -80,7 +80,7 @@ const Hero = () => {
             {/* Download CV Button */}
             <div className="mt-8">
               <a
-                href="/assets/cv.pdf"
+                href="/assets/CV_BinyamMamo.pdf"
                 download
                 className="inline-flex items-center rounded-lg bg-emerald-600 px-4 py-2.5 text-sm text-white transition-all duration-200 hover:bg-emerald-700 sm:px-6 sm:py-3 sm:text-base"
               >
