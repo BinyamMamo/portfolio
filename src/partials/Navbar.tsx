@@ -68,7 +68,7 @@ const Navbar = () => {
                 textColor={darkMode ? 'text-neutral-100' : 'text-neutral-900'}
                 icon={
                   <img
-                    className="mr-3.5 h-9 w-9 rounded-full border border-emerald-900/75 bg-neutral-700/80 object-cover object-center opacity-100 ring-1 ring-neutral-700 transition duration-300 hover:ring-2"
+                    className="mr-3.5 h-8 w-8 rounded-full border border-emerald-900/75 bg-neutral-700/80 object-cover object-center opacity-100 ring-1 ring-neutral-700 transition duration-300 hover:ring-2 md:h-9 md:w-9"
                     src="/assets/images/portrait_nobg.png"
                     alt="Avatar image"
                     loading="lazy"
@@ -92,7 +92,7 @@ const Navbar = () => {
             </button>
             <BiMessageDetail
               onClick={toggleContactModal}
-              className={`mt-0.5 flex text-3xl md:hidden ${
+              className={`mt-0.5 flex text-2xl md:hidden ${
                 darkMode ? 'text-white' : 'text-neutral-800'
               }`}
             />

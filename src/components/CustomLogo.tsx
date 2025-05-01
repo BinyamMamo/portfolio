@@ -38,7 +38,7 @@ const CustomLogo = (props: ILogoProps) => {
     <div className="flex items-center">
       {props.icon}
       <div
-        className={`text-3xl font-extrabold uppercase ${
+        className={`text-2xl font-extrabold uppercase md:text-3xl ${
           props.textColor ||
           (isDarkMode ? 'text-neutral-100' : 'text-neutral-900')
         }`}
