@@ -4,13 +4,17 @@ import React, { useEffect, useState } from 'react';
 const Hero = () => {
   const skills = [
     { name: 'Node.js', icon: '🌐' },
-    { name: 'TypeScript', icon: '📘' },
-    { name: 'Python', icon: '🐍' },
+    // { name: 'TypeScript', icon: '📘' },
     { name: 'MongoDB', icon: '🍃' },
     { name: 'Express', icon: '⚡' },
     { name: 'React', icon: '⚛️' },
-    { name: 'Docker', icon: '🐳' },
-    { name: 'AWS', icon: '☁️' },
+    { name: 'Flask', icon: '📦' },
+    { name: 'MySQL', icon: '🛢️' },
+    { name: 'Python', icon: '🐍' },
+    { name: 'Javascript', icon: '｡🇯‌🇸‌' },
+    // { name: 'Docker', icon: '🐳' },
+    // { name: 'Tensorflow', icon: '🤖' },
+    // { name: 'AWS', icon: '☁️' },
   ];
 
   const scrollToEducation = () => {
@@ -141,45 +145,55 @@ const Hero = () => {
             {/* Social links */}
             <div className="mt-6 flex justify-center space-x-4 md:justify-start">
               <a
-                href="/"
+                href="#"
                 className="transition-transform duration-200 hover:scale-110"
               >
                 <img
-                  src="/assets/images/twitter-icon.png"
+                  src="/assets/images/twitter_logo.png"
                   alt="Twitter icon"
                   className="h-6 w-6 sm:h-8 sm:w-8"
                 />
               </a>
               <a
-                href="/"
+                href="#"
                 className="transition-transform duration-200 hover:scale-110"
               >
                 <img
-                  src="/assets/images/facebook-icon.png"
-                  alt="Facebook icon"
+                  src="/assets/images/telegram.png"
+                  alt="Telegram icon"
                   className="h-6 w-6 sm:h-8 sm:w-8"
                 />
               </a>
               <a
-                href="/"
+                href="https://www.linkedin.com/in/binyammamo"
                 className="transition-transform duration-200 hover:scale-110"
               >
                 <img
-                  src="/assets/images/linkedin-icon.png"
+                  src="/assets/images/linkedin_logo.png"
                   alt="Linkedin icon"
                   className="h-6 w-6 sm:h-8 sm:w-8"
                 />
               </a>
               <a
+                href="https:/wa.me/+971568784063"
+                className="transition-transform duration-200 hover:scale-110"
+              >
+                <img
+                  src="/assets/images/whatsapp_logo.png"
+                  alt="Whatsapp icon"
+                  className="h-6 w-6 sm:h-8 sm:w-8"
+                />
+              </a>
+              {/* <a
                 href="/"
                 className="transition-transform duration-200 hover:scale-110"
               >
                 <img
-                  src="/assets/images/youtube-icon.png"
-                  alt="Youtube icon"
+                  src="/assets/images/reddit_logo.png"
+                  alt="Reddit icon"
                   className="h-6 w-6 sm:h-8 sm:w-8"
                 />
-              </a>
+              </a> */}
             </div>
           </div>
 
