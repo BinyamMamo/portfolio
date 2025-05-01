@@ -1,5 +1,5 @@
 {
-  "name": "astro-boilerplate",
+  "name": "portfolio",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -56,5 +56,8 @@
   "volta": {
     "node": "16.15.1"
   },
-  "author": "Ixartz (https://github.com/ixartz)"
+  "engines": {
+    "node": "18"
+  },
+  "author": "Binyam (https://github.com/BinyamMamo)"
 }

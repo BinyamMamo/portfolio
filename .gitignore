@@ -25,3 +25,7 @@ Thumbs.db
 
 # Local Netlify folder
 .netlify
+
+input.txt
+export.sh
+splitter.sh
