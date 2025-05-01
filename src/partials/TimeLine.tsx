@@ -1,5 +1,5 @@
 import { Section } from 'astro-boilerplate-components';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 interface EducationDetails {
@@ -16,6 +16,29 @@ interface EducationDetails {
 
 const TimeLine: React.FC = () => {
   const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [isLightMode, setIsLightMode] = useState(false);
+
+  useEffect(() => {
+    // Check initially and add listener for theme changes
+    const checkTheme = () => {
+      setIsLightMode(document.documentElement.classList.contains('light-mode'));
+    };
+
+    checkTheme();
+
+    // Create an observer to watch for class changes on html element
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          checkTheme();
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, { attributes: true });
+
+    return () => observer.disconnect();
+  }, []);
 
   const educationData: EducationDetails[] = [
     {
@@ -89,15 +112,28 @@ const TimeLine: React.FC = () => {
   };
 
   const getColorClasses = (color: string) => {
-    switch (color) {
-      case 'yellow':
-        return 'hover:border-yellow-500/50 sm:before:bg-yellow-600';
-      case 'emerald':
-        return 'hover:border-emerald-500/50 sm:before:bg-emerald-600';
-      case 'slate':
-        return 'hover:border-slate-500/50 sm:before:bg-slate-600';
-      default:
-        return 'hover:border-neutral-500/50 sm:before:bg-neutral-600';
+    if (isLightMode) {
+      switch (color) {
+        case 'yellow':
+          return 'hover:border-yellow-500/50 sm:before:bg-yellow-600';
+        case 'emerald':
+          return 'hover:border-emerald-500/50 sm:before:bg-emerald-600';
+        case 'slate':
+          return 'hover:border-slate-500/50 sm:before:bg-slate-600';
+        default:
+          return 'hover:border-neutral-500/50 sm:before:bg-neutral-600';
+      }
+    } else {
+      switch (color) {
+        case 'yellow':
+          return 'hover:border-yellow-500/50 sm:before:bg-yellow-600';
+        case 'emerald':
+          return 'hover:border-emerald-500/50 sm:before:bg-emerald-600';
+        case 'slate':
+          return 'hover:border-slate-500/50 sm:before:bg-slate-600';
+        default:
+          return 'hover:border-neutral-500/50 sm:before:bg-neutral-600';
+      }
     }
   };
 
@@ -115,7 +151,11 @@ const TimeLine: React.FC = () => {
                   <h3 className="text-2xl font-semibold sm:text-3xl">
                     Education
                   </h3>
-                  <span className="pt-2 text-sm font-bold uppercase tracking-wider text-gray-400">
+                  <span
+                    className={`pt-2 text-sm font-bold uppercase tracking-wider ${
+                      isLightMode ? 'text-gray-600' : 'text-gray-400'
+                    }`}
+                  >
                     {new Date().toLocaleDateString('en-US', {
                       month: 'short',
                       day: '2-digit',
@@ -125,30 +165,54 @@ const TimeLine: React.FC = () => {
                 </div>
               </div>
               <div className="relative col-span-12 space-y-6 px-0 sm:col-span-9 sm:px-4">
-                <div className="relative col-span-12 space-y-12 px-0 transition-all before:bg-gray-700 sm:col-span-8 sm:space-y-8 sm:px-4 sm:before:absolute sm:before:-left-3 sm:before:bottom-0 sm:before:top-2 sm:before:w-0.5">
+                <div
+                  className={`relative col-span-12 space-y-12 px-0 transition-all before:bg-gray-700 sm:col-span-8 sm:space-y-8 sm:px-4 sm:before:absolute sm:before:-left-3 sm:before:bottom-0 sm:before:top-2 sm:before:w-0.5 ${
+                    isLightMode ? 'before:bg-gray-300' : 'before:bg-gray-700'
+                  }`}
+                >
                   {educationData.map((edu) => (
                     <div
                       key={edu.id}
-                      className={`flex flex-col rounded-lg border border-neutral-700/50 bg-neutral-800/50 p-4 transition-all duration-300 ${getColorClasses(
+                      className={`flex flex-col rounded-lg border p-4 transition-all duration-300 ${getColorClasses(
                         edu.color
-                      )} sm:relative sm:before:absolute sm:before:left-[-36px] sm:before:top-1 sm:before:z-[1] sm:before:h-4 sm:before:w-4 sm:before:rounded-full`}
+                      )} sm:relative sm:before:absolute sm:before:left-[-36px] sm:before:top-1 sm:before:z-[1] sm:before:h-4 sm:before:w-4 sm:before:rounded-full ${
+                        isLightMode
+                          ? '!border-gray-200 !bg-white/90'
+                          : 'border-neutral-700/50 bg-neutral-800/50'
+                      }`}
                     >
                       <div className="flex items-start justify-between">
                         <div className="grow">
-                          <h3 className="text-lg font-semibold tracking-wide sm:text-xl">
+                          <h3
+                            className={`text-lg font-semibold tracking-wide sm:text-xl ${
+                              isLightMode ? 'text-gray-800' : ''
+                            }`}
+                          >
                             {edu.institution}
                           </h3>
-                          <time className="pt-1 text-xs uppercase tracking-wide text-gray-400">
+                          <time
+                            className={`pt-1 text-xs uppercase tracking-wide ${
+                              isLightMode ? 'text-gray-500' : 'text-gray-400'
+                            }`}
+                          >
                             {edu.period}
                           </time>
-                          <p className="mt-3">
+                          <p
+                            className={`mt-3 ${
+                              isLightMode ? 'text-gray-700' : ''
+                            }`}
+                          >
                             {edu.degree}
                             <br />
                             <i>{edu.status}</i>
                           </p>
                         </div>
                         <button
-                          className="rounded-full p-2 text-gray-400 transition-colors hover:bg-neutral-700/50 hover:text-white"
+                          className={`rounded-full p-2 transition-colors ${
+                            isLightMode
+                              ? 'text-gray-500 hover:bg-gray-100 hover:text-gray-800'
+                              : 'text-gray-400 hover:bg-neutral-700/50 hover:text-white'
+                          }`}
                           onClick={() => handleToggle(edu.id)}
                           aria-label={
                             expandedId === edu.id
@@ -165,19 +229,41 @@ const TimeLine: React.FC = () => {
                       </div>
 
                       {expandedId === edu.id && (
-                        <div className="mt-4 space-y-4 border-t border-neutral-700/50 pt-4">
+                        <div
+                          className={`mt-4 space-y-4 border-t pt-4 ${
+                            isLightMode
+                              ? 'border-gray-200'
+                              : 'border-neutral-700/50'
+                          }`}
+                        >
                           {edu.description && (
-                            <p className="text-sm text-gray-300">
+                            <p
+                              className={`text-sm ${
+                                isLightMode ? 'text-gray-600' : 'text-gray-300'
+                              }`}
+                            >
                               {edu.description}
                             </p>
                           )}
 
                           {edu.achievements && edu.achievements.length > 0 && (
                             <div>
-                              <h4 className="mb-2 text-sm font-semibold text-gray-200">
+                              <h4
+                                className={`mb-2 text-sm font-semibold ${
+                                  isLightMode
+                                    ? 'text-gray-700'
+                                    : 'text-gray-200'
+                                }`}
+                              >
                                 Achievements:
                               </h4>
-                              <ul className="list-inside list-disc space-y-1 text-sm text-gray-300">
+                              <ul
+                                className={`list-inside list-disc space-y-1 text-sm ${
+                                  isLightMode
+                                    ? 'text-gray-600'
+                                    : 'text-gray-300'
+                                }`}
+                              >
                                 {edu.achievements.map((achievement, index) => (
                                   <li key={index}>{achievement}</li>
                                 ))}
@@ -187,14 +273,24 @@ const TimeLine: React.FC = () => {
 
                           {edu.coursework && edu.coursework.length > 0 && (
                             <div>
-                              <h4 className="mb-2 text-sm font-semibold text-gray-200">
+                              <h4
+                                className={`mb-2 text-sm font-semibold ${
+                                  isLightMode
+                                    ? 'text-gray-700'
+                                    : 'text-gray-200'
+                                }`}
+                              >
                                 Key Coursework:
                               </h4>
                               <div className="flex flex-wrap gap-2">
                                 {edu.coursework.map((course, index) => (
                                   <span
                                     key={index}
-                                    className="rounded-full bg-neutral-700/50 px-2 py-1 text-xs text-gray-300"
+                                    className={`rounded-full px-2 py-1 text-xs ${
+                                      isLightMode
+                                        ? 'bg-gray-100 text-gray-700'
+                                        : 'bg-neutral-700/50 text-gray-300'
+                                    }`}
                                   >
                                     {course}
                                   </span>
@@ -211,7 +307,7 @@ const TimeLine: React.FC = () => {
             </div>
           </div>
         </section>
-        <div className="absolute bottom-0 left-1/2 hidden -translate-x-1/2  animate-bounce md:flex">
+        <div className="absolute bottom-0 left-1/2 hidden -translate-x-1/2 animate-bounce md:flex">
           <button
             onClick={() => {
               const footer = document.querySelector('#projects-section');
@@ -219,12 +315,20 @@ const TimeLine: React.FC = () => {
                 footer.scrollIntoView({ behavior: 'smooth' });
               }
             }}
-            className="rounded-full border border-neutral-700/50 bg-neutral-800/50 p-2 transition-all duration-200 hover:border-emerald-700/50 hover:bg-neutral-700/50"
+            className={`rounded-full border p-2 transition-all duration-200 ${
+              isLightMode
+                ? 'border-gray-300 bg-gray-100/50 hover:border-emerald-500/30 hover:bg-gray-200/50'
+                : 'border-neutral-700/50 bg-neutral-800/50 hover:border-emerald-700/50 hover:bg-neutral-700/50'
+            }`}
             aria-label="Scroll to footer"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 text-neutral-400 hover:text-emerald-400"
+              className={`h-6 w-6 ${
+                isLightMode
+                  ? 'text-gray-500 hover:text-emerald-500'
+                  : 'text-neutral-400 hover:text-emerald-400'
+              }`}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

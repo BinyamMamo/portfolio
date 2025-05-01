@@ -62,7 +62,7 @@ const { project } = Astro.props;
             href={project.link}
             target='_blank'
             rel='noopener noreferrer'
-            class='inline-flex items-center rounded-lg bg-emerald-600 px-6 py-3 text-white transition-colors duration-200 hover:bg-emerald-700'
+            class='inline-flex items-center rounded-lg bg-emerald-600 px-6 py-3 !text-white transition-colors duration-200 hover:bg-emerald-700'
           >
             <FaExternalLinkAlt className='mr-2' />
             Live Demo
@@ -72,7 +72,7 @@ const { project } = Astro.props;
               href={project.repoLink}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center rounded-lg border border-neutral-700 bg-neutral-800 px-6 py-3 text-white transition-colors duration-200 hover:bg-neutral-700"
+              class="inline-flex items-center rounded-lg bg-indigo-500 px-6 py-3 !text-white transition-colors duration-200 hover:bg-neutral-700"
             >
               <FaGithub className="mr-2" />
               View Code
@@ -179,12 +179,12 @@ const { project } = Astro.props;
           <div class='sticky top-24 space-y-8'>
             <!-- Technologies -->
             <div
-              class='rounded-xl border border-neutral-700 bg-neutral-800/50 p-6'
+              class='card-light rounded-xl border border-neutral-700 bg-neutral-800/50 p-6'
             >
               <h3 class='mb-4 text-xl font-bold text-white'>
                 Technologies Used
               </h3>
-              <div class='flex flex-wrap gap-2'>
+              <div class='tags-light-mode flex flex-wrap gap-2'>
                 {project.technologies.map((tech) => (
                   <span class="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-sm text-emerald-300">
                     {tech}
@@ -195,7 +195,7 @@ const { project } = Astro.props;
 
             <!-- Project Links -->
             <div
-              class='rounded-xl border border-neutral-700 bg-neutral-800/50 p-6'
+              class='card-light rounded-xl border border-neutral-700 bg-neutral-800/50 p-6'
             >
               <h3 class='mb-4 text-xl font-bold text-white'>Project Links</h3>
               <div class='space-y-3'>
@@ -227,5 +227,38 @@ const { project } = Astro.props;
     </div>
   </main>
 
-  <Footer />
+  <Footer client:load />
 </Base>
+
+<script>
+  // Initialize theme from localStorage
+  document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.className = savedTheme + '-mode';
+  });
+</script>
+
+<style>
+  /* Button styles that preserve white text in both light and dark mode */
+  :global(.dark-light-button) {
+    border-color: var(--border-color, #334155) !important;
+    background-color: var(--bg-color, #1e293b) !important;
+    color: white !important;
+  }
+
+  :global(html.light-mode .dark-light-button) {
+    border-color: #cbd5e1 !important;
+    background-color: #64748b !important;
+  }
+
+  :global(html.light-mode .dark-light-button:hover) {
+    background-color: #475569 !important;
+  }
+
+  /* Ensure technology tags keep proper styling in light mode */
+  :global(html.light-mode .tags-light-mode span) {
+    background-color: rgba(236, 253, 245, 0.8) !important;
+    border-color: rgba(16, 185, 129, 0.2) !important;
+    color: #059669 !important;
+  }
+</style>

@@ -17,7 +17,7 @@ import { AppConfig } from '@/utils/AppConfig';
     <ProjectList client:load />
   </main>
 
-  <Footer />
+  <Footer client:load />
 
   <!-- Floating navigation dots -->
   <div class='fixed right-6 top-1/2 z-40 hidden -translate-y-1/2 md:block'>
@@ -55,6 +55,79 @@ import { AppConfig } from '@/utils/AppConfig';
     </div>
   </div>
 </Base>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('.min-h-screen');
+    const navDots = document.querySelectorAll('.nav-dot');
+    let previousActive = null;
+
+    // Initialize theme from localStorage
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.className = savedTheme + '-mode';
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.6,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          const activeDot = document.querySelector(`.nav-dot[href="#${id}"]`);
+
+          if (activeDot && !activeDot.classList.contains('active')) {
+            // Remove active class from all dots
+            navDots.forEach((dot) => {
+              dot.classList.remove('active');
+              dot.classList.remove('transitioning');
+            });
+
+            // Add transitioning class for liquid animation
+            if (previousActive) {
+              previousActive.classList.add('transitioning');
+              setTimeout(() => {
+                previousActive.classList.remove('transitioning');
+              }, 600);
+            }
+
+            // Add active class to current dot
+            activeDot.classList.add('active');
+            previousActive = activeDot;
+          }
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+
+    // Add click ripple effect
+    navDots.forEach((dot) => {
+      dot.addEventListener('click', (e) => {
+        // Create ripple element
+        const ripple = document.createElement('span');
+        ripple.classList.add('ripple');
+        dot.appendChild(ripple);
+
+        // Position the ripple
+        const rect = dot.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = `${size}px`;
+        ripple.style.left = `${e.clientX - rect.left - size / 2}px`;
+        ripple.style.top = `${e.clientY - rect.top - size / 2}px`;
+
+        // Remove ripple after animation
+        setTimeout(() => {
+          ripple.remove();
+        }, 600);
+      });
+    });
+  });
+</script>
 
 <style>
   .nav-dot {
@@ -138,73 +211,14 @@ import { AppConfig } from '@/utils/AppConfig';
     opacity: 0;
     transition: all 0.5s ease;
   }
+
+  /* Light mode specific styles */
+  :global(html.light-mode) .nav-dot span:first-child {
+    background-color: #d1d5db;
+  }
+
+  :global(html.light-mode) .nav-dot:hover span:first-child,
+  :global(html.light-mode) .nav-dot.active span:first-child {
+    background-color: rgb(16, 185, 129);
+  }
 </style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('.min-h-screen');
-    const navDots = document.querySelectorAll('.nav-dot');
-    let previousActive = null;
-
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.6,
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id;
-          const activeDot = document.querySelector(`.nav-dot[href="#${id}"]`);
-
-          if (activeDot && !activeDot.classList.contains('active')) {
-            // Remove active class from all dots
-            navDots.forEach((dot) => {
-              dot.classList.remove('active');
-              dot.classList.remove('transitioning');
-            });
-
-            // Add transitioning class for liquid animation
-            if (previousActive) {
-              previousActive.classList.add('transitioning');
-              setTimeout(() => {
-                previousActive.classList.remove('transitioning');
-              }, 600);
-            }
-
-            // Add active class to current dot
-            activeDot.classList.add('active');
-            previousActive = activeDot;
-          }
-        }
-      });
-    }, observerOptions);
-
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
-
-    // Add click ripple effect
-    navDots.forEach((dot) => {
-      dot.addEventListener('click', (e) => {
-        // Create ripple element
-        const ripple = document.createElement('span');
-        ripple.classList.add('ripple');
-        dot.appendChild(ripple);
-
-        // Position the ripple
-        const rect = dot.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        ripple.style.width = ripple.style.height = `${size}px`;
-        ripple.style.left = `${e.clientX - rect.left - size / 2}px`;
-        ripple.style.top = `${e.clientY - rect.top - size / 2}px`;
-
-        // Remove ripple after animation
-        setTimeout(() => {
-          ripple.remove();
-        }, 600);
-      });
-    });
-  });
-</script>

@@ -1,5 +1,5 @@
 import { Section } from 'astro-boilerplate-components';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Hero = () => {
   const skills = [
@@ -20,6 +20,30 @@ const Hero = () => {
     }
   };
 
+  const [isLightMode, setIsLightMode] = useState(false);
+
+  useEffect(() => {
+    // Check initially and add listener for theme changes
+    const checkTheme = () => {
+      setIsLightMode(document.documentElement.classList.contains('light-mode'));
+    };
+
+    checkTheme();
+
+    // Create an observer to watch for class changes on html element
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          checkTheme();
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, { attributes: true });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div
       className="flex min-h-screen items-center px-4 pt-16 sm:px-6 lg:px-8"
@@ -39,7 +63,11 @@ const Hero = () => {
               </span>{' '}
             </h1>
 
-            <div className="text-base leading-7 text-gray-300 sm:text-lg">
+            <div
+              className={`text-base leading-7 ${
+                isLightMode ? 'text-gray-600' : 'text-gray-300'
+              } sm:text-lg`}
+            >
               <p>
                 <b>Backend Developer</b> certified by{' '}
                 <a
@@ -61,14 +89,22 @@ const Hero = () => {
 
             {/* Skills Section */}
             <div className="mt-8">
-              <h3 className="mb-4 text-lg font-semibold text-gray-300 sm:text-xl">
+              <h3
+                className={`mb-4 text-lg font-semibold ${
+                  isLightMode ? 'text-gray-700' : 'text-gray-300'
+                } sm:text-xl`}
+              >
                 Skills & Technologies
               </h3>
               <div className="flex flex-wrap justify-center gap-2 sm:gap-3 md:justify-start">
                 {skills.map((skill, index) => (
                   <div
                     key={index}
-                    className="rounded-full border border-neutral-700/50 bg-neutral-800/50 px-3 py-1.5 text-xs text-gray-300 transition-all duration-200 hover:bg-neutral-700/50 sm:px-4 sm:py-2 sm:text-sm"
+                    className={`rounded-full border px-3 py-1.5 text-xs transition-all duration-200 sm:px-4 sm:py-2 sm:text-sm ${
+                      isLightMode
+                        ? 'border-gray-300 bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        : 'border-neutral-700/50 bg-neutral-800/50 text-gray-300 hover:bg-neutral-700/50'
+                    }`}
                   >
                     <span className="mr-1 sm:mr-2">{skill.icon}</span>
                     {skill.name}
@@ -82,7 +118,7 @@ const Hero = () => {
               <a
                 href="/assets/CV_BinyamMamo.pdf"
                 download
-                className="inline-flex items-center rounded-lg bg-emerald-600 px-4 py-2.5 text-sm text-white transition-all duration-200 hover:bg-emerald-700 sm:px-6 sm:py-3 sm:text-base"
+                className="inline-flex items-center rounded-lg bg-emerald-600 px-4 py-2.5 text-sm !text-white transition-all duration-200 hover:bg-emerald-700 sm:px-6 sm:py-3 sm:text-base"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -150,7 +186,11 @@ const Hero = () => {
           {/* Avatar section */}
           <div className="hidden w-full justify-center md:flex md:w-1/3">
             <img
-              className="h-48 rounded-full border border-neutral-800 opacity-75 ring-1 ring-neutral-700 transition-opacity duration-300 hover:opacity-100 sm:h-64 md:h-80 md:border-0 md:ring-0"
+              className={`h-48 rounded-full border transition duration-300 ease-in-out hover:opacity-100 sm:h-64 md:h-80 md:border-0 md:ring-0 ${
+                isLightMode
+                  ? 'opacity-85 border-gray-200 ring-gray-300'
+                  : 'border-neutral-800 opacity-75 ring-1 ring-neutral-700'
+              }`}
               src="/assets/images/portrait_nobg.png"
               alt="Avatar image"
               loading="lazy"
@@ -162,12 +202,20 @@ const Hero = () => {
         <div className="absolute bottom-10 left-1/2 hidden -translate-x-1/2 animate-bounce md:flex">
           <button
             onClick={scrollToEducation}
-            className="rounded-full border border-neutral-700/50 bg-neutral-800/50 p-2 transition-all duration-200 hover:border-emerald-700/50 hover:bg-neutral-700/50"
+            className={`rounded-full border p-2 transition-all duration-200 ${
+              isLightMode
+                ? 'border-gray-300 bg-gray-100/50 hover:border-emerald-500/30 hover:bg-gray-200/50'
+                : 'border-neutral-700/50 bg-neutral-800/50 hover:border-emerald-700/50 hover:bg-neutral-700/50'
+            }`}
             aria-label="Scroll to next section"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 text-neutral-400 hover:text-emerald-400"
+              className={`h-6 w-6 ${
+                isLightMode
+                  ? 'text-gray-500 hover:text-emerald-500'
+                  : 'text-neutral-400 hover:text-emerald-400'
+              }`}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

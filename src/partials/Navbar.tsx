@@ -12,20 +12,28 @@ const Navbar = () => {
   const [darkMode, setDarkMode] = useState(true); // Default to dark mode
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Handle dark mode toggle
+  // Initialize theme state from localStorage on mount
   useEffect(() => {
-    if (darkMode) {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setDarkMode(savedTheme === 'dark');
+  }, []);
+
+  // Handle dark mode toggle directly
+  const toggleDarkMode = () => {
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+
+    if (newDarkMode) {
       document.documentElement.classList.add('dark-mode');
       document.documentElement.classList.remove('light-mode');
-      document.body.style.backgroundColor = '#0f172a';
-      document.body.style.color = '#f8fafc';
     } else {
       document.documentElement.classList.add('light-mode');
       document.documentElement.classList.remove('dark-mode');
-      document.body.style.backgroundColor = '#f8fafc';
-      document.body.style.color = '#0f172a';
     }
-  }, [darkMode]);
+
+    // Save preference to localStorage
+    localStorage.setItem('theme', newDarkMode ? 'dark' : 'light');
+  };
 
   // Handle scroll effect
   useEffect(() => {
@@ -44,10 +52,12 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed inset-x-0  top-0 z-50 border-neutral-800 py-1.5 shadow-xl transition ease-in-out ${
+        className={`fixed inset-x-0 top-0 z-50 py-1.5 transition ease-in-out ${
           isScrolled
-            ? 'bg-neutral-900/95 shadow-neutral-900'
-            : 'border-0 shadow-neutral-800/0'
+            ? darkMode
+              ? 'bg-neutral-900/95 shadow-xl shadow-neutral-900/50'
+              : 'bg-white/95 shadow-xl shadow-gray-200/50'
+            : 'border-0 shadow-none'
         }`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-10">
@@ -55,18 +65,10 @@ const Navbar = () => {
             {/* Logo */}
             <a href="/" className="flex items-center">
               <CustomLogo
-                textColor="from-emerald-600 to-emerald-600 bg-gradient-to-r bg-clip-text text-transparent"
+                textColor={darkMode ? 'text-neutral-100' : 'text-neutral-900'}
                 icon={
-                  // <svg
-                  //   className="mr-1.5 mt-1 h-8 w-8 fill-current text-emerald-500 transition-colors duration-200 hover:text-emerald-600"
-                  //   xmlns="http://www.w3.org/2000/svg"
-                  //   viewBox="0 0 24 24"
-                  // >
-                  //   <path d="M8.5 3.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0zm4 4a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0zm6 2a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0zm-2 4a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0zm-6 3a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0z" />
-                  //   <path d="M16.4 16.1c-.6.6-1.4 1-2.3 1.1-.9.1-1.8-.1-2.6-.6l-6.7-4.2c-.4-.3-.7-.6-.9-1-.3-.5-.4-1.1-.2-1.6.1-.6.5-1.1 1-1.4l6.8-4.2c.8-.5 1.7-.7 2.6-.6.9.1 1.7.5 2.3 1.1l.7.7-1.2 1.2-.7-.7c-.4-.4-.8-.6-1.3-.7-.5 0-1 .1-1.4.3L6.7 11c-.2.1-.3.3-.3.4v.2l6.7 4.2c.4.3.9.3 1.4.3.5 0 1-.3 1.3-.7l.7-.7 1.2 1.2-.7.7-.6-.5z" />
-                  // </svg>
                   <img
-                    className="mr-3.5 h-9 w-9 rounded-full border border-emerald-700/75 bg-neutral-700/80 object-cover object-center opacity-100 ring-1 ring-neutral-700 transition duration-300 hover:ring-2"
+                    className="mr-3.5 h-9 w-9 rounded-full border border-emerald-900/75 bg-neutral-700/80 object-cover object-center opacity-100 ring-1 ring-neutral-700 transition duration-300 hover:ring-2"
                     src="/assets/images/portrait_nobg.png"
                     alt="Avatar image"
                     loading="lazy"
@@ -79,15 +81,20 @@ const Navbar = () => {
             {/* Contact Button */}
             <button
               onClick={toggleContactModal}
-              className="hidden items-center gap-2 rounded-lg border border-neutral-900 bg-emerald-600 px-4 py-2 text-base text-white ring-0 ring-emerald-800 transition ease-in-out hover:bg-emerald-700 hover:ring-2 md:flex"
+              className={`hidden items-center gap-2 rounded-lg py-2 text-base transition ease-in-out md:flex md:px-4 ${
+                darkMode
+                  ? 'border border-neutral-900 bg-neutral-800 !text-white ring-0 ring-neutral-800 hover:bg-neutral-700 hover:ring-2'
+                  : 'border border-neutral-800 bg-neutral-800 !text-white hover:border-neutral-800 hover:bg-neutral-800'
+              }`}
             >
-              <BiMessageDetail className="mt-0.5 text-xl" />
+              <BiMessageDetail className="mt-0.5 text-xl !text-white" />
               <span>Contact Me</span>
             </button>
             <BiMessageDetail
               onClick={toggleContactModal}
-              style={{ textShadow: '2px 2px 4px #10b98199' }}
-              className="flex text-2xl text-emerald-500 md:hidden"
+              className={`mt-0.5 flex text-3xl md:hidden ${
+                darkMode ? 'text-white' : 'text-neutral-800'
+              }`}
             />
           </div>
         </div>
@@ -95,8 +102,12 @@ const Navbar = () => {
 
       {/* Floating Dark Mode Toggle */}
       <button
-        onClick={() => setDarkMode(!darkMode)}
-        className="fixed bottom-6 right-6 z-50 rounded-full border border-neutral-700/50 bg-neutral-800/50 p-3 shadow-lg transition-all duration-200 hover:border-emerald-700/50 hover:bg-neutral-700/50"
+        onClick={toggleDarkMode}
+        className={`fixed bottom-6 right-6 z-50 rounded-full border p-3 shadow-lg transition-all duration-200 ${
+          darkMode
+            ? 'border-neutral-700/50 bg-neutral-800/50 text-white hover:border-emerald-700/50 hover:bg-neutral-700/50'
+            : 'border-gray-300 bg-white text-neutral-800 hover:border-emerald-400/50 hover:bg-gray-100'
+        }`}
         aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
       >
         {darkMode ? (
@@ -109,14 +120,30 @@ const Navbar = () => {
       {/* Contact Modal */}
       {showContactModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm transition-all duration-300">
-          <div className="w-full max-w-md rounded-xl border border-neutral-700 bg-neutral-800 p-6 shadow-xl transition-all duration-300">
+          <div
+            className={`contact-modal w-full max-w-md rounded-xl border p-6 shadow-xl transition-all duration-300 ${
+              darkMode
+                ? 'border-neutral-700 bg-neutral-800'
+                : 'border-gray-200 bg-white'
+            }`}
+          >
             <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-white">Let's Connect</h2>
+              <h2
+                className={`text-2xl font-bold ${
+                  darkMode ? 'text-white' : 'text-gray-800'
+                }`}
+              >
+                Let's Connect
+              </h2>
               <button
                 onClick={toggleContactModal}
-                className="rounded-full p-2 transition-colors duration-200 hover:bg-neutral-700/50"
+                className={`rounded-full p-2 transition-colors duration-200 ${
+                  darkMode
+                    ? 'text-neutral-400 hover:bg-neutral-700/50 hover:text-white'
+                    : 'text-gray-500 hover:bg-gray-100 hover:text-gray-800'
+                }`}
               >
-                <FaTimes className="h-5 w-5 text-neutral-400 hover:text-white" />
+                <FaTimes className="h-5 w-5" />
               </button>
             </div>
 
@@ -124,14 +151,20 @@ const Navbar = () => {
               <div>
                 <label
                   htmlFor="name"
-                  className="mb-1 block text-sm font-medium text-neutral-300"
+                  className={`mb-1 block text-sm font-medium ${
+                    darkMode ? 'text-neutral-300' : 'text-gray-600'
+                  }`}
                 >
                   Name
                 </label>
                 <input
                   type="text"
                   id="name"
-                  className="w-full rounded-lg border border-neutral-700 bg-neutral-900 px-4 py-3 text-white transition-all duration-200 placeholder:text-neutral-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className={`w-full rounded-lg border px-4 py-3 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
+                    darkMode
+                      ? 'border-neutral-700 bg-neutral-900 text-white placeholder:text-neutral-500'
+                      : 'border-gray-200 bg-gray-50 text-gray-800 placeholder:text-gray-400'
+                  }`}
                   placeholder="Your name"
                 />
               </div>
@@ -139,14 +172,20 @@ const Navbar = () => {
               <div>
                 <label
                   htmlFor="email"
-                  className="mb-1 block text-sm font-medium text-neutral-300"
+                  className={`mb-1 block text-sm font-medium ${
+                    darkMode ? 'text-neutral-300' : 'text-gray-600'
+                  }`}
                 >
                   Email
                 </label>
                 <input
                   type="email"
                   id="email"
-                  className="w-full rounded-lg border border-neutral-700 bg-neutral-900 px-4 py-3 text-white transition-all duration-200 placeholder:text-neutral-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className={`w-full rounded-lg border px-4 py-3 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
+                    darkMode
+                      ? 'border-neutral-700 bg-neutral-900 text-white placeholder:text-neutral-500'
+                      : 'border-gray-200 bg-gray-50 text-gray-800 placeholder:text-gray-400'
+                  }`}
                   placeholder="your.email@example.com"
                 />
               </div>
@@ -154,14 +193,20 @@ const Navbar = () => {
               <div>
                 <label
                   htmlFor="message"
-                  className="mb-1 block text-sm font-medium text-neutral-300"
+                  className={`mb-1 block text-sm font-medium ${
+                    darkMode ? 'text-neutral-300' : 'text-gray-600'
+                  }`}
                 >
                   Message
                 </label>
                 <textarea
                   id="message"
                   rows={5}
-                  className="w-full rounded-lg border border-neutral-700 bg-neutral-900 px-4 py-3 text-white transition-all duration-200 placeholder:text-neutral-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className={`w-full rounded-lg border px-4 py-3 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
+                    darkMode
+                      ? 'border-neutral-700 bg-neutral-900 text-white placeholder:text-neutral-500'
+                      : 'border-gray-200 bg-gray-50 text-gray-800 placeholder:text-gray-400'
+                  }`}
                   placeholder="How can I help you?"
                 ></textarea>
               </div>
@@ -177,13 +222,21 @@ const Navbar = () => {
                 <button
                   type="button"
                   onClick={toggleContactModal}
-                  className="w-full rounded-lg border border-neutral-700 bg-neutral-800 px-6 py-3 font-medium text-white transition-all duration-200 hover:bg-neutral-700 sm:w-auto"
+                  className={`w-full rounded-lg border px-6 py-3 font-medium transition-all duration-200 sm:w-auto ${
+                    darkMode
+                      ? 'border-neutral-700 bg-neutral-800 text-white hover:bg-neutral-700'
+                      : 'border-gray-200 bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
                 >
                   Cancel
                 </button>
               </div>
 
-              <div className="mt-4 text-center text-sm text-neutral-400">
+              <div
+                className={`mt-4 text-center text-sm ${
+                  darkMode ? 'text-neutral-400' : 'text-gray-500'
+                }`}
+              >
                 I'll get back to you as soon as possible!
               </div>
             </form>

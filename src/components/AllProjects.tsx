@@ -124,6 +124,31 @@ const AllProjects: React.FC<AllProjectsProps> = ({ projects }) => {
     }
   };
 
+  // Check if we're in light mode
+  const [isLightMode, setIsLightMode] = useState(false);
+
+  useEffect(() => {
+    // Check initially and add listener for theme changes
+    const checkTheme = () => {
+      setIsLightMode(document.documentElement.classList.contains('light-mode'));
+    };
+
+    checkTheme();
+
+    // Create an observer to watch for class changes on html element
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          checkTheme();
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, { attributes: true });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="space-y-8">
       {/* Filters */}
@@ -142,7 +167,11 @@ const AllProjects: React.FC<AllProjectsProps> = ({ projects }) => {
                 className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-all ${
                   selectedCategory === category
                     ? 'bg-emerald-600 text-white'
-                    : 'bg-neutral-800 text-gray-300 hover:bg-neutral-700'
+                    : `bg-neutral-800 text-gray-300 hover:bg-neutral-700 ${
+                        isLightMode
+                          ? 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                          : ''
+                      }`
                 }`}
               >
                 {category}
@@ -158,10 +187,16 @@ const AllProjects: React.FC<AllProjectsProps> = ({ projects }) => {
             placeholder="Search projects..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-lg border border-neutral-700 bg-neutral-800 px-4 py-2 pl-10 text-white placeholder:text-gray-400 focus:border-emerald-500 focus:outline-none md:w-64"
+            className={`w-full rounded-lg border border-neutral-700 bg-neutral-800 px-4 py-2 pl-10 text-white placeholder:text-gray-400 focus:border-emerald-500 focus:outline-none md:w-64 ${
+              isLightMode
+                ? 'border-gray-300 bg-white text-gray-800 placeholder:text-gray-500'
+                : ''
+            }`}
           />
           <svg
-            className="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
+            className={`absolute left-3 top-2.5 h-5 w-5 ${
+              isLightMode ? 'text-gray-500' : 'text-gray-400'
+            }`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -180,7 +215,11 @@ const AllProjects: React.FC<AllProjectsProps> = ({ projects }) => {
       {/* Active Tag Filter */}
       {selectedTag && (
         <div className="flex items-center space-x-2">
-          <span className="text-gray-400">Filtering by:</span>
+          <span
+            className={`text-gray-400 ${isLightMode ? 'text-gray-600' : ''}`}
+          >
+            Filtering by:
+          </span>
           <Tag
             color={ColorTags.EMERALD}
             isActive={true}
@@ -221,7 +260,11 @@ const AllProjects: React.FC<AllProjectsProps> = ({ projects }) => {
           ))}
         </div>
       ) : (
-        <div className="flex h-40 items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800/50">
+        <div
+          className={`flex h-40 items-center justify-center rounded-lg border border-neutral-700 bg-neutral-800/50 ${
+            isLightMode ? 'border-gray-300 bg-gray-100/50 text-gray-600' : ''
+          }`}
+        >
           <p className="text-gray-400">
             No projects found. Try a different search or category.
           </p>

@@ -45,7 +45,7 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
-    "src/**/*.astro",
+    // "src/**/*.astro", // Removed as the files do not exist
     "src/partials/ProjectList.jsx"
   ]
 }
