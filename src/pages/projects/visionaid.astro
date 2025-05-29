@@ -1,0 +1,66 @@
+---
+import ProjectDetail from '@/templates/ProjectDetail.astro';
+
+const project = {
+  name: 'VisionAid',
+  description:
+    'An AI-powered accessibility application designed to assist visually impaired individuals through advanced computer vision and natural language processing technologies.',
+  fullDescription: `VisionAid is an innovative mobile application that transforms the way visually impaired users interact with their environment. By leveraging cutting-edge AI technologies, the app provides real-time assistance for daily navigation and interaction challenges.
+
+Developed as part of the 19th IEEE Student Day Competition, VisionAid represents a collaborative effort between developers and academic supervisors from the University of Dubai. The application empowers vision through technology, focusing on enhancing independence and quality of life for visually impaired individuals.
+
+The app combines advanced computer vision, natural language processing, and spatial audio to create a comprehensive accessibility solution that addresses real-world challenges faced by the visually impaired community.`,
+  link: '/',
+  repoLink: 'https://github.com/yourusername/visionaid',
+  img: {
+    src: '/assets/images/practice.gif',
+    alt: 'VisionAid accessibility interface',
+  },
+  images: [
+    {
+      src: '/assets/images/browse.gif',
+      alt: 'Text recognition and OCR interface',
+    },
+    {
+      src: '/assets/images/piano.gif',
+      alt: 'Object detection and spatial guidance',
+    },
+  ],
+  technologies: [
+    'Computer Vision',
+    'Natural Language Processing',
+    'Mobile Development',
+    'Audio Processing',
+    'Cloud AI Services',
+    'Machine Learning',
+  ],
+  features: [
+    'Advanced OCR technology with real-time text scanning and recognition',
+    'Arabic translation support with seamless language processing',
+    'AI-powered text summaries for better comprehension',
+    'Real-time object detection with spatial audio guidance',
+    'Environmental scene analysis with context-aware descriptions',
+    'Hazard detection with immediate voice alerts for safety',
+    'Distance estimation for safe navigation',
+    'Custom object training for personalized recognition',
+  ],
+  challenges: [
+    'Implementing real-time computer vision processing on mobile devices',
+    'Creating accurate spatial audio guidance for object location',
+    'Developing multilingual support with focus on Arabic translation',
+    'Optimizing AI models for mobile performance while maintaining accuracy',
+    'Designing intuitive audio-first user interfaces for accessibility',
+    'Integrating multiple AI services while ensuring reliable offline functionality',
+  ],
+  lessons: [
+    'Understanding the critical importance of accessibility in technology design',
+    'Best practices for developing audio-first user interfaces',
+    'Techniques for optimizing AI models for mobile deployment',
+    'The value of collaborative development with academic research institutions',
+    'Importance of user-centered design when developing assistive technologies',
+    'Strategies for creating inclusive technology that empowers users',
+  ],
+};
+---
+
+<ProjectDetail project={project} />

@@ -1,0 +1,67 @@
+---
+import ProjectDetail from '@/templates/ProjectDetail.astro';
+
+const project = {
+  name: 'PeerSphere',
+  description:
+    'A peer tutoring platform that connects university students with qualified peer tutors, featuring session management and progress tracking.',
+  fullDescription: `PeerSphere is a comprehensive peer tutoring platform designed to connect university students with qualified peer tutors in a seamless, user-friendly environment. The platform addresses the growing need for accessible, affordable academic support by leveraging the knowledge and expertise of fellow students.
+
+The application features distinct interfaces for students, tutors, and administrators, each tailored to their specific needs and workflows. Students can easily find and book tutoring sessions, while tutors can manage their availability and track their earnings. Administrators have comprehensive oversight tools to ensure quality and monitor platform performance.
+
+Built with modern React technologies and a focus on user experience, PeerSphere demonstrates how technology can facilitate meaningful educational connections within university communities.`,
+  link: '/',
+  repoLink: 'https://github.com/yourusername/peersphere',
+  img: {
+    src: '/assets/images/browse.gif',
+    alt: 'PeerSphere tutoring platform dashboard',
+  },
+  images: [
+    {
+      src: '/assets/images/practice.gif',
+      alt: 'Student booking and session management interface',
+    },
+    {
+      src: '/assets/images/piano.gif',
+      alt: 'Tutor availability and earnings tracking',
+    },
+  ],
+  technologies: [
+    'React',
+    'Vite',
+    'Tailwind CSS',
+    'React Router',
+    'Context API',
+    'JavaScript',
+    'Local Storage',
+  ],
+  features: [
+    'Multi-role user system supporting students, tutors, and administrators',
+    'Intuitive tutor discovery and booking system for students',
+    'Comprehensive session management with progress tracking',
+    'Tutor availability management and earnings tracking dashboard',
+    'Administrative oversight with tutor approval and session monitoring',
+    'Real-time analytics and platform performance metrics',
+    'Role-based navigation and user interface customization',
+    'Demo mode with role switching for easy testing and demonstration',
+  ],
+  challenges: [
+    'Designing distinct user experiences for three different user roles',
+    'Creating an efficient booking system that handles availability conflicts',
+    'Implementing comprehensive state management across multiple user types',
+    'Balancing feature complexity with user interface simplicity',
+    'Developing a scalable architecture for future backend integration',
+    'Creating meaningful analytics and reporting for platform administrators',
+  ],
+  lessons: [
+    'The importance of role-based design in multi-user applications',
+    'Strategies for managing complex state in React applications',
+    'Best practices for creating intuitive booking and scheduling interfaces',
+    'How to design scalable frontend architectures for future expansion',
+    'The value of creating comprehensive demo modes for stakeholder presentations',
+    'Techniques for building educational technology that serves diverse user needs',
+  ],
+};
+---
+
+<ProjectDetail project={project} />

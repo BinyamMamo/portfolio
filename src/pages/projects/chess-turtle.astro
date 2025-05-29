@@ -1,0 +1,67 @@
+---
+import ProjectDetail from '@/templates/ProjectDetail.astro';
+
+const project = {
+  name: 'Chess Turtle',
+  description:
+    'A Python project combining turtle graphics and tkinter to create a chessboard drawer and playable chess game with AI support.',
+  fullDescription: `Chess Turtle is a unique Python project that demonstrates the versatility of Python's built-in libraries by combining turtle graphics and tkinter to create both an artistic chessboard drawer and a fully functional chess game with AI capabilities.
+
+The project showcases two distinct but interconnected applications: a customizable chessboard drawer that uses turtle graphics to create beautiful, themed chessboards with adjustable sizes and color schemes, and a complete chess game implementation with AI opponents of varying difficulty levels.
+
+This project serves as an excellent example of how traditional programming concepts can be applied creatively, combining visual programming with game development and artificial intelligence. The chess AI implements strategic evaluation based on piece values, board control, and tactical positioning, offering players a challenging and educational gaming experience.`,
+  link: '/',
+  repoLink: 'https://github.com/BinyamMamo/chess_turtle',
+  img: {
+    src: '/assets/images/piano.gif',
+    alt: 'Chess Turtle game and board drawer interface',
+  },
+  images: [
+    {
+      src: '/assets/images/browse.gif',
+      alt: 'Customizable chessboard drawer with themes',
+    },
+    {
+      src: '/assets/images/practice.gif',
+      alt: 'Chess game interface with AI opponent',
+    },
+  ],
+  technologies: [
+    'Python',
+    'Turtle Graphics',
+    'Tkinter',
+    'Game AI',
+    'Object-Oriented Programming',
+    'GUI Development',
+    'Algorithm Implementation',
+  ],
+  features: [
+    'Customizable chessboard drawer with multiple color themes and sizes',
+    'Interactive UI with theme selection and board size adjustment',
+    'Fully playable chess game with intuitive tkinter interface',
+    'AI opponents with three difficulty levels: Easy, Normal, and Hard',
+    'Move validation and game rule enforcement',
+    'Valid move highlighting for selected pieces',
+    'Comprehensive move history tracking',
+    'Seamless transition between board drawer and chess game',
+  ],
+  challenges: [
+    'Implementing chess game logic with proper move validation',
+    'Creating an AI that provides appropriate challenge levels',
+    'Designing intuitive user interfaces using tkinter',
+    'Optimizing turtle graphics performance for smooth drawing',
+    'Balancing code complexity with educational value',
+    'Integrating two different GUI libraries (turtle and tkinter) seamlessly',
+  ],
+  lessons: [
+    'How to effectively combine multiple Python libraries for complex projects',
+    'Techniques for implementing game AI with strategic evaluation',
+    'Best practices for creating educational programming projects',
+    'The importance of user experience design in desktop applications',
+    'Strategies for organizing complex Python projects with multiple modules',
+    'How to create engaging demonstrations of programming concepts',
+  ],
+};
+---
+
+<ProjectDetail project={project} />

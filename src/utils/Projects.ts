@@ -29,7 +29,7 @@ export const getAllProjects = (): ProjectData[] => {
       repoLink: 'https://github.com/yourusername/funkey',
       img: {
         src: '/assets/images/browse.gif',
-        alt: 'Project Web Design',
+        alt: 'Funkey typing interface',
       },
       category: 'Web Development',
       tags: [
@@ -41,116 +41,102 @@ export const getAllProjects = (): ProjectData[] => {
       featured: true,
     },
     {
-      id: 'ecommerce',
-      name: 'E-Commerce',
+      id: 'visionaid',
+      name: 'VisionAid',
       description:
-        'A full-stack e-commerce solution with real-time inventory management, payment processing, and advanced analytics dashboard.',
+        'An AI-powered accessibility application designed to assist visually impaired individuals through advanced computer vision and natural language processing technologies.',
       link: '/',
-      repoLink: 'https://github.com/yourusername/ecommerce',
-      img: {
-        src: '/assets/images/piano.gif',
-        alt: 'E-Commerce Platform',
-      },
-      category: 'Web Development',
-      tags: [
-        { text: 'Next.js', color: ColorTags.VIOLET },
-        { text: 'Stripe', color: ColorTags.EMERALD },
-        { text: 'JavaScript', color: ColorTags.YELLOW },
-      ],
-      featured: true,
-    },
-    {
-      id: 'ai-chat',
-      name: 'AI Chat Assistant',
-      description:
-        'An intelligent chat assistant powered by machine learning that can understand context and provide relevant responses.',
-      link: '/',
-      repoLink: 'https://github.com/yourusername/ai-chat',
+      repoLink: 'https://github.com/yourusername/visionaid',
       img: {
         src: '/assets/images/practice.gif',
-        alt: 'AI Chat Assistant',
+        alt: 'VisionAid accessibility interface',
       },
       category: 'AI & Machine Learning',
       tags: [
-        { text: 'Python', color: ColorTags.FUCHSIA },
-        { text: 'TensorFlow', color: ColorTags.INDIGO },
-        { text: 'React', color: ColorTags.ROSE },
+        { text: 'Computer Vision', color: ColorTags.INDIGO },
+        { text: 'NLP', color: ColorTags.PURPLE },
+        { text: 'Mobile Development', color: ColorTags.BLUE },
+        { text: 'Accessibility', color: ColorTags.EMERALD },
       ],
       featured: true,
     },
     {
-      id: 'data-visualization',
-      name: 'Data Visualization Dashboard',
+      id: 'mindwave',
+      name: 'MindWave',
       description:
-        'Interactive dashboard for visualizing complex datasets with multiple chart types and filtering options.',
+        'A mobile-first web application that delivers science-backed approaches to mental wellness through engaging, bite-sized interactions with TikTok-like scrollable interface.',
       link: '/',
-      repoLink: 'https://github.com/yourusername/data-viz',
+      repoLink: 'https://github.com/BinyamMamo/mindwave',
+      img: {
+        src: '/assets/images/piano.gif',
+        alt: 'MindWave mental wellness app',
+      },
+      category: 'Web Development',
+      tags: [
+        { text: 'React', color: ColorTags.ROSE },
+        { text: 'Vite', color: ColorTags.VIOLET },
+        { text: 'Tailwind CSS', color: ColorTags.SKY },
+        { text: 'Mental Health', color: ColorTags.EMERALD },
+      ],
+      featured: true,
+    },
+    {
+      id: 'peersphere',
+      name: 'PeerSphere',
+      description:
+        'A peer tutoring platform that connects university students with qualified peer tutors, featuring session management and progress tracking.',
+      link: '/',
+      repoLink: 'https://github.com/yourusername/peersphere',
       img: {
         src: '/assets/images/browse.gif',
-        alt: 'Data Visualization Dashboard',
+        alt: 'PeerSphere tutoring platform',
+      },
+      category: 'Web Development',
+      tags: [
+        { text: 'React', color: ColorTags.ROSE },
+        { text: 'Vite', color: ColorTags.VIOLET },
+        { text: 'Context API', color: ColorTags.YELLOW },
+        { text: 'Education', color: ColorTags.EMERALD },
+      ],
+      featured: false,
+    },
+    {
+      id: 'birthday-paradox',
+      name: 'Birthday Paradox Simulator',
+      description:
+        'An interactive web application that demonstrates the Birthday Paradox through real-time simulations and probability visualizations.',
+      link: '/',
+      repoLink: 'https://github.com/yourusername/birthday-paradox',
+      img: {
+        src: '/assets/images/practice.gif',
+        alt: 'Birthday Paradox visualization',
       },
       category: 'Data Science',
       tags: [
-        { text: 'D3.js', color: ColorTags.ORANGE },
         { text: 'React', color: ColorTags.ROSE },
+        { text: 'Recharts', color: ColorTags.ORANGE },
+        { text: 'Probability', color: ColorTags.INDIGO },
+        { text: 'Mathematics', color: ColorTags.PURPLE },
+      ],
+      featured: false,
+    },
+    {
+      id: 'chess-turtle',
+      name: 'Chess Turtle',
+      description:
+        'A Python project combining turtle graphics and tkinter to create a chessboard drawer and playable chess game with AI support.',
+      link: '/',
+      repoLink: 'https://github.com/BinyamMamo/chess_turtle',
+      img: {
+        src: '/assets/images/piano.gif',
+        alt: 'Chess Turtle game interface',
+      },
+      category: 'Desktop Application',
+      tags: [
         { text: 'Python', color: ColorTags.FUCHSIA },
-      ],
-      featured: false,
-    },
-    {
-      id: 'mobile-app',
-      name: 'Fitness Tracker App',
-      description:
-        'Mobile application for tracking workouts, nutrition, and fitness progress with personalized recommendations.',
-      link: '/',
-      repoLink: 'https://github.com/yourusername/fitness-app',
-      img: {
-        src: '/assets/images/piano.gif',
-        alt: 'Fitness App',
-      },
-      category: 'Mobile Development',
-      tags: [
-        { text: 'React Native', color: ColorTags.BLUE },
-        { text: 'Firebase', color: ColorTags.YELLOW },
-        { text: 'TypeScript', color: ColorTags.ROSE },
-      ],
-      featured: false,
-    },
-    {
-      id: 'iot-project',
-      name: 'Smart Home System',
-      description:
-        'IoT-based smart home automation system with voice control, scheduling, and energy management features.',
-      link: '/',
-      repoLink: 'https://github.com/yourusername/smart-home',
-      img: {
-        src: '/assets/images/piano.gif',
-        alt: 'Smart Home System',
-      },
-      category: 'IoT',
-      tags: [
-        { text: 'Raspberry Pi', color: ColorTags.RED },
-        { text: 'Node.js', color: ColorTags.GREEN },
-        { text: 'MQTT', color: ColorTags.BLUE },
-      ],
-      featured: false,
-    },
-    {
-      id: 'devops-tool',
-      name: 'Continuous Integration Pipeline',
-      description:
-        'Automated CI/CD pipeline for software deployment with testing, building, and monitoring capabilities.',
-      link: '/',
-      repoLink: 'https://github.com/yourusername/ci-pipeline',
-      img: {
-        src: '/assets/images/practice.gif',
-        alt: 'CI Pipeline',
-      },
-      category: 'DevOps',
-      tags: [
-        { text: 'Docker', color: ColorTags.BLUE },
-        { text: 'Jenkins', color: ColorTags.RED },
-        { text: 'Kubernetes', color: ColorTags.BLUE },
+        { text: 'Turtle Graphics', color: ColorTags.GREEN },
+        { text: 'Tkinter', color: ColorTags.BLUE },
+        { text: 'Game AI', color: ColorTags.INDIGO },
       ],
       featured: false,
     },

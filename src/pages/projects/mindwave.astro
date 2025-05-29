@@ -1,0 +1,67 @@
+---
+import ProjectDetail from '@/templates/ProjectDetail.astro';
+
+const project = {
+  name: 'MindWave',
+  description:
+    'A mobile-first web application that delivers science-backed approaches to mental wellness through engaging, bite-sized interactions with TikTok-like scrollable interface.',
+  fullDescription: `MindWave is a revolutionary mental wellness application that combines micro-habit building, engaging visual feedback, and quick relief tools in a familiar TikTok-like scrollable interface. The app delivers science-backed approaches to mental wellness through bite-sized, engaging interactions designed for modern attention spans.
+
+The application features fractal visualizations that grow as users complete micro-habits, creating a satisfying visual representation of progress and neural pathway development. With its mobile-first design and focus on micro-interactions lasting 15-30 seconds, MindWave makes mental wellness accessible and engaging for users of all backgrounds.
+
+Built with modern web technologies, MindWave emphasizes user privacy by storing all data locally, requiring no backend infrastructure or user authentication for the MVP version.`,
+  link: '/',
+  repoLink: 'https://github.com/BinyamMamo/mindwave',
+  img: {
+    src: '/assets/images/piano.gif',
+    alt: 'MindWave mental wellness app interface',
+  },
+  images: [
+    {
+      src: '/assets/images/browse.gif',
+      alt: 'MicroBreak scrollable feed interface',
+    },
+    {
+      src: '/assets/images/practice.gif',
+      alt: 'Fractal visualization and habit tracking',
+    },
+  ],
+  technologies: [
+    'React',
+    'Vite',
+    'Tailwind CSS',
+    'Framer Motion',
+    'React Router',
+    'React Context API',
+    'Local Storage',
+  ],
+  features: [
+    'TikTok-like vertical scrolling feed with 15-30 second wellness content',
+    'Guided micro-breathing exercises and perspective reset visualizations',
+    'Micro-habit builder with fractal visualization growth system',
+    'Quick relief tools including breathing pacer and color therapy',
+    'Single-prompt journaling with character limits for focused reflection',
+    'Progressive muscle relaxation and smile practice exercises',
+    'Habit tracking with streaks and completion history',
+    'Educational elements about neural pathway development',
+  ],
+  challenges: [
+    'Creating engaging micro-interactions that fit within 30-second timeframes',
+    'Implementing smooth scrolling experiences similar to popular social media apps',
+    'Designing effective fractal visualizations that respond to user progress',
+    'Balancing scientific backing with user engagement and accessibility',
+    'Optimizing mobile performance for smooth animations and interactions',
+    'Creating a privacy-first architecture using only local storage',
+  ],
+  lessons: [
+    'The power of micro-interactions in building sustainable wellness habits',
+    'How familiar UI patterns can make wellness tools more accessible',
+    'Techniques for creating meaningful visual feedback in habit-building apps',
+    'Best practices for mobile-first web application development',
+    'The importance of privacy-by-design in mental health applications',
+    'Strategies for gamifying wellness without trivializing mental health',
+  ],
+};
+---
+
+<ProjectDetail project={project} />
