@@ -48,7 +48,7 @@ export const getAllProjects = (): ProjectData[] => {
       link: '/',
       repoLink: 'https://github.com/yourusername/visionaid',
       img: {
-        src: '/assets/images/practice.gif',
+        src: '/assets/images/visionaid/visionaid.gif',
         alt: 'VisionAid accessibility interface',
       },
       category: 'AI & Machine Learning',
@@ -61,34 +61,14 @@ export const getAllProjects = (): ProjectData[] => {
       featured: true,
     },
     {
-      id: 'mindwave',
-      name: 'MindWave',
-      description:
-        'A mobile-first web application that delivers science-backed approaches to mental wellness through engaging, bite-sized interactions with TikTok-like scrollable interface.',
-      link: '/',
-      repoLink: 'https://github.com/BinyamMamo/mindwave',
-      img: {
-        src: '/assets/images/piano.gif',
-        alt: 'MindWave mental wellness app',
-      },
-      category: 'Web Development',
-      tags: [
-        { text: 'React', color: ColorTags.ROSE },
-        { text: 'Vite', color: ColorTags.VIOLET },
-        { text: 'Tailwind CSS', color: ColorTags.SKY },
-        { text: 'Mental Health', color: ColorTags.EMERALD },
-      ],
-      featured: true,
-    },
-    {
       id: 'peersphere',
       name: 'PeerSphere',
       description:
         'A peer tutoring platform that connects university students with qualified peer tutors, featuring session management and progress tracking.',
       link: '/',
-      repoLink: 'https://github.com/yourusername/peersphere',
+      repoLink: 'https://github.com/BinyamMamo/peersphere',
       img: {
-        src: '/assets/images/browse.gif',
+        src: '/assets/images/peersphere/peersphere.gif',
         alt: 'PeerSphere tutoring platform',
       },
       category: 'Web Development',
@@ -101,14 +81,34 @@ export const getAllProjects = (): ProjectData[] => {
       featured: false,
     },
     {
+      id: 'mindwave',
+      name: 'MindWave',
+      description:
+        'A mobile-first web application that delivers science-backed approaches to mental wellness through engaging, bite-sized interactions with TikTok-like scrollable interface.',
+      link: '/',
+      repoLink: 'https://github.com/BinyamMamo/mindwave',
+      img: {
+        src: '/assets/images/mindwave/mindwave.gif',
+        alt: 'MindWave mental wellness app',
+      },
+      category: 'Web Development',
+      tags: [
+        { text: 'React', color: ColorTags.ROSE },
+        { text: 'Vite', color: ColorTags.VIOLET },
+        { text: 'Tailwind CSS', color: ColorTags.SKY },
+        { text: 'Mental Health', color: ColorTags.EMERALD },
+      ],
+      featured: true,
+    },
+    {
       id: 'birthday-paradox',
       name: 'Birthday Paradox Simulator',
       description:
         'An interactive web application that demonstrates the Birthday Paradox through real-time simulations and probability visualizations.',
       link: '/',
-      repoLink: 'https://github.com/yourusername/birthday-paradox',
+      repoLink: 'https://github.com/BinyamMamo/birthday_paradox',
       img: {
-        src: '/assets/images/practice.gif',
+        src: '/assets/images/birthday-paradox/birthday-paradox.gif',
         alt: 'Birthday Paradox visualization',
       },
       category: 'Data Science',
@@ -128,7 +128,7 @@ export const getAllProjects = (): ProjectData[] => {
       link: '/',
       repoLink: 'https://github.com/BinyamMamo/chess_turtle',
       img: {
-        src: '/assets/images/piano.gif',
+        src: '/assets/images/chess-turtle/chess-turtle.gif',
         alt: 'Chess Turtle game interface',
       },
       category: 'Desktop Application',
