@@ -1,0 +1,127 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --surface-muted: #f4f4f4;
+  --fg: #0a0a0a;
+  --fg-muted: #525252;
+  --fg-subtle: #737373;
+  --border: #e5e5e5;
+  --border-strong: #d4d4d4;
+  --accent: #047857;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #0a0a0a;
+  --surface: #111111;
+  --surface-muted: #171717;
+  --fg: #ededed;
+  --fg-muted: #a3a3a3;
+  --fg-subtle: #737373;
+  --border: #222222;
+  --border-strong: #333333;
+  --accent: #34d399;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
+  }
+
+  /* Both html and body carry the page color so overscroll never reveals a different shade. */
+  html {
+    background-color: var(--bg);
+    color: var(--fg);
+    scroll-padding-top: 5rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--bg);
+  }
+
+  ::selection {
+    background-color: var(--fg);
+    color: var(--bg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@utility page-container {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+
+  @media (width >= 40rem) {
+    padding-inline: 2rem;
+  }
+}
+
+/* Bulleted list with a small square marker. */
+@utility list-rule {
+  & > li {
+    position: relative;
+    padding-left: 1.125rem;
+  }
+
+  & > li::before {
+    content: '';
+    position: absolute;
+    left: 0.125rem;
+    top: 0.68em;
+    width: 0.3125rem;
+    height: 0.3125rem;
+    background-color: var(--fg-subtle);
+  }
+}
+
+@keyframes dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility animate-dropdown {
+  animation: dropdown-in 140ms ease-out;
+}
