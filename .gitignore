@@ -26,6 +26,9 @@ Thumbs.db
 .vercel
 .claude/
 
+# PDFs rendered with `pnpm cv:pdf`
+cv-out/
+
 input.txt
 export.sh
 splitter.sh

@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import { Logo } from '@/components/logo';
 import { ProjectVideo } from '@/components/project-video';
-import type { Project, ProjectMedia } from '@/content/projects';
+import type { Project, ProjectMedia } from '@/lib/schemas';
 import { cn } from '@/lib/cn';
 import { getTech } from '@/lib/tech';
 

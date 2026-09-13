@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowRight, ChevronDown, FileText, Mail } from 'lucide-react';
+import { ArrowRight, ChevronDown, FileText, Globe, Mail } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useId, useRef, useState } from 'react';
@@ -11,7 +11,7 @@ import type { NavIcon, NavLink, NavMega } from '@/lib/nav';
 
 const CLOSE_DELAY_MS = 120;
 
-const icons: Record<NavIcon, typeof Mail> = { mail: Mail, file: FileText };
+const icons: Record<NavIcon, typeof Mail> = { mail: Mail, file: FileText, globe: Globe };
 
 function MenuItem({ item, onNavigate }: { item: NavLink; onNavigate: () => void }) {
   const Icon = item.icon ? icons[item.icon] : null;
@@ -166,7 +166,7 @@ export function MegaMenu({ label, groups, featured, footer }: NavMega) {
                   className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
                 />
               </span>
-              <span className="eyebrow mt-4 block [--eyebrow-color:var(--accent)]">{featured.eyebrow}</span>
+              <span className="eyebrow mt-4 block [--eyebrow-color:var(--brand)]">{featured.eyebrow}</span>
               <span className="mt-2 block text-sm font-medium text-fg">{featured.label}</span>
               <span className="mt-1 block text-[13px] leading-snug text-fg-muted">{featured.description}</span>
             </Link>
@@ -179,7 +179,7 @@ export function MegaMenu({ label, groups, featured, footer }: NavMega) {
             <Link
               href={footer.href}
               onClick={close}
-              className="group ml-auto inline-flex items-center gap-1.5 font-medium text-fg transition-colors hover:text-accent"
+              className="group ml-auto inline-flex items-center gap-1.5 font-medium text-fg transition-colors hover:text-brand"
             >
               {footer.label}
               <ArrowRight aria-hidden className="size-4 transition-transform group-hover:translate-x-0.5" />

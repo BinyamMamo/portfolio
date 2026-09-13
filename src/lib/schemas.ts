@@ -1,0 +1,183 @@
+/**
+ * Schemas for everything stored in content/. Shared by the public site, the dashboard forms,
+ * the server actions, the CV renderer and the scripts, so they all agree on one shape.
+ */
+import { z } from 'zod';
+
+const required = (label: string) => z.string().trim().min(1, `${label} is required`);
+const slug = z
+  .string()
+  .trim()
+  .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'Use lowercase letters, numbers and single dashes');
+const dimension = z.number().int().positive();
+
+/* Media */
+
+export const mediaSchema = z.discriminatedUnion('kind', [
+  z.object({
+    kind: z.literal('video'),
+    src: required('Source'),
+    poster: required('Poster'),
+    alt: z.string().trim(),
+    width: dimension,
+    height: dimension,
+  }),
+  z.object({
+    kind: z.literal('image'),
+    src: required('Source'),
+    alt: z.string().trim(),
+    width: dimension,
+    height: dimension,
+  }),
+]);
+export type ProjectMedia = z.infer<typeof mediaSchema>;
+
+/* Profile */
+
+export const linkIcons = ['github', 'linkedin', 'whatsapp', 'website'] as const;
+export type LinkIcon = (typeof linkIcons)[number];
+
+export const linkSchema = z.object({
+  label: required('Label'),
+  handle: z.string().trim(),
+  url: required('URL'),
+  icon: z.enum(linkIcons),
+});
+export type ProfileLink = z.infer<typeof linkSchema>;
+
+export const factSchema = z.object({
+  value: required('Value'),
+  label: required('Label'),
+});
+
+export const profileSchema = z.object({
+  name: required('Name'),
+  role: required('Role'),
+  location: z.string().trim(),
+  email: z.email('Enter a valid email'),
+  phone: z.string().trim(),
+  siteUrl: z.url('Enter a full URL, including https://'),
+  avatar: z.string().trim(),
+  /** Hero paragraph. Supports [label](https://link) for inline links. */
+  intro: z.string().trim(),
+  /** Short professional summary used for SEO and as the CV summary. */
+  summary: z.string().trim(),
+  facts: z.array(factSchema).max(4),
+  links: z.array(linkSchema),
+});
+export type Profile = z.infer<typeof profileSchema>;
+
+/* Projects */
+
+export const projectSchema = z.object({
+  slug,
+  name: required('Name'),
+  tagline: required('Tagline'),
+  summary: required('Summary'),
+  category: required('Category'),
+  /** Tech ids from src/lib/tech.ts, or any custom name. */
+  stack: z.array(z.string().trim().min(1)),
+  topics: z.array(z.string().trim().min(1)).optional(),
+  highlight: z.string().trim().optional(),
+  liveUrl: z.string().trim().optional(),
+  repoUrl: z.string().trim().optional(),
+  featured: z.boolean(),
+  cover: mediaSchema.optional(),
+  gallery: z.array(mediaSchema),
+  overview: z.array(z.string().trim().min(1)),
+  features: z.array(z.string().trim().min(1)),
+  challenges: z.array(z.string().trim().min(1)),
+});
+export type Project = z.infer<typeof projectSchema>;
+
+export const projectsSchema = z.array(projectSchema).superRefine((projects, context) => {
+  const seen = new Set<string>();
+  projects.forEach((project, index) => {
+    if (seen.has(project.slug)) {
+      context.addIssue({ code: 'custom', message: `Duplicate slug "${project.slug}"`, path: [index, 'slug'] });
+    }
+    seen.add(project.slug);
+  });
+});
+
+/* Career */
+
+export const timelineEntrySchema = z.object({
+  id: slug,
+  title: required('Title'),
+  org: required('Organization'),
+  orgUrl: z.string().trim().optional(),
+  start: required('Start'),
+  end: z.string().trim().optional(),
+  points: z.array(z.string().trim().min(1)),
+  details: z
+    .object({
+      label: z.string().trim(),
+      items: z.array(z.string().trim().min(1)),
+    })
+    .optional(),
+  stack: z.array(z.string().trim().min(1)).optional(),
+});
+export type TimelineEntry = z.infer<typeof timelineEntrySchema>;
+export const timelineSchema = z.array(timelineEntrySchema);
+
+/* Skills */
+
+export const skillGroupSchema = z.object({
+  id: slug,
+  title: required('Title'),
+  items: z.array(z.string().trim().min(1)),
+});
+export type SkillGroup = z.infer<typeof skillGroupSchema>;
+export const skillGroupsSchema = z.array(skillGroupSchema);
+
+/* Navigation */
+
+export const navigationSchema = z.object({
+  projectGroups: z.array(
+    z.object({
+      title: required('Title'),
+      slugs: z.array(z.string()),
+    }),
+  ),
+  featured: z
+    .object({
+      slug: z.string(),
+      eyebrow: z.string().trim(),
+    })
+    .optional(),
+});
+export type NavigationContent = z.infer<typeof navigationSchema>;
+
+/* CV */
+
+export const cvTemplateIds = ['classic', 'modern', 'sidebar'] as const;
+export type CvTemplateId = (typeof cvTemplateIds)[number];
+
+export const cvSettingsSchema = z.object({
+  template: z.enum(cvTemplateIds),
+  /** Download name without the .pdf extension. */
+  fileName: slug,
+  /** Projects shown on the default CV, in order. */
+  projectSlugs: z.array(z.string()),
+});
+export type CvSettings = z.infer<typeof cvSettingsSchema>;
+
+/** A CV tailored for one application. Anything left out falls back to the default CV. */
+export const cvVariantSchema = z.object({
+  slug,
+  label: required('Label'),
+  company: z.string().trim().optional(),
+  role: z.string().trim().optional(),
+  template: z.enum(cvTemplateIds).optional(),
+  headline: z.string().trim().optional(),
+  summary: z.string().trim().optional(),
+  projectSlugs: z.array(z.string()).optional(),
+  experienceIds: z.array(z.string()).optional(),
+  /** Skills to list first, in this order. */
+  skills: z.array(z.string()).optional(),
+  /** Extra bullet points keyed by experience or education id. */
+  extraPoints: z.record(z.string(), z.array(z.string().trim().min(1))).optional(),
+  notes: z.string().trim().optional(),
+});
+export type CvVariant = z.infer<typeof cvVariantSchema>;

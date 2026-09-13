@@ -1,7 +1,7 @@
 import type { LogoSource } from '@/lib/tech';
 
 /** Lucide icons available to menu items, referenced by name so nav data stays serializable. */
-export type NavIcon = 'mail' | 'file';
+export type NavIcon = 'mail' | 'file' | 'globe';
 
 export interface NavLink {
   label: string;

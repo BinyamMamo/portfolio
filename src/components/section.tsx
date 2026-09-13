@@ -10,7 +10,7 @@ export function Eyebrow({ children, className }: { children: ReactNode; classNam
 export function SectionLabel({ index, label }: { index: string; label: string }) {
   return (
     <Eyebrow>
-      <span className="text-accent">{index}</span>
+      <span className="text-brand">{index}</span>
       <span aria-hidden className="mx-2 text-border-strong">
         /
       </span>

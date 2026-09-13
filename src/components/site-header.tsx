@@ -1,14 +1,23 @@
 import { HeaderClient } from '@/components/header-client';
-import { navigation } from '@/content/navigation';
-import { site } from '@/content/site';
+import { RESUME_HREF } from '@/lib/constants';
+import { buildNavigation } from '@/lib/navigation';
 import { tech } from '@/lib/tech';
+import { getNavigationContent, getProfile, getProjects, getSkillGroups } from '@/server/content';
 
-export function SiteHeader() {
+export async function SiteHeader() {
+  const [profile, projects, skills, navigation] = await Promise.all([
+    getProfile(),
+    getProjects(),
+    getSkillGroups(),
+    getNavigationContent(),
+  ]);
+  const github = profile.links.find((link) => link.icon === 'github');
+
   return (
     <HeaderClient
-      nav={navigation}
-      resumeHref={site.resume}
-      github={{ href: 'https://github.com/BinyamMamo', icon: tech.github.logo.icon }}
+      nav={buildNavigation({ profile, projects, skills, navigation })}
+      resumeHref={RESUME_HREF}
+      github={github ? { href: github.url, icon: tech.github.logo.icon } : undefined}
     />
   );
 }

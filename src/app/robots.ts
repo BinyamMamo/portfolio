@@ -1,10 +1,12 @@
 import type { MetadataRoute } from 'next';
 
-import { site } from '@/content/site';
+import { getProfile } from '@/server/content';
 
-export default function robots(): MetadataRoute.Robots {
+export default async function robots(): Promise<MetadataRoute.Robots> {
+  const { siteUrl } = await getProfile();
+
   return {
-    rules: { userAgent: '*', allow: '/' },
-    sitemap: `${site.url}/sitemap.xml`,
+    rules: { userAgent: '*', allow: '/', disallow: ['/dashboard', '/login', '/api/'] },
+    sitemap: `${siteUrl.replace(/\/$/, '')}/sitemap.xml`,
   };
 }

@@ -1,0 +1,39 @@
+[
+  {
+    "id": "alx-africa-prodev-back-end-program",
+    "title": "ProDev Back-End Program",
+    "org": "ALX Africa",
+    "orgUrl": "https://www.alxafrica.com",
+    "start": "Jan 2025",
+    "end": "Present",
+    "points": [
+      "Advanced back-end track covering Django, GraphQL APIs, containerization and CI/CD pipelines."
+    ],
+    "stack": [
+      "django",
+      "graphql",
+      "docker",
+      "kubernetes"
+    ]
+  },
+  {
+    "id": "kuraztech-backend-intern",
+    "title": "Backend Intern",
+    "org": "Kuraztech",
+    "orgUrl": "https://kuraztech.com",
+    "start": "Jul 2024",
+    "end": "Sep 2024",
+    "points": [
+      "Built features for an internship management system and a price comparison platform.",
+      "Worked in a Laravel codebase with Bootstrap and Tailwind CSS on the front end, planning work in Trello."
+    ],
+    "stack": [
+      "laravel",
+      "javascript",
+      "bootstrap",
+      "tailwindcss",
+      "github",
+      "trello"
+    ]
+  }
+]
