@@ -14,7 +14,12 @@ const RENDER_SCALE = 0.5;
 const IDLE_FRAME_MS = 1000 / 30;
 
 /** Hex color tokens from globals.css, in the order the shader expects them. */
-const PALETTE_TOKENS = ['--bg', '--glow-a', '--glow-b', '--glow-energy'] as const;
+const COLOR_TOKENS = ['--bg', '--glow-a', '--glow-b', '--glow-energy', '--aurora-a', '--aurora-b'] as const;
+/** Numeric tokens, stored after the colors. */
+const SCALAR_TOKENS = ['--aurora-intensity', '--ambient-fade'] as const;
+/** Element whose bottom edge ends the ambient layers. Without one, they end after the first screen. */
+const AMBIENT_END_SELECTOR = '[data-ambient-end]';
+const PALETTE_SIZE = COLOR_TOKENS.length * 3 + SCALAR_TOKENS.length;
 
 const vertexSource = `
 attribute vec2 aPosition;
@@ -42,6 +47,14 @@ uniform vec3 uBase;
 uniform vec3 uGlowA;
 uniform vec3 uGlowB;
 uniform vec3 uGlowEnergy;
+uniform vec3 uAuroraA;
+uniform vec3 uAuroraB;
+uniform float uAuroraIntensity;
+// Page scroll, viewport height and the page range over which ambient layers fade out, all in CSS pixels.
+uniform float uScroll;
+uniform float uViewportHeight;
+uniform float uFadeStart;
+uniform float uFadeEnd;
 // xy: position in viewport heights, zw: velocity in viewport heights per second.
 uniform vec4 uPoints[MAX_POINTS];
 uniform float uAges[MAX_POINTS];
@@ -76,6 +89,23 @@ float fbm(vec2 p) {
   return value;
 }
 
+// Northern lights: a few slow curtains with a wavy upper edge, a long soft fade below and faint vertical rays.
+vec3 aurora(vec2 p, float time) {
+  vec3 light = vec3(0.0);
+  for (int i = 0; i < 3; i++) {
+    float layer = float(i);
+    float drift = time * (0.012 + layer * 0.006);
+    float edge = 0.58 + layer * 0.1 + 0.2 * fbm(vec2(p.x * 0.55 + drift + layer * 7.3, time * 0.02 + layer * 3.1));
+    float dy = p.y - edge;
+    float curtain = dy > 0.0 ? exp(-dy * dy / 0.003) : exp(-dy * dy / (0.05 + layer * 0.03));
+    float rays = 0.6 + 0.4 * noise(vec2(p.x * (7.0 + layer * 3.0) - drift * 4.0 + layer * 11.0, p.y * 0.6 + time * 0.03));
+    float breathe = 0.65 + 0.35 * sin(time * (0.18 + layer * 0.05) + p.x * 1.3 + layer * 2.0);
+    vec3 tint = mix(uAuroraA, uAuroraB, 0.5 + 0.5 * sin(p.x * 1.1 + drift * 3.0 + layer));
+    light += tint * curtain * rays * breathe * (0.55 - layer * 0.12);
+  }
+  return light;
+}
+
 void main() {
   vec2 p = vec2(vUv.x * uRes.x / uRes.y, vUv.y);
 
@@ -88,9 +118,10 @@ void main() {
     vec2 d = p - uPoints[i].xy;
     vec2 v = uPoints[i].zw;
     float fade = 1.0 - age / LIFETIME;
-    float falloff = exp(-dot(d, d) / 0.04) * fade * fade;
+    // The divisor sets the radius of the disturbance around the pointer.
+    float falloff = exp(-dot(d, d) / 0.012) * fade * fade;
     float swirl = v.x * d.y - v.y * d.x;
-    displacement += v * falloff * 0.11 + vec2(-d.y, d.x) * swirl * falloff * 3.0;
+    displacement += v * falloff * 0.06 + vec2(-d.y, d.x) * swirl * falloff * 2.2;
     energy += length(v) * falloff;
   }
 
@@ -102,10 +133,17 @@ void main() {
   );
   float field = fbm(q * 1.1 + warp * 1.8 + vec2(-t * 0.5, t * 0.3));
 
+  // Ambient layers belong to the top of the page and fade out past the hero.
+  float pageY = uScroll + (1.0 - vUv.y) * uViewportHeight;
+  float ambient = 1.0 - smoothstep(uFadeStart, uFadeEnd, pageY);
+  // The pointer still reveals and stirs the gradient around itself further down the page.
+  float reveal = max(ambient, clamp(energy * 0.6, 0.0, 1.0));
+
   vec3 color = uBase;
-  color = mix(color, uGlowA, smoothstep(-0.05, 0.45, field) * 0.6);
-  color = mix(color, uGlowB, smoothstep(0.0, 0.5, warp.y) * 0.4);
-  color = mix(color, uGlowEnergy, clamp(energy * 0.12, 0.0, 0.6));
+  color = mix(color, uGlowA, smoothstep(-0.05, 0.45, field) * 0.6 * reveal);
+  color = mix(color, uGlowB, smoothstep(0.0, 0.5, warp.y) * 0.4 * reveal);
+  color = mix(color, uGlowEnergy, clamp(energy * 0.1, 0.0, 0.45));
+  color += aurora(q, uTime) * uAuroraIntensity * 0.35 * ambient;
 
   // Dither so the smooth gradient does not band.
   color += (fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) / 255.0;
@@ -143,20 +181,25 @@ function parseHex(value: string): number[] | null {
   return [0, 2, 4].map((offset) => parseInt(full.slice(offset, offset + 2), 16) / 255);
 }
 
-/** Reads the palette tokens as RGB triples. Tokens that are missing or not hex keep their previous value. */
+/** Reads the palette tokens: RGB triples, then scalars. Invalid or missing tokens keep their previous value. */
 function readPalette(previous: Float32Array): Float32Array {
   const styles = getComputedStyle(document.documentElement);
   const palette = new Float32Array(previous);
-  PALETTE_TOKENS.forEach((token, index) => {
+  COLOR_TOKENS.forEach((token, index) => {
     const rgb = parseHex(styles.getPropertyValue(token));
     if (rgb) palette.set(rgb, index * 3);
+  });
+  SCALAR_TOKENS.forEach((token, index) => {
+    const value = parseFloat(styles.getPropertyValue(token));
+    if (Number.isFinite(value)) palette[COLOR_TOKENS.length * 3 + index] = value;
   });
   return palette;
 }
 
 /**
  * Animated gradient behind the whole site. Pointer movement disturbs the gradient in proportion
- * to its speed instead of drawing a trail. Colors come from the --bg and --glow-* tokens in
+ * to its speed instead of drawing a trail, and a slow aurora drifts on its own. Colors come from
+ * the --bg, --glow-* and --aurora-* tokens in
  * globals.css. Without WebGL the plain page color shows instead.
  */
 export function BackgroundCanvas() {
@@ -199,7 +242,12 @@ export function BackgroundCanvas() {
     const uniforms = {
       res: uniform('uRes'),
       time: uniform('uTime'),
-      palette: [uniform('uBase'), uniform('uGlowA'), uniform('uGlowB'), uniform('uGlowEnergy')],
+      colors: ['uBase', 'uGlowA', 'uGlowB', 'uGlowEnergy', 'uAuroraA', 'uAuroraB'].map(uniform),
+      auroraIntensity: uniform('uAuroraIntensity'),
+      scroll: uniform('uScroll'),
+      viewportHeight: uniform('uViewportHeight'),
+      fadeStart: uniform('uFadeStart'),
+      fadeEnd: uniform('uFadeEnd'),
       points: uniform('uPoints'),
       ages: uniform('uAges'),
     };
@@ -210,13 +258,28 @@ export function BackgroundCanvas() {
     let nextSlot = 0;
     let lastSample: { x: number; y: number; time: number } | null = null;
 
-    let targetPalette = readPalette(new Float32Array(PALETTE_TOKENS.length * 3));
+    let targetPalette = readPalette(new Float32Array(PALETTE_SIZE));
     const palette = new Float32Array(targetPalette);
     let paletteSettled = true;
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const start = performance.now();
     let previousDraw = start;
+
+    let ambientEnd: Element | null = null;
+    let lastEndLookup = -Infinity;
+    /** Page range (CSS px) over which the ambient layers fade, centered on the bottom of the hero. */
+    const fadeRange = (now: number) => {
+      if (!ambientEnd?.isConnected && now - lastEndLookup > 1000) {
+        ambientEnd = document.querySelector(AMBIENT_END_SELECTOR);
+        lastEndLookup = now;
+      }
+      const length = targetPalette[COLOR_TOKENS.length * 3 + 1] ?? 320;
+      const end = ambientEnd?.isConnected
+        ? ambientEnd.getBoundingClientRect().bottom + window.scrollY
+        : window.innerHeight;
+      return { start: end - length, end: end + length * 0.5 };
+    };
 
     const resize = () => {
       const scale = Math.min(window.devicePixelRatio || 1, 2) * RENDER_SCALE;
@@ -249,7 +312,13 @@ export function BackgroundCanvas() {
 
       gl.uniform2f(uniforms.res, canvas.width, canvas.height);
       gl.uniform1f(uniforms.time, reduceMotion ? 0 : (now - start) / 1000);
-      uniforms.palette.forEach((location, index) => gl.uniform3fv(location, palette.subarray(index * 3, index * 3 + 3)));
+      uniforms.colors.forEach((location, index) => gl.uniform3fv(location, palette.subarray(index * 3, index * 3 + 3)));
+      gl.uniform1f(uniforms.auroraIntensity, palette[COLOR_TOKENS.length * 3] ?? 0);
+      const fade = fadeRange(now);
+      gl.uniform1f(uniforms.scroll, window.scrollY);
+      gl.uniform1f(uniforms.viewportHeight, window.innerHeight);
+      gl.uniform1f(uniforms.fadeStart, fade.start);
+      gl.uniform1f(uniforms.fadeEnd, fade.end);
       gl.uniform4fv(uniforms.points, points);
       gl.uniform1fv(uniforms.ages, ages);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
@@ -293,12 +362,18 @@ export function BackgroundCanvas() {
 
     let frame = 0;
     let lastDraw = 0;
+    let lastScroll = -Infinity;
+    const onScroll = () => {
+      lastScroll = performance.now();
+      if (reduceMotion) draw(lastScroll);
+    };
     const tick = (now: number) => {
       frame = requestAnimationFrame(tick);
       const newestSample = sampleTimes[(nextSlot + MAX_POINTS - 1) % MAX_POINTS] ?? -Infinity;
       const disturbed = now - newestSample < LIFETIME_S * 1000;
       // Full frame rate while the pointer stirs things up or the theme fades, half otherwise.
-      if (disturbed || !paletteSettled || now - lastDraw >= IDLE_FRAME_MS) {
+      const scrolling = now - lastScroll < 300;
+      if (disturbed || scrolling || !paletteSettled || now - lastDraw >= IDLE_FRAME_MS) {
         lastDraw = now;
         draw(now);
       }
@@ -313,6 +388,7 @@ export function BackgroundCanvas() {
       window.addEventListener('pointermove', onPointerMove, { passive: true });
     }
     window.addEventListener('resize', onResize);
+    window.addEventListener('scroll', onScroll, { passive: true });
     themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     canvas.addEventListener('webglcontextlost', onContextLost);
 
@@ -320,6 +396,7 @@ export function BackgroundCanvas() {
       cancelAnimationFrame(frame);
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('resize', onResize);
+      window.removeEventListener('scroll', onScroll);
       themeObserver.disconnect();
       canvas.removeEventListener('webglcontextlost', onContextLost);
       gl.getExtension('WEBGL_lose_context')?.loseContext();

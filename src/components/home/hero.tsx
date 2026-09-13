@@ -23,11 +23,11 @@ function InlineLink({ href, children }: { href: string; children: ReactNode }) {
 
 export function Hero() {
   return (
-    <section className="page-container pt-12 pb-20 sm:pt-20 sm:pb-24">
+    // data-ambient-end: the background gradient and aurora fade out around the bottom of this section.
+    <section data-ambient-end className="page-container pt-12 pb-20 sm:pt-20 sm:pb-24">
       <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_16rem] lg:grid-cols-[minmax(0,1fr)_19rem] lg:gap-20">
         <div>
           <p className="eyebrow flex flex-wrap items-center gap-x-2 gap-y-1">
-            <span aria-hidden className="size-1.5 rounded-full bg-accent" />
             {site.role}
             <span aria-hidden className="text-border-strong">
               /

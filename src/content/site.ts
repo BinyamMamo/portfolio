@@ -2,6 +2,8 @@ import { type LogoSource, tech } from '@/lib/tech';
 
 export interface SocialLink {
   label: string;
+  /** Short text shown under the label in menus. */
+  handle: string;
   href: string;
   logo: LogoSource;
 }
@@ -18,16 +20,19 @@ export const site = {
   socials: [
     {
       label: 'GitHub',
+      handle: 'github.com/BinyamMamo',
       href: 'https://github.com/BinyamMamo',
       logo: tech.github.logo,
     },
     {
       label: 'LinkedIn',
+      handle: 'linkedin.com/in/binyammamo',
       href: 'https://www.linkedin.com/in/binyammamo',
       logo: { icon: '/icons/linkedin.svg' },
     },
     {
       label: 'WhatsApp',
+      handle: 'Message me directly',
       href: 'https://wa.me/971568784063',
       logo: { icon: '/icons/whatsapp.svg' },
     },

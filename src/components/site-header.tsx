@@ -8,7 +8,7 @@ export function SiteHeader() {
     <HeaderClient
       nav={navigation}
       resumeHref={site.resume}
-      github={{ href: 'https://github.com/BinyamMamo', logo: tech.github.logo }}
+      github={{ href: 'https://github.com/BinyamMamo', icon: tech.github.logo.icon }}
     />
   );
 }

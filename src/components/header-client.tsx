@@ -1,20 +1,20 @@
 'use client';
 
-import { ArrowRight, Menu, X } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState, useSyncExternalStore } from 'react';
 
-import { Logo } from '@/components/logo';
+import { MaskIcon } from '@/components/mask-icon';
 import { MegaMenu } from '@/components/mega-menu';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { cn } from '@/lib/cn';
 import { isNavMega, type NavEntry, type NavLink } from '@/lib/nav';
-import type { LogoSource } from '@/lib/tech';
 
 interface HeaderClientProps {
   nav: NavEntry[];
   resumeHref: string;
-  github: { href: string; logo: LogoSource };
+  /** `icon` is a single-color SVG, recolored to match the other header icons. */
+  github: { href: string; icon: string };
 }
 
 function subscribeToScroll(onChange: () => void) {
@@ -23,12 +23,26 @@ function subscribeToScroll(onChange: () => void) {
 }
 
 function MobileRow({ link, onNavigate }: { link: NavLink; onNavigate: () => void }) {
+  const className = 'flex items-center justify-between py-3.5 text-fg';
+  const Arrow = link.external ? ArrowUpRight : ArrowRight;
+  const content = (
+    <>
+      {link.label}
+      <Arrow aria-hidden className="size-4 text-fg-subtle" />
+    </>
+  );
+
   return (
     <li>
-      <Link href={link.href} onClick={onNavigate} className="flex items-center justify-between py-3.5 text-fg">
-        {link.label}
-        <ArrowRight aria-hidden className="size-4 text-fg-subtle" />
-      </Link>
+      {link.external ? (
+        <a href={link.href} target="_blank" rel="noreferrer" onClick={onNavigate} className={className}>
+          {content}
+        </a>
+      ) : (
+        <Link href={link.href} onClick={onNavigate} className={className}>
+          {content}
+        </Link>
+      )}
     </li>
   );
 }
@@ -65,8 +79,11 @@ export function HeaderClient({ nav, resumeHref, github }: HeaderClientProps) {
   }, [menuOpen]);
 
   const closeMenu = () => setMenuOpen(false);
-  const megaMenus = nav.filter(isNavMega);
-  const plainLinks = nav.filter((entry): entry is NavLink => !isNavMega(entry));
+  const expandedMenus = nav.filter(isNavMega).filter((menu) => menu.expandOnMobile);
+  // Plain links and menus too large for mobile both show as single rows.
+  const mobileLinks: NavLink[] = nav
+    .filter((entry) => !isNavMega(entry) || !entry.expandOnMobile)
+    .map((entry) => ({ label: entry.label, href: entry.href }));
 
   return (
     <>
@@ -106,7 +123,7 @@ export function HeaderClient({ nav, resumeHref, github }: HeaderClientProps) {
 
           <div className="flex items-center gap-1">
             <a href={github.href} target="_blank" rel="noreferrer" aria-label="GitHub profile" className="icon-btn">
-              <Logo logo={github.logo} size={18} />
+              <MaskIcon src={github.icon} size={18} />
             </a>
             <ThemeToggle className="icon-btn" />
             <div className="ml-2 hidden md:block">
@@ -126,12 +143,12 @@ export function HeaderClient({ nav, resumeHref, github }: HeaderClientProps) {
       >
         <nav aria-label="Mobile" className="page-container flex flex-col gap-10 py-8">
           <ul className="divide-y border-y">
-            {plainLinks.map((link) => (
+            {mobileLinks.map((link) => (
               <MobileRow key={link.href} link={link} onNavigate={closeMenu} />
             ))}
           </ul>
 
-          {megaMenus.map((menu) => (
+          {expandedMenus.map((menu) => (
             <div key={menu.label} className="space-y-7">
               <p className="eyebrow">{menu.label}</p>
               {menu.groups.map((group) => (
@@ -139,7 +156,7 @@ export function HeaderClient({ nav, resumeHref, github }: HeaderClientProps) {
                   <p className="text-xs text-fg-subtle">{group.title}</p>
                   <ul className="mt-2 divide-y border-y">
                     {group.items.map((item) => (
-                      <MobileRow key={item.href} link={item} onNavigate={closeMenu} />
+                      <MobileRow key={`${item.label}-${item.href}`} link={item} onNavigate={closeMenu} />
                     ))}
                   </ul>
                 </div>
