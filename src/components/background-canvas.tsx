@@ -18,7 +18,7 @@ const IDLE_FRAME_MS = 1000 / 30;
 /** Hex color tokens from globals.css, in the order the shader expects them. */
 const COLOR_TOKENS = ['--bg', '--glow-a', '--glow-b', '--glow-energy', '--aurora-a', '--aurora-b'] as const;
 /** Numeric tokens, stored after the colors. */
-const SCALAR_TOKENS = ['--aurora-intensity', '--ambient-fade', '--pointer-strength'] as const;
+const SCALAR_TOKENS = ['--aurora-intensity', '--ambient-fade', '--pointer-strength', '--pointer-radius'] as const;
 /** Element whose bottom edge ends the ambient layers. Without one, they end after the first screen. */
 const AMBIENT_END_SELECTOR = '[data-ambient-end]';
 const PALETTE_SIZE = COLOR_TOKENS.length * 3 + SCALAR_TOKENS.length;
@@ -53,6 +53,7 @@ uniform vec3 uAuroraA;
 uniform vec3 uAuroraB;
 uniform float uAuroraIntensity;
 uniform float uPointerStrength;
+uniform float uPointerRadius;
 // Page scroll, viewport height and the page range over which ambient layers fade out, all in CSS pixels.
 uniform float uScroll;
 uniform float uViewportHeight;
@@ -125,8 +126,8 @@ void main() {
     vec2 d = p - uPoints[i].xy;
     vec2 v = uPoints[i].zw;
     float fade = 1.0 - age / LIFETIME;
-    // The divisor sets the radius of the disturbance around the pointer.
-    float falloff = exp(-dot(d, d) / 0.012) * fade * fade;
+    // uPointerRadius sets the size of the disturbance around the pointer.
+    float falloff = exp(-dot(d, d) / uPointerRadius) * fade * fade;
     float swirl = v.x * d.y - v.y * d.x;
     displacement += (v * falloff * 0.06 + vec2(-d.y, d.x) * swirl * falloff * 2.2) * uPointerStrength;
     energy += length(v) * falloff * uPointerStrength;
@@ -253,6 +254,7 @@ export function BackgroundCanvas() {
       colors: ['uBase', 'uGlowA', 'uGlowB', 'uGlowEnergy', 'uAuroraA', 'uAuroraB'].map(uniform),
       auroraIntensity: uniform('uAuroraIntensity'),
       pointerStrength: uniform('uPointerStrength'),
+      pointerRadius: uniform('uPointerRadius'),
       scroll: uniform('uScroll'),
       viewportHeight: uniform('uViewportHeight'),
       fadeStart: uniform('uFadeStart'),
@@ -326,6 +328,8 @@ export function BackgroundCanvas() {
       uniforms.colors.forEach((location, index) => gl.uniform3fv(location, palette.subarray(index * 3, index * 3 + 3)));
       gl.uniform1f(uniforms.auroraIntensity, palette[COLOR_TOKENS.length * 3] ?? 0);
       gl.uniform1f(uniforms.pointerStrength, palette[COLOR_TOKENS.length * 3 + 2] ?? 1);
+      // A zero radius would divide by zero in the shader.
+      gl.uniform1f(uniforms.pointerRadius, Math.max(palette[COLOR_TOKENS.length * 3 + 3] ?? 0.012, 0.001));
       const fade = fadeRange(now);
       gl.uniform1f(uniforms.scroll, window.scrollY);
       gl.uniform1f(uniforms.viewportHeight, window.innerHeight);
