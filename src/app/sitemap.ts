@@ -1,12 +1,14 @@
 import type { MetadataRoute } from 'next';
 
-import { projects } from '@/content/projects';
-import { site } from '@/content/site';
+import { getProfile, getProjects } from '@/server/content';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [profile, projects] = await Promise.all([getProfile(), getProjects()]);
+  const base = profile.siteUrl.replace(/\/$/, '');
+
   return [
-    { url: site.url },
-    { url: `${site.url}/projects` },
-    ...projects.map((project) => ({ url: `${site.url}/projects/${project.slug}` })),
+    { url: base },
+    { url: `${base}/projects` },
+    ...projects.map((project) => ({ url: `${base}/projects/${project.slug}` })),
   ];
 }

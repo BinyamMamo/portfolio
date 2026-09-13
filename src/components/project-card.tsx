@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { ProjectMediaView } from '@/components/project-media';
 import { TechList } from '@/components/tech-list';
-import type { Project } from '@/content/projects';
+import type { Project } from '@/lib/schemas';
 
 export function ProjectCard({ project }: { project: Project }) {
   return (

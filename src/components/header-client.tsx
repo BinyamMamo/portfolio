@@ -14,7 +14,7 @@ interface HeaderClientProps {
   nav: NavEntry[];
   resumeHref: string;
   /** `icon` is a single-color SVG, recolored to match the other header icons. */
-  github: { href: string; icon: string };
+  github?: { href: string; icon: string };
 }
 
 function subscribeToScroll(onChange: () => void) {
@@ -122,9 +122,11 @@ export function HeaderClient({ nav, resumeHref, github }: HeaderClientProps) {
           </div>
 
           <div className="flex items-center gap-1">
-            <a href={github.href} target="_blank" rel="noreferrer" aria-label="GitHub profile" className="icon-btn">
-              <MaskIcon src={github.icon} size={18} />
-            </a>
+            {github && (
+              <a href={github.href} target="_blank" rel="noreferrer" aria-label="GitHub profile" className="icon-btn">
+                <MaskIcon src={github.icon} size={18} />
+              </a>
+            )}
             <ThemeToggle className="icon-btn" />
             <div className="ml-2 hidden md:block">
               <a href={resumeHref} target="_blank" rel="noreferrer" className="btn btn-primary">

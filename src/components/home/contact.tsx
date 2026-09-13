@@ -4,9 +4,11 @@ import { ButtonLink } from '@/components/button-link';
 import { CopyEmailButton } from '@/components/copy-email-button';
 import { SectionLabel } from '@/components/section';
 import { SocialLinks } from '@/components/social-links';
-import { site } from '@/content/site';
+import { getProfile } from '@/server/content';
 
-export function Contact() {
+export async function Contact() {
+  const { email } = await getProfile();
+
   return (
     <section id="contact" aria-labelledby="contact-title" className="border-t">
       <div className="page-container py-20 sm:py-28">
@@ -20,11 +22,11 @@ export function Contact() {
             me.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <ButtonLink href={`mailto:${site.email}`} external>
+            <ButtonLink href={`mailto:${email}`} external>
               <Mail aria-hidden />
-              {site.email}
+              {email}
             </ButtonLink>
-            <CopyEmailButton email={site.email} />
+            <CopyEmailButton email={email} />
           </div>
           <SocialLinks className="mt-10 border-t pt-8" />
         </div>

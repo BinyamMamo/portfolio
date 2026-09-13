@@ -1,9 +1,10 @@
 import { Logo } from '@/components/logo';
 import { cn } from '@/lib/cn';
-import { getTech, type TechId } from '@/lib/tech';
+import { getTech } from '@/lib/tech';
 
 interface TechListProps {
-  ids: TechId[];
+  /** Tech ids from the registry, or custom names (shown without a logo). */
+  ids: string[];
   className?: string;
 }
 

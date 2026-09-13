@@ -63,6 +63,13 @@ export const tech = {
 
 export type TechId = keyof typeof tech;
 
-export function getTech(id: TechId): Tech {
-  return tech[id];
+export const techIds = Object.keys(tech) as TechId[];
+
+export function isTechId(value: string): value is TechId {
+  return Object.hasOwn(tech, value);
+}
+
+/** Looks up a registered technology. Unknown names (custom skills) come back as a name without a logo. */
+export function getTech(id: string): Tech {
+  return isTechId(id) ? tech[id] : { name: id };
 }

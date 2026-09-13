@@ -1,0 +1,32 @@
+{
+  "projectGroups": [
+    {
+      "title": "AI and computer vision",
+      "slugs": [
+        "visionaid",
+        "certiscan",
+        "labaid",
+        "manim-generator"
+      ]
+    },
+    {
+      "title": "Web platforms",
+      "slugs": [
+        "funkey",
+        "peersphere",
+        "mindwave"
+      ]
+    },
+    {
+      "title": "Simulations and games",
+      "slugs": [
+        "birthday-paradox",
+        "chess-turtle"
+      ]
+    }
+  ],
+  "featured": {
+    "slug": "funkey",
+    "eyebrow": "Top 5 at ALX"
+  }
+}

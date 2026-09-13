@@ -1,0 +1,59 @@
+[
+  {
+    "id": "languages",
+    "title": "Languages",
+    "items": [
+      "javascript",
+      "python",
+      "cpp",
+      "java",
+      "bash"
+    ]
+  },
+  {
+    "id": "backend",
+    "title": "Backend",
+    "items": [
+      "nodejs",
+      "express",
+      "nestjs",
+      "flask",
+      "django",
+      "laravel",
+      "graphql"
+    ]
+  },
+  {
+    "id": "databases",
+    "title": "Databases",
+    "items": [
+      "mongodb",
+      "mysql",
+      "postgresql",
+      "firebase"
+    ]
+  },
+  {
+    "id": "frontend",
+    "title": "Frontend",
+    "items": [
+      "react",
+      "tailwindcss",
+      "bootstrap",
+      "jquery"
+    ]
+  },
+  {
+    "id": "tools-and-infrastructure",
+    "title": "Tools and infrastructure",
+    "items": [
+      "git",
+      "github",
+      "linux",
+      "docker",
+      "kubernetes",
+      "nginx",
+      "trello"
+    ]
+  }
+]
