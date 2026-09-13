@@ -83,10 +83,7 @@ export function MegaMenu({ label, groups, featured, footer }: NavMega) {
           }
           setOpen((value) => !value);
         }}
-        className={cn(
-          'flex h-9 items-center gap-1 rounded-md px-3 text-sm transition-colors',
-          open ? 'text-fg' : 'text-fg-muted hover:text-fg',
-        )}
+        className="nav-link gap-1"
       >
         {label}
         <ChevronDown aria-hidden className={cn('size-3.5 transition-transform', open && 'rotate-180')} />
@@ -101,14 +98,14 @@ export function MegaMenu({ label, groups, featured, footer }: NavMega) {
           <div className="grid grid-cols-3 gap-8">
             {groups.map((group) => (
               <div key={group.title}>
-                <p className="font-mono text-[11px] tracking-[0.18em] text-fg-subtle uppercase">{group.title}</p>
+                <p className="eyebrow">{group.title}</p>
                 <ul className="mt-4 space-y-1">
                   {group.items.map((item) => (
                     <li key={item.href}>
                       <Link
                         href={item.href}
                         onClick={close}
-                        className="-mx-3 block rounded-lg px-3 py-2 transition-colors hover:bg-surface-muted"
+                        className="-mx-3 block rounded-control px-3 py-2 transition-colors hover:bg-surface-muted"
                       >
                         <span className="block text-sm font-medium text-fg">{item.label}</span>
                         {item.description && (
@@ -126,7 +123,7 @@ export function MegaMenu({ label, groups, featured, footer }: NavMega) {
 
           {featured && (
             <Link href={featured.href} onClick={close} className="group hidden lg:block">
-              <span className="relative block aspect-video overflow-hidden rounded-lg border bg-surface-muted">
+              <span className="relative block aspect-video overflow-hidden rounded-control border bg-surface-muted">
                 <Image
                   src={featured.image}
                   alt=""
@@ -135,7 +132,7 @@ export function MegaMenu({ label, groups, featured, footer }: NavMega) {
                   className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
                 />
               </span>
-              <span className="mt-4 block font-mono text-[11px] tracking-[0.18em] text-accent uppercase">
+              <span className="eyebrow mt-4 block [--eyebrow-color:var(--accent)]">
                 {featured.eyebrow}
               </span>
               <span className="mt-2 block text-sm font-medium text-fg">{featured.label}</span>

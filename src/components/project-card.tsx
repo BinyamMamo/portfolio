@@ -9,7 +9,7 @@ export function ProjectCard({ project }: { project: Project }) {
   return (
     <article
       data-hover-play
-      className="group relative flex h-full flex-col overflow-hidden rounded-xl border bg-surface transition-colors hover:border-border-strong"
+      className="card group relative flex h-full flex-col overflow-hidden rounded-card transition-colors hover:border-border-strong"
     >
       <ProjectMediaView
         media={project.cover}

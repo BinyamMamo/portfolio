@@ -2,7 +2,7 @@ import { Mail } from 'lucide-react';
 
 import { ButtonLink } from '@/components/button-link';
 import { CopyEmailButton } from '@/components/copy-email-button';
-import { Eyebrow } from '@/components/section';
+import { SectionLabel } from '@/components/section';
 import { SocialLinks } from '@/components/social-links';
 import { site } from '@/content/site';
 
@@ -10,15 +10,9 @@ export function Contact() {
   return (
     <section id="contact" aria-labelledby="contact-title" className="border-t">
       <div className="page-container py-20 sm:py-28">
-        <div className="rounded-2xl border bg-surface p-8 sm:p-12">
-          <Eyebrow>
-            <span className="text-accent">05</span>
-            <span aria-hidden className="mx-2 text-border-strong">
-              /
-            </span>
-            Contact
-          </Eyebrow>
-          <h2 id="contact-title" className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight text-fg sm:text-5xl">
+        <div className="card rounded-panel p-8 sm:p-12">
+          <SectionLabel index="05" label="Contact" />
+          <h2 id="contact-title" className="heading mt-4 max-w-2xl text-3xl sm:text-5xl">
             Get in touch
           </h2>
           <p className="mt-5 max-w-xl leading-relaxed text-fg-muted">

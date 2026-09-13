@@ -22,7 +22,7 @@ function FeaturedRow({ project, reversed }: { project: Project; reversed: boolea
         tabIndex={-1}
         aria-hidden
         className={cn(
-          'block overflow-hidden rounded-xl border transition-colors hover:border-border-strong lg:col-span-7',
+          'block overflow-hidden rounded-card border transition-colors hover:border-border-strong lg:col-span-7',
           reversed && 'lg:order-2',
         )}
       >
@@ -35,7 +35,7 @@ function FeaturedRow({ project, reversed }: { project: Project; reversed: boolea
       </Link>
       <div className="lg:col-span-5">
         <p className="font-mono text-xs text-fg-subtle">{project.category}</p>
-        <h3 className="mt-3 text-2xl font-semibold tracking-tight text-fg">
+        <h3 className="heading mt-3 text-2xl">
           <Link href={href} className="transition-colors hover:text-accent">
             {project.name}
           </Link>

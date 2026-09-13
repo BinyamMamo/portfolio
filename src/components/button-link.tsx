@@ -3,9 +3,10 @@ import type { ReactNode } from 'react';
 
 import { cn } from '@/lib/cn';
 
+/** Styles live in globals.css (btn, btn-primary, btn-secondary). */
 const variants = {
-  primary: 'bg-fg text-bg hover:opacity-85',
-  secondary: 'border border-border-strong text-fg hover:bg-surface-muted',
+  primary: 'btn-primary',
+  secondary: 'btn-secondary',
 } as const;
 
 interface ButtonLinkProps {
@@ -18,11 +19,7 @@ interface ButtonLinkProps {
 }
 
 export function ButtonLink({ href, children, variant = 'primary', external = false, className }: ButtonLinkProps) {
-  const classes = cn(
-    'inline-flex h-10 items-center justify-center gap-2 rounded-lg px-4 text-sm font-medium whitespace-nowrap transition-[opacity,background-color] [&_svg]:size-4',
-    variants[variant],
-    className,
-  );
+  const classes = cn('btn', variants[variant], className);
 
   if (external) {
     return (

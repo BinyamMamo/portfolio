@@ -13,6 +13,9 @@ const MAX_SPEED = 6;
 const RENDER_SCALE = 0.5;
 const IDLE_FRAME_MS = 1000 / 30;
 
+/** Hex color tokens from globals.css, in the order the shader expects them. */
+const PALETTE_TOKENS = ['--bg', '--glow-a', '--glow-b', '--glow-energy'] as const;
+
 const vertexSource = `
 attribute vec2 aPosition;
 varying vec2 vUv;
@@ -35,7 +38,10 @@ precision mediump float;
 
 uniform vec2 uRes;
 uniform float uTime;
-uniform float uDark;
+uniform vec3 uBase;
+uniform vec3 uGlowA;
+uniform vec3 uGlowB;
+uniform vec3 uGlowEnergy;
 // xy: position in viewport heights, zw: velocity in viewport heights per second.
 uniform vec4 uPoints[MAX_POINTS];
 uniform float uAges[MAX_POINTS];
@@ -96,15 +102,10 @@ void main() {
   );
   float field = fbm(q * 1.1 + warp * 1.8 + vec2(-t * 0.5, t * 0.3));
 
-  // Light tints stay close to white so the page never reads as grey.
-  vec3 base = mix(vec3(0.98), vec3(0.039), uDark);
-  vec3 colorA = mix(vec3(0.88, 0.97, 0.92), vec3(0.03, 0.26, 0.18), uDark);
-  vec3 colorB = mix(vec3(0.90, 0.96, 0.97), vec3(0.04, 0.16, 0.21), uDark);
-
-  vec3 color = base;
-  color = mix(color, colorA, smoothstep(-0.05, 0.45, field) * 0.6);
-  color = mix(color, colorB, smoothstep(0.0, 0.5, warp.y) * 0.4);
-  color = mix(color, colorA, clamp(energy * 0.12, 0.0, 0.5));
+  vec3 color = uBase;
+  color = mix(color, uGlowA, smoothstep(-0.05, 0.45, field) * 0.6);
+  color = mix(color, uGlowB, smoothstep(0.0, 0.5, warp.y) * 0.4);
+  color = mix(color, uGlowEnergy, clamp(energy * 0.12, 0.0, 0.6));
 
   // Dither so the smooth gradient does not band.
   color += (fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) / 255.0;
@@ -135,26 +136,56 @@ function createProgram(gl: WebGLRenderingContext): WebGLProgram | null {
   return gl.getProgramParameter(program, gl.LINK_STATUS) ? program : null;
 }
 
+function parseHex(value: string): number[] | null {
+  const hex = value.trim().replace(/^#/, '');
+  const full = hex.length === 3 ? [...hex].map((char) => char + char).join('') : hex;
+  if (!/^[0-9a-f]{6}$/i.test(full)) return null;
+  return [0, 2, 4].map((offset) => parseInt(full.slice(offset, offset + 2), 16) / 255);
+}
+
+/** Reads the palette tokens as RGB triples. Tokens that are missing or not hex keep their previous value. */
+function readPalette(previous: Float32Array): Float32Array {
+  const styles = getComputedStyle(document.documentElement);
+  const palette = new Float32Array(previous);
+  PALETTE_TOKENS.forEach((token, index) => {
+    const rgb = parseHex(styles.getPropertyValue(token));
+    if (rgb) palette.set(rgb, index * 3);
+  });
+  return palette;
+}
+
 /**
  * Animated gradient behind the whole site. Pointer movement disturbs the gradient in proportion
- * to its speed instead of drawing a trail. Falls back to the plain page color without WebGL.
+ * to its speed instead of drawing a trail. Colors come from the --bg and --glow-* tokens in
+ * globals.css. Without WebGL the plain page color shows instead.
  */
 export function BackgroundCanvas() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const gl = canvas?.getContext('webgl', {
+    const container = containerRef.current;
+    if (!container) return;
+
+    // A fresh canvas per mount. React can run this effect twice in development, and a context
+    // lost during cleanup can never be used again.
+    const canvas = document.createElement('canvas');
+    canvas.style.display = 'block';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    container.appendChild(canvas);
+
+    const gl = canvas.getContext('webgl', {
       alpha: false,
       antialias: false,
       depth: false,
       stencil: false,
       powerPreference: 'low-power',
     });
-    if (!canvas || !gl) return;
-
-    const program = createProgram(gl);
-    if (!program) return;
+    const program = gl && createProgram(gl);
+    if (!gl || !program) {
+      canvas.remove();
+      return;
+    }
     gl.useProgram(program);
 
     // One triangle that covers the viewport.
@@ -164,12 +195,13 @@ export function BackgroundCanvas() {
     gl.enableVertexAttribArray(position);
     gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
 
+    const uniform = (name: string) => gl.getUniformLocation(program, name);
     const uniforms = {
-      res: gl.getUniformLocation(program, 'uRes'),
-      time: gl.getUniformLocation(program, 'uTime'),
-      dark: gl.getUniformLocation(program, 'uDark'),
-      points: gl.getUniformLocation(program, 'uPoints'),
-      ages: gl.getUniformLocation(program, 'uAges'),
+      res: uniform('uRes'),
+      time: uniform('uTime'),
+      palette: [uniform('uBase'), uniform('uGlowA'), uniform('uGlowB'), uniform('uGlowEnergy')],
+      points: uniform('uPoints'),
+      ages: uniform('uAges'),
     };
 
     const points = new Float32Array(MAX_POINTS * 4);
@@ -178,10 +210,13 @@ export function BackgroundCanvas() {
     let nextSlot = 0;
     let lastSample: { x: number; y: number; time: number } | null = null;
 
-    const start = performance.now();
-    const isDarkTheme = () => document.documentElement.classList.contains('dark');
-    let dark = isDarkTheme() ? 1 : 0;
+    let targetPalette = readPalette(new Float32Array(PALETTE_TOKENS.length * 3));
+    const palette = new Float32Array(targetPalette);
+    let paletteSettled = true;
+
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const start = performance.now();
+    let previousDraw = start;
 
     const resize = () => {
       const scale = Math.min(window.devicePixelRatio || 1, 2) * RENDER_SCALE;
@@ -190,20 +225,31 @@ export function BackgroundCanvas() {
       gl.viewport(0, 0, canvas.width, canvas.height);
     };
 
-    let previousDraw = performance.now();
     const draw = (now: number) => {
-      // Ease between themes over time, so slow devices finish the fade as quickly as fast ones.
       const seconds = Math.min((now - previousDraw) / 1000, 0.25);
       previousDraw = now;
-      const target = isDarkTheme() ? 1 : 0;
-      dark = reduceMotion ? target : dark + (target - dark) * (1 - Math.exp(-seconds * 10));
-      if (Math.abs(target - dark) < 0.002) dark = target;
+
+      // Fade between theme palettes over time, so slow devices finish as quickly as fast ones.
+      if (!paletteSettled) {
+        const blend = reduceMotion ? 1 : 1 - Math.exp(-seconds * 10);
+        let remaining = 0;
+        for (let i = 0; i < palette.length; i++) {
+          const target = targetPalette[i] ?? 0;
+          const current = (palette[i] ?? 0) + (target - (palette[i] ?? 0)) * blend;
+          palette[i] = current;
+          remaining = Math.max(remaining, Math.abs(target - current));
+        }
+        if (remaining < 0.002) {
+          palette.set(targetPalette);
+          paletteSettled = true;
+        }
+      }
 
       for (let i = 0; i < MAX_POINTS; i++) ages[i] = (now - (sampleTimes[i] ?? -Infinity)) / 1000;
 
       gl.uniform2f(uniforms.res, canvas.width, canvas.height);
       gl.uniform1f(uniforms.time, reduceMotion ? 0 : (now - start) / 1000);
-      gl.uniform1f(uniforms.dark, dark);
+      uniforms.palette.forEach((location, index) => gl.uniform3fv(location, palette.subarray(index * 3, index * 3 + 3)));
       gl.uniform4fv(uniforms.points, points);
       gl.uniform1fv(uniforms.ages, ages);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
@@ -234,23 +280,16 @@ export function BackgroundCanvas() {
       nextSlot = (nextSlot + 1) % MAX_POINTS;
     };
 
-    resize();
-    draw(performance.now());
+    const onResize = () => {
+      resize();
+      if (reduceMotion) draw(performance.now());
+    };
 
-    if (reduceMotion) {
-      // Static gradient: redraw only when the size or theme changes.
-      const redraw = () => {
-        resize();
-        draw(performance.now());
-      };
-      const themeObserver = new MutationObserver(redraw);
-      themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-      window.addEventListener('resize', redraw);
-      return () => {
-        themeObserver.disconnect();
-        window.removeEventListener('resize', redraw);
-      };
-    }
+    const themeObserver = new MutationObserver(() => {
+      targetPalette = readPalette(targetPalette);
+      paletteSettled = false;
+      if (reduceMotion) draw(performance.now());
+    });
 
     let frame = 0;
     let lastDraw = 0;
@@ -258,29 +297,35 @@ export function BackgroundCanvas() {
       frame = requestAnimationFrame(tick);
       const newestSample = sampleTimes[(nextSlot + MAX_POINTS - 1) % MAX_POINTS] ?? -Infinity;
       const disturbed = now - newestSample < LIFETIME_S * 1000;
-      const changingTheme = dark !== (isDarkTheme() ? 1 : 0);
       // Full frame rate while the pointer stirs things up or the theme fades, half otherwise.
-      if (disturbed || changingTheme || now - lastDraw >= IDLE_FRAME_MS) {
+      if (disturbed || !paletteSettled || now - lastDraw >= IDLE_FRAME_MS) {
         lastDraw = now;
         draw(now);
       }
     };
-    frame = requestAnimationFrame(tick);
 
     const onContextLost = () => cancelAnimationFrame(frame);
 
-    window.addEventListener('pointermove', onPointerMove, { passive: true });
-    window.addEventListener('resize', resize);
+    resize();
+    draw(start);
+    if (!reduceMotion) {
+      frame = requestAnimationFrame(tick);
+      window.addEventListener('pointermove', onPointerMove, { passive: true });
+    }
+    window.addEventListener('resize', onResize);
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     canvas.addEventListener('webglcontextlost', onContextLost);
 
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener('pointermove', onPointerMove);
-      window.removeEventListener('resize', resize);
+      window.removeEventListener('resize', onResize);
+      themeObserver.disconnect();
       canvas.removeEventListener('webglcontextlost', onContextLost);
       gl.getExtension('WEBGL_lose_context')?.loseContext();
+      canvas.remove();
     };
   }, []);
 
-  return <canvas ref={canvasRef} aria-hidden className="pointer-events-none fixed inset-0 -z-10 size-full" />;
+  return <div ref={containerRef} aria-hidden className="pointer-events-none fixed inset-0 -z-10" />;
 }

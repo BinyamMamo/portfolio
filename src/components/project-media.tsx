@@ -29,7 +29,7 @@ export function ProjectMediaView({ media, variant, sizes, project, preload, clas
         )}
       >
         {project && (
-          <div className="flex items-center gap-3 rounded-lg border bg-surface px-4 py-3">
+          <div className="card flex items-center gap-3 rounded-control px-4 py-3">
             {project.stack.map((id) => {
               const { logo, name } = getTech(id);
               return logo ? <Logo key={id} logo={logo} size={22} /> : <span key={id} className="sr-only">{name}</span>;

@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 function ContentBlock({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section>
-      <h2 className="text-xl font-semibold tracking-tight text-fg">{title}</h2>
+      <h2 className="heading text-xl">{title}</h2>
       <div className="mt-5">{children}</div>
     </section>
   );
@@ -46,7 +46,7 @@ function ContentBlock({ title, children }: { title: string; children: ReactNode 
 function MetaRow({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="py-4">
-      <dt className="font-mono text-[11px] tracking-[0.18em] text-fg-subtle uppercase">{label}</dt>
+      <dt className="eyebrow">{label}</dt>
       <dd className="mt-2 text-sm text-fg">{children}</dd>
     </div>
   );
@@ -73,7 +73,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <header className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-16">
         <div className="max-w-3xl">
           <Eyebrow>{project.category}</Eyebrow>
-          <h1 className="mt-4 text-4xl font-semibold tracking-tight text-fg sm:text-5xl">{project.name}</h1>
+          <h1 className="heading mt-4 text-4xl sm:text-5xl">{project.name}</h1>
           <p className="mt-5 text-lg leading-relaxed text-fg-muted">{project.summary}</p>
         </div>
         {(project.liveUrl || project.repoUrl) && (
@@ -104,7 +104,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         variant="full"
         sizes="(min-width: 1152px) 1088px, 100vw"
         preload
-        className="mt-12 rounded-xl border"
+        className="mt-12 rounded-card border"
       />
 
       <div className="mt-16 grid gap-12 lg:grid-cols-[minmax(0,1fr)_16rem] lg:gap-20">
@@ -149,7 +149,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
       {project.gallery.length > 0 && (
         <section className="mt-24" aria-labelledby="gallery-title">
-          <h2 id="gallery-title" className="text-xl font-semibold tracking-tight text-fg">
+          <h2 id="gallery-title" className="heading text-xl">
             Gallery
           </h2>
           <div className="mt-8 grid gap-x-6 gap-y-10 md:grid-cols-2">
@@ -159,7 +159,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   media={media}
                   variant="full"
                   sizes="(min-width: 1152px) 532px, (min-width: 768px) 50vw, 100vw"
-                  className="rounded-lg border"
+                  className="rounded-control border"
                 />
                 <figcaption className="mt-3 text-sm text-fg-muted">{media.alt}</figcaption>
               </figure>
@@ -173,7 +173,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <Link href={`/projects/${nextProject.slug}`} className="group flex items-center justify-between gap-6">
             <span>
               <Eyebrow>Next project</Eyebrow>
-              <span className="mt-2 block text-2xl font-semibold tracking-tight text-fg transition-colors group-hover:text-accent">
+              <span className="heading mt-2 block text-2xl transition-colors group-hover:text-accent">
                 {nextProject.name}
               </span>
             </span>

@@ -70,7 +70,7 @@ export function ProjectsBrowser({ items, categories }: { items: BrowserItem[]; c
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search name or technology"
-            className="h-10 w-full rounded-lg border bg-surface pr-3 pl-9 text-sm text-fg outline-none placeholder:text-fg-subtle focus:border-border-strong"
+            className="h-10 w-full rounded-control border bg-surface pr-3 pl-9 text-sm text-fg outline-none placeholder:text-fg-subtle focus:border-border-strong"
           />
         </label>
       </div>
@@ -90,7 +90,7 @@ export function ProjectsBrowser({ items, categories }: { items: BrowserItem[]; c
               setQuery('');
               setCategory(ALL);
             }}
-            className="mt-4 text-sm text-fg underline decoration-border-strong underline-offset-4 hover:decoration-fg"
+            className="link-underline mt-4 text-sm"
           >
             Clear filters
           </button>

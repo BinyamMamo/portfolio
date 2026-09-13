@@ -15,12 +15,7 @@ const facts = [
 
 function InlineLink({ href, children }: { href: string; children: ReactNode }) {
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      className="text-fg underline decoration-border-strong underline-offset-4 transition-colors hover:decoration-accent"
-    >
+    <a href={href} target="_blank" rel="noreferrer" className="link-underline">
       {children}
     </a>
   );
@@ -31,7 +26,7 @@ export function Hero() {
     <section className="page-container pt-12 pb-20 sm:pt-20 sm:pb-24">
       <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_16rem] lg:grid-cols-[minmax(0,1fr)_19rem] lg:gap-20">
         <div>
-          <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs tracking-[0.18em] text-fg-subtle uppercase">
+          <p className="eyebrow flex flex-wrap items-center gap-x-2 gap-y-1">
             <span aria-hidden className="size-1.5 rounded-full bg-accent" />
             {site.role}
             <span aria-hidden className="text-border-strong">
@@ -39,7 +34,7 @@ export function Hero() {
             </span>
             {site.location}
           </p>
-          <h1 className="mt-6 text-5xl font-semibold tracking-tight text-fg sm:text-7xl">{site.name}</h1>
+          <h1 className="heading mt-6 text-5xl sm:text-7xl">{site.name}</h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-fg-muted">
             I build backend systems, APIs and the web apps on top of them, and I care about putting AI to practical use.
             Certified by <InlineLink href="https://www.alxafrica.com">ALX</InlineLink> and studying Computer
@@ -59,14 +54,14 @@ export function Hero() {
         </div>
 
         <div className="order-first w-32 sm:w-40 md:order-none md:w-full">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border bg-surface">
+          <div className="card relative aspect-[4/5] overflow-hidden rounded-panel">
             <Image
               src="/media/portrait.webp"
               alt={`Portrait of ${site.name}`}
               fill
               preload
               sizes="(min-width: 1024px) 304px, (min-width: 768px) 256px, 160px"
-              className="object-cover transition duration-500 dark:grayscale dark:hover:grayscale-0"
+              className="object-cover"
             />
           </div>
         </div>
@@ -76,7 +71,7 @@ export function Hero() {
         {facts.map((fact) => (
           <div key={fact.label} className="flex flex-col-reverse py-5 sm:px-6 sm:first:pl-0">
             <dt className="mt-1 text-sm text-fg-muted">{fact.label}</dt>
-            <dd className="text-2xl font-semibold tracking-tight text-fg">{fact.value}</dd>
+            <dd className="heading text-2xl">{fact.value}</dd>
           </div>
         ))}
       </dl>

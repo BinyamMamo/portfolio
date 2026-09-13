@@ -25,7 +25,7 @@ export default function ProjectsPage() {
     <div className="page-container pt-14 pb-24 sm:pt-20">
       <header className="max-w-2xl">
         <Eyebrow>Projects</Eyebrow>
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-fg sm:text-5xl">Things I have built</h1>
+        <h1 className="heading mt-4 text-4xl sm:text-5xl">Things I have built</h1>
         <p className="mt-5 text-lg leading-relaxed text-fg-muted">
           Web platforms, AI tools and a few experiments, from university competitions to side projects.
         </p>

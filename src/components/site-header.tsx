@@ -6,7 +6,6 @@ import { tech } from '@/lib/tech';
 export function SiteHeader() {
   return (
     <HeaderClient
-      name={site.name}
       nav={navigation}
       resumeHref={site.resume}
       github={{ href: 'https://github.com/BinyamMamo', logo: tech.github.logo }}

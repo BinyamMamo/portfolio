@@ -12,14 +12,10 @@ import { isNavMega, type NavEntry, type NavLink } from '@/lib/nav';
 import type { LogoSource } from '@/lib/tech';
 
 interface HeaderClientProps {
-  name: string;
   nav: NavEntry[];
   resumeHref: string;
   github: { href: string; logo: LogoSource };
 }
-
-const iconButton =
-  'flex size-9 items-center justify-center rounded-md text-fg-muted transition-colors hover:bg-surface-muted hover:text-fg';
 
 function subscribeToScroll(onChange: () => void) {
   window.addEventListener('scroll', onChange, { passive: true });
@@ -37,7 +33,7 @@ function MobileRow({ link, onNavigate }: { link: NavLink; onNavigate: () => void
   );
 }
 
-export function HeaderClient({ name, nav, resumeHref, github }: HeaderClientProps) {
+export function HeaderClient({ nav, resumeHref, github }: HeaderClientProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const scrolled = useSyncExternalStore(
     subscribeToScroll,
@@ -69,10 +65,6 @@ export function HeaderClient({ name, nav, resumeHref, github }: HeaderClientProp
   }, [menuOpen]);
 
   const closeMenu = () => setMenuOpen(false);
-  const initials = name
-    .split(' ')
-    .map((part) => part[0])
-    .join('');
   const megaMenus = nav.filter(isNavMega);
   const plainLinks = nav.filter((entry): entry is NavLink => !isNavMega(entry));
 
@@ -85,27 +77,26 @@ export function HeaderClient({ name, nav, resumeHref, github }: HeaderClientProp
           'has-[[data-open=true]]:border-border has-[[data-open=true]]:bg-bg',
         )}
       >
-        <div className="page-container flex h-16 items-center justify-between gap-6">
-          <div className="flex items-center gap-6">
-            <Link
-              href="/"
-              onClick={closeMenu}
-              aria-label={`${name}, home`}
-              className="flex size-9 items-center justify-center rounded-lg border bg-surface font-mono text-xs font-semibold text-fg transition-colors hover:border-border-strong"
+        <div className="page-container flex h-header items-center justify-between gap-6">
+          <div className="flex items-center">
+            <button
+              type="button"
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              onClick={() => setMenuOpen((value) => !value)}
+              className="icon-btn -ml-2 md:hidden"
             >
-              {initials}
-            </Link>
+              {menuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+            </button>
 
-            <nav aria-label="Main" className="hidden items-center md:flex">
+            {/* Negative margin lines the first label up with the page content. */}
+            <nav aria-label="Main" className="-ml-3 hidden items-center md:flex">
               {nav.map((entry) =>
                 isNavMega(entry) ? (
                   <MegaMenu key={entry.label} {...entry} />
                 ) : (
-                  <Link
-                    key={entry.href}
-                    href={entry.href}
-                    className="flex h-9 items-center rounded-md px-3 text-sm text-fg-muted transition-colors hover:text-fg"
-                  >
+                  <Link key={entry.href} href={entry.href} className="nav-link">
                     {entry.label}
                   </Link>
                 ),
@@ -114,28 +105,15 @@ export function HeaderClient({ name, nav, resumeHref, github }: HeaderClientProp
           </div>
 
           <div className="flex items-center gap-1">
-            <a href={github.href} target="_blank" rel="noreferrer" aria-label="GitHub profile" className={iconButton}>
+            <a href={github.href} target="_blank" rel="noreferrer" aria-label="GitHub profile" className="icon-btn">
               <Logo logo={github.logo} size={18} />
             </a>
-            <ThemeToggle className={iconButton} />
-            <a
-              href={resumeHref}
-              target="_blank"
-              rel="noreferrer"
-              className="ml-2 hidden h-9 items-center rounded-lg bg-fg px-3.5 text-sm font-medium text-bg transition-opacity hover:opacity-85 md:inline-flex"
-            >
-              Resume
-            </a>
-            <button
-              type="button"
-              aria-expanded={menuOpen}
-              aria-controls="mobile-menu"
-              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-              onClick={() => setMenuOpen((value) => !value)}
-              className={cn(iconButton, 'md:hidden')}
-            >
-              {menuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
-            </button>
+            <ThemeToggle className="icon-btn" />
+            <div className="ml-2 hidden md:block">
+              <a href={resumeHref} target="_blank" rel="noreferrer" className="btn btn-primary">
+                Resume
+              </a>
+            </div>
           </div>
         </div>
       </header>
@@ -144,7 +122,7 @@ export function HeaderClient({ name, nav, resumeHref, github }: HeaderClientProp
       <div
         id="mobile-menu"
         hidden={!menuOpen}
-        className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto bg-bg md:hidden"
+        className="fixed inset-x-0 top-header bottom-0 z-40 overflow-y-auto bg-bg md:hidden"
       >
         <nav aria-label="Mobile" className="page-container flex flex-col gap-10 py-8">
           <ul className="divide-y border-y">
@@ -155,7 +133,7 @@ export function HeaderClient({ name, nav, resumeHref, github }: HeaderClientProp
 
           {megaMenus.map((menu) => (
             <div key={menu.label} className="space-y-7">
-              <p className="font-mono text-[11px] tracking-[0.18em] text-fg-subtle uppercase">{menu.label}</p>
+              <p className="eyebrow">{menu.label}</p>
               {menu.groups.map((group) => (
                 <div key={group.title}>
                   <p className="text-xs text-fg-subtle">{group.title}</p>
@@ -172,12 +150,7 @@ export function HeaderClient({ name, nav, resumeHref, github }: HeaderClientProp
             </div>
           ))}
 
-          <a
-            href={resumeHref}
-            target="_blank"
-            rel="noreferrer"
-            className="flex h-11 items-center justify-center rounded-lg bg-fg text-sm font-medium text-bg"
-          >
+          <a href={resumeHref} target="_blank" rel="noreferrer" className="btn btn-primary">
             Resume
           </a>
         </nav>

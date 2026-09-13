@@ -26,9 +26,9 @@ export function CopyEmailButton({ email }: { email: string }) {
     <button
       type="button"
       onClick={copy}
-      className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border-strong px-4 text-sm font-medium text-fg transition-colors hover:bg-surface-muted"
+      className="btn btn-secondary"
     >
-      {copied ? <Check aria-hidden className="size-4 text-accent" /> : <Copy aria-hidden className="size-4" />}
+      {copied ? <Check aria-hidden className="text-accent" /> : <Copy aria-hidden />}
       <span aria-live="polite">{copied ? 'Copied' : 'Copy email'}</span>
     </button>
   );

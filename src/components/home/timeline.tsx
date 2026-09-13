@@ -29,7 +29,7 @@ export function Timeline({ entries }: { entries: TimelineEntry[] }) {
                   href={entry.orgUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="underline decoration-border-strong underline-offset-4 transition-colors hover:text-fg hover:decoration-fg"
+                  className="link-underline"
                 >
                   {entry.org}
                 </a>

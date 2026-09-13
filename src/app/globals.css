@@ -2,6 +2,10 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/*
+ * Design tokens. Change the look of the whole site from here.
+ * Keep colors as hex: the background canvas reads --bg and --glow-* directly.
+ */
 :root {
   --bg: #fafafa;
   --surface: #ffffff;
@@ -12,6 +16,16 @@
   --border: #e5e5e5;
   --border-strong: #d4d4d4;
   --accent: #047857;
+
+  /* Animated background (src/components/background-canvas.tsx) */
+  --glow-a: #e0f7eb;
+  --glow-b: #e6f5f7;
+  /* Color the gradient shifts toward where the pointer disturbs it. */
+  --glow-energy: #b4e6cf;
+
+  --page-gutter: 1.25rem;
+  --page-gutter-wide: 2rem;
+
   color-scheme: light;
 }
 
@@ -25,9 +39,15 @@
   --border: #222222;
   --border-strong: #333333;
   --accent: #34d399;
+
+  --glow-a: #08422e;
+  --glow-b: #0a2936;
+  --glow-energy: #10704b;
+
   color-scheme: dark;
 }
 
+/* Tokens exposed as Tailwind utilities, for example bg-surface, text-fg-muted, border-border-strong. */
 @theme inline {
   --color-bg: var(--bg);
   --color-surface: var(--surface);
@@ -41,6 +61,15 @@
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+/* rounded-control, rounded-card, rounded-panel, h-header, top-header, max-w-page */
+@theme {
+  --radius-control: 0.5rem;
+  --radius-card: 0.75rem;
+  --radius-panel: 1rem;
+  --spacing-header: 4rem;
+  --container-page: 72rem;
 }
 
 @layer base {
@@ -57,7 +86,7 @@
   html {
     background-color: var(--bg);
     color: var(--fg);
-    scroll-padding-top: 5rem;
+    scroll-padding-top: calc(var(--spacing-header) + 1rem);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -84,14 +113,46 @@
   }
 }
 
+/* Layout */
+
 @utility page-container {
   width: 100%;
-  max-width: 72rem;
+  max-width: var(--container-page);
   margin-inline: auto;
-  padding-inline: 1.25rem;
+  padding-inline: var(--page-gutter);
 
   @media (width >= 40rem) {
-    padding-inline: 2rem;
+    padding-inline: var(--page-gutter-wide);
+  }
+}
+
+/* Typography */
+
+@utility heading {
+  color: var(--fg);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+/* Small uppercase label. Override the color with [--eyebrow-color:var(--accent)]. */
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--eyebrow-color, var(--fg-subtle));
+}
+
+@utility link-underline {
+  color: var(--fg);
+  text-decoration-line: underline;
+  text-decoration-color: var(--border-strong);
+  text-underline-offset: 4px;
+  transition: text-decoration-color 150ms;
+
+  &:hover {
+    text-decoration-color: var(--accent);
   }
 }
 
@@ -112,6 +173,91 @@
     background-color: var(--fg-subtle);
   }
 }
+
+/* Controls */
+
+@utility btn {
+  display: inline-flex;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-control);
+  padding-inline: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition:
+    opacity 150ms,
+    background-color 150ms;
+
+  & svg {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+  }
+}
+
+@utility btn-primary {
+  background-color: var(--fg);
+  color: var(--bg);
+
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+@utility btn-secondary {
+  border: 1px solid var(--border-strong);
+  color: var(--fg);
+
+  &:hover {
+    background-color: var(--surface-muted);
+  }
+}
+
+@utility icon-btn {
+  display: flex;
+  width: 2.25rem;
+  height: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem;
+  color: var(--fg-muted);
+  transition:
+    color 150ms,
+    background-color 150ms;
+
+  &:hover {
+    background-color: var(--surface-muted);
+    color: var(--fg);
+  }
+}
+
+@utility nav-link {
+  display: flex;
+  height: 2.25rem;
+  align-items: center;
+  border-radius: 0.375rem;
+  padding-inline: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--fg-muted);
+  transition: color 150ms;
+
+  &:hover,
+  &[aria-expanded='true'] {
+    color: var(--fg);
+  }
+}
+
+/* Surfaces. Pair with a rounded-* utility. */
+@utility card {
+  border-width: 1px;
+  border-style: solid;
+  background-color: var(--surface);
+}
+
+/* Motion */
 
 @keyframes dropdown-in {
   from {
