@@ -21,13 +21,15 @@
   --glow-a: #e0f7eb;
   --glow-b: #e6f5f7;
   /* Color the gradient shifts toward where the pointer disturbs it. */
-  --glow-energy: #b4e6cf;
+  --glow-energy: #cbeadb;
   /* Northern lights layer. Intensity 0 hides it, 1 shows it fully. */
-  --aurora-a: #34d399;
-  --aurora-b: #22d3ee;
-  --aurora-intensity: 0;
+  --aurora-a: #8fd3b5;
+  --aurora-b: #8cc9d3;
+  --aurora-intensity: 0.5;
   /* Distance over which the gradient and aurora fade out around the bottom of the hero. */
   --ambient-fade: 320px;
+  /* How strongly the pointer stirs the gradient. 0 turns it off, 1 is the strongest. */
+  --pointer-strength: 0.5;
 
   --page-gutter: 1.25rem;
   --page-gutter-wide: 2rem;
@@ -48,9 +50,9 @@
 
   --glow-a: #08422e;
   --glow-b: #0a2936;
-  --glow-energy: #10704b;
-  --aurora-a: #1fa971;
-  --aurora-b: #1b8a9c;
+  --glow-energy: #0b5038;
+  --aurora-a: #178559;
+  --aurora-b: #156b78;
   --aurora-intensity: 1;
 
   color-scheme: dark;

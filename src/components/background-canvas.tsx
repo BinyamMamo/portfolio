@@ -8,7 +8,9 @@ const MAX_POINTS = 24;
 const LIFETIME_S = 1.6;
 const SAMPLE_INTERVAL_MS = 20;
 /** Pointer speed cap in viewport heights per second, so flicks do not tear the gradient apart. */
-const MAX_SPEED = 6;
+const MAX_SPEED = 4;
+/** How quickly the tracked velocity follows the pointer (0 to 1). Lower is smoother and slower. */
+const VELOCITY_SMOOTHING = 0.25;
 /** The gradient is soft, so rendering below native resolution is invisible and much cheaper. */
 const RENDER_SCALE = 0.5;
 const IDLE_FRAME_MS = 1000 / 30;
@@ -16,7 +18,7 @@ const IDLE_FRAME_MS = 1000 / 30;
 /** Hex color tokens from globals.css, in the order the shader expects them. */
 const COLOR_TOKENS = ['--bg', '--glow-a', '--glow-b', '--glow-energy', '--aurora-a', '--aurora-b'] as const;
 /** Numeric tokens, stored after the colors. */
-const SCALAR_TOKENS = ['--aurora-intensity', '--ambient-fade'] as const;
+const SCALAR_TOKENS = ['--aurora-intensity', '--ambient-fade', '--pointer-strength'] as const;
 /** Element whose bottom edge ends the ambient layers. Without one, they end after the first screen. */
 const AMBIENT_END_SELECTOR = '[data-ambient-end]';
 const PALETTE_SIZE = COLOR_TOKENS.length * 3 + SCALAR_TOKENS.length;
@@ -50,6 +52,7 @@ uniform vec3 uGlowEnergy;
 uniform vec3 uAuroraA;
 uniform vec3 uAuroraB;
 uniform float uAuroraIntensity;
+uniform float uPointerStrength;
 // Page scroll, viewport height and the page range over which ambient layers fade out, all in CSS pixels.
 uniform float uScroll;
 uniform float uViewportHeight;
@@ -90,8 +93,11 @@ float fbm(vec2 p) {
 }
 
 // Northern lights: a few slow curtains with a wavy upper edge, a long soft fade below and faint vertical rays.
-vec3 aurora(vec2 p, float time) {
-  vec3 light = vec3(0.0);
+// Returns the blended curtain color in rgb and how much of the pixel it covers in a, so it can be
+// mixed over both dark and light backgrounds.
+vec4 aurora(vec2 p, float time) {
+  vec3 tint = vec3(0.0);
+  float coverage = 0.0;
   for (int i = 0; i < 3; i++) {
     float layer = float(i);
     float drift = time * (0.012 + layer * 0.006);
@@ -100,10 +106,11 @@ vec3 aurora(vec2 p, float time) {
     float curtain = dy > 0.0 ? exp(-dy * dy / 0.003) : exp(-dy * dy / (0.05 + layer * 0.03));
     float rays = 0.6 + 0.4 * noise(vec2(p.x * (7.0 + layer * 3.0) - drift * 4.0 + layer * 11.0, p.y * 0.6 + time * 0.03));
     float breathe = 0.65 + 0.35 * sin(time * (0.18 + layer * 0.05) + p.x * 1.3 + layer * 2.0);
-    vec3 tint = mix(uAuroraA, uAuroraB, 0.5 + 0.5 * sin(p.x * 1.1 + drift * 3.0 + layer));
-    light += tint * curtain * rays * breathe * (0.55 - layer * 0.12);
+    float amount = curtain * rays * breathe * (0.55 - layer * 0.12);
+    tint += mix(uAuroraA, uAuroraB, 0.5 + 0.5 * sin(p.x * 1.1 + drift * 3.0 + layer)) * amount;
+    coverage += amount;
   }
-  return light;
+  return vec4(tint / max(coverage, 0.0001), coverage);
 }
 
 void main() {
@@ -121,8 +128,8 @@ void main() {
     // The divisor sets the radius of the disturbance around the pointer.
     float falloff = exp(-dot(d, d) / 0.012) * fade * fade;
     float swirl = v.x * d.y - v.y * d.x;
-    displacement += v * falloff * 0.06 + vec2(-d.y, d.x) * swirl * falloff * 2.2;
-    energy += length(v) * falloff;
+    displacement += (v * falloff * 0.06 + vec2(-d.y, d.x) * swirl * falloff * 2.2) * uPointerStrength;
+    energy += length(v) * falloff * uPointerStrength;
   }
 
   vec2 q = p - displacement;
@@ -143,7 +150,8 @@ void main() {
   color = mix(color, uGlowA, smoothstep(-0.05, 0.45, field) * 0.6 * reveal);
   color = mix(color, uGlowB, smoothstep(0.0, 0.5, warp.y) * 0.4 * reveal);
   color = mix(color, uGlowEnergy, clamp(energy * 0.1, 0.0, 0.45));
-  color += aurora(q, uTime) * uAuroraIntensity * 0.35 * ambient;
+  vec4 lights = aurora(q, uTime);
+  color = mix(color, lights.rgb, clamp(lights.a * 0.35 * uAuroraIntensity * ambient, 0.0, 0.6));
 
   // Dither so the smooth gradient does not band.
   color += (fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) / 255.0;
@@ -244,6 +252,7 @@ export function BackgroundCanvas() {
       time: uniform('uTime'),
       colors: ['uBase', 'uGlowA', 'uGlowB', 'uGlowEnergy', 'uAuroraA', 'uAuroraB'].map(uniform),
       auroraIntensity: uniform('uAuroraIntensity'),
+      pointerStrength: uniform('uPointerStrength'),
       scroll: uniform('uScroll'),
       viewportHeight: uniform('uViewportHeight'),
       fadeStart: uniform('uFadeStart'),
@@ -257,6 +266,8 @@ export function BackgroundCanvas() {
     const sampleTimes = new Float64Array(MAX_POINTS).fill(-Infinity);
     let nextSlot = 0;
     let lastSample: { x: number; y: number; time: number } | null = null;
+    let smoothVx = 0;
+    let smoothVy = 0;
 
     let targetPalette = readPalette(new Float32Array(PALETTE_SIZE));
     const palette = new Float32Array(targetPalette);
@@ -314,6 +325,7 @@ export function BackgroundCanvas() {
       gl.uniform1f(uniforms.time, reduceMotion ? 0 : (now - start) / 1000);
       uniforms.colors.forEach((location, index) => gl.uniform3fv(location, palette.subarray(index * 3, index * 3 + 3)));
       gl.uniform1f(uniforms.auroraIntensity, palette[COLOR_TOKENS.length * 3] ?? 0);
+      gl.uniform1f(uniforms.pointerStrength, palette[COLOR_TOKENS.length * 3 + 2] ?? 1);
       const fade = fadeRange(now);
       gl.uniform1f(uniforms.scroll, window.scrollY);
       gl.uniform1f(uniforms.viewportHeight, window.innerHeight);
@@ -333,7 +345,11 @@ export function BackgroundCanvas() {
       if (previous && now - previous.time < SAMPLE_INTERVAL_MS) return;
       lastSample = { x, y, time: now };
       // After a pause the distance travelled says nothing about speed.
-      if (!previous || now - previous.time > 200) return;
+      if (!previous || now - previous.time > 200) {
+        smoothVx = 0;
+        smoothVy = 0;
+        return;
+      }
 
       const seconds = (now - previous.time) / 1000;
       let vx = (x - previous.x) / seconds;
@@ -344,7 +360,11 @@ export function BackgroundCanvas() {
         vy *= MAX_SPEED / speed;
       }
 
-      points.set([x, y, vx, vy], nextSlot * 4);
+      // Ease toward the new velocity so quick, jittery movement does not flicker the gradient.
+      smoothVx += (vx - smoothVx) * VELOCITY_SMOOTHING;
+      smoothVy += (vy - smoothVy) * VELOCITY_SMOOTHING;
+
+      points.set([x, y, smoothVx, smoothVy], nextSlot * 4);
       sampleTimes[nextSlot] = now;
       nextSlot = (nextSlot + 1) % MAX_POINTS;
     };
