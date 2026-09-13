@@ -271,13 +271,11 @@ export function BackgroundCanvas() {
     let smoothVx = 0;
     let smoothVy = 0;
 
-    let targetPalette = readPalette(new Float32Array(PALETTE_SIZE));
-    const palette = new Float32Array(targetPalette);
-    let paletteSettled = true;
+    // Theme changes swap the palette at once; the page-wide cross-fade in src/lib/theme.ts smooths it.
+    let palette = readPalette(new Float32Array(PALETTE_SIZE));
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const start = performance.now();
-    let previousDraw = start;
 
     let ambientEnd: Element | null = null;
     let lastEndLookup = -Infinity;
@@ -287,7 +285,7 @@ export function BackgroundCanvas() {
         ambientEnd = document.querySelector(AMBIENT_END_SELECTOR);
         lastEndLookup = now;
       }
-      const length = targetPalette[COLOR_TOKENS.length * 3 + 1] ?? 320;
+      const length = palette[COLOR_TOKENS.length * 3 + 1] ?? 320;
       const end = ambientEnd?.isConnected
         ? ambientEnd.getBoundingClientRect().bottom + window.scrollY
         : window.innerHeight;
@@ -302,25 +300,6 @@ export function BackgroundCanvas() {
     };
 
     const draw = (now: number) => {
-      const seconds = Math.min((now - previousDraw) / 1000, 0.25);
-      previousDraw = now;
-
-      // Fade between theme palettes over time, so slow devices finish as quickly as fast ones.
-      if (!paletteSettled) {
-        const blend = reduceMotion ? 1 : 1 - Math.exp(-seconds * 10);
-        let remaining = 0;
-        for (let i = 0; i < palette.length; i++) {
-          const target = targetPalette[i] ?? 0;
-          const current = (palette[i] ?? 0) + (target - (palette[i] ?? 0)) * blend;
-          palette[i] = current;
-          remaining = Math.max(remaining, Math.abs(target - current));
-        }
-        if (remaining < 0.002) {
-          palette.set(targetPalette);
-          paletteSettled = true;
-        }
-      }
-
       for (let i = 0; i < MAX_POINTS; i++) ages[i] = (now - (sampleTimes[i] ?? -Infinity)) / 1000;
 
       gl.uniform2f(uniforms.res, canvas.width, canvas.height);
@@ -379,9 +358,9 @@ export function BackgroundCanvas() {
     };
 
     const themeObserver = new MutationObserver(() => {
-      targetPalette = readPalette(targetPalette);
-      paletteSettled = false;
-      if (reduceMotion) draw(performance.now());
+      palette = readPalette(palette);
+      // Draw right away so the new theme's snapshot already has the new colors.
+      draw(performance.now());
     });
 
     let frame = 0;
@@ -395,9 +374,9 @@ export function BackgroundCanvas() {
       frame = requestAnimationFrame(tick);
       const newestSample = sampleTimes[(nextSlot + MAX_POINTS - 1) % MAX_POINTS] ?? -Infinity;
       const disturbed = now - newestSample < LIFETIME_S * 1000;
-      // Full frame rate while the pointer stirs things up or the theme fades, half otherwise.
+      // Full frame rate while the pointer stirs things up or the page scrolls, half otherwise.
       const scrolling = now - lastScroll < 300;
-      if (disturbed || scrolling || !paletteSettled || now - lastDraw >= IDLE_FRAME_MS) {
+      if (disturbed || scrolling || now - lastDraw >= IDLE_FRAME_MS) {
         lastDraw = now;
         draw(now);
       }

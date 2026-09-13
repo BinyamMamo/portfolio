@@ -33,6 +33,9 @@
   /* Size of the pointer disturbance. Larger values spread it wider. */
   --pointer-radius: 0.04;
 
+  /* Length of the cross-fade when switching between light and dark. */
+  --theme-fade: 450ms;
+
   --page-gutter: 1.25rem;
   --page-gutter-wide: 2rem;
 
@@ -128,18 +131,11 @@
   }
 }
 
-/*
- * Added for a moment while the theme switches (src/lib/theme.ts) so colors fade instead of snapping.
- * Keep the duration in sync with THEME_FADE_MS there. .theme-icon keeps its own transform transition.
- */
-html.theme-transition *:not(.theme-icon),
-html.theme-transition *:not(.theme-icon)::before,
-html.theme-transition *:not(.theme-icon)::after {
-  transition:
-    background-color 300ms ease,
-    border-color 300ms ease,
-    color 300ms ease,
-    fill 300ms ease !important;
+/* Theme switches cross-fade the whole page from a snapshot of the old theme (src/lib/theme.ts). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--theme-fade);
+  animation-timing-function: ease-in-out;
 }
 
 /* Layout */

@@ -5,7 +5,7 @@ import { Moon, Sun } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import { applyTheme } from '@/lib/theme';
 
-const icon = 'theme-icon absolute size-[18px] transition-[rotate,scale,opacity] duration-300 ease-out';
+const icon = 'absolute size-[18px] transition-[rotate,scale,opacity] duration-300 ease-out';
 
 export function ThemeToggle({ className }: { className?: string }) {
   return (
