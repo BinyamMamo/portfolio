@@ -50,7 +50,10 @@
     border-color: var(--border);
   }
 
-  /* Both html and body carry the page color so overscroll never reveals a different shade. */
+  /*
+   * The page color lives on html only, so overscroll shows the same shade. body stays transparent
+   * so the fixed background canvas (z-index below 0) is visible through it.
+   */
   html {
     background-color: var(--bg);
     color: var(--fg);
@@ -61,7 +64,6 @@
 
   body {
     min-height: 100dvh;
-    background-color: var(--bg);
   }
 
   ::selection {

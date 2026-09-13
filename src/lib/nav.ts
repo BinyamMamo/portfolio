@@ -4,14 +4,29 @@ export interface NavLink {
   description?: string;
 }
 
-export interface NavGroup {
-  label: string;
+export interface NavLinkGroup {
+  title: string;
   items: NavLink[];
-  footer?: NavLink;
 }
 
-export type NavEntry = NavLink | NavGroup;
+export interface NavFeature {
+  eyebrow: string;
+  label: string;
+  href: string;
+  description: string;
+  image: string;
+}
 
-export function isNavGroup(entry: NavEntry): entry is NavGroup {
-  return 'items' in entry;
+/** A top bar entry that opens a full-width panel of grouped links. */
+export interface NavMega {
+  label: string;
+  groups: NavLinkGroup[];
+  featured?: NavFeature;
+  footer: NavLink;
+}
+
+export type NavEntry = NavLink | NavMega;
+
+export function isNavMega(entry: NavEntry): entry is NavMega {
+  return 'groups' in entry;
 }
