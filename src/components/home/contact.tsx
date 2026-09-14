@@ -13,7 +13,7 @@ export async function Contact() {
     <section id="contact" aria-labelledby="contact-title" className="border-t">
       <div className="page-container py-20 sm:py-28">
         <div className="rounded-panel border p-8 sm:p-12">
-          <SectionLabel index="05" label="Contact" />
+          <SectionLabel index="07" label="Contact" />
           <h2 id="contact-title" className="heading mt-4 max-w-2xl text-3xl sm:text-5xl">
             Get in touch
           </h2>

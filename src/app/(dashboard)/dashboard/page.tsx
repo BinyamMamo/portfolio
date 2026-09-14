@@ -6,6 +6,7 @@ import { PublishCard } from '@/components/dashboard/publish-card';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { requireDashboard } from '@/server/auth';
 import {
+  getAreas,
   getCvVariants,
   getEducation,
   getExperience,
@@ -17,7 +18,7 @@ import { contentChanges, currentBranch } from '@/server/publish';
 
 export default async function DashboardPage() {
   await requireDashboard();
-  const [profile, projects, experience, education, skills, variants, changes, branch] = await Promise.all([
+  const [profile, projects, experience, education, skills, variants, changes, branch, areas] = await Promise.all([
     getProfile(),
     getProjects(),
     getExperience(),
@@ -26,11 +27,13 @@ export default async function DashboardPage() {
     getCvVariants(),
     contentChanges().catch(() => []),
     currentBranch().catch(() => 'unknown'),
+    getAreas(),
   ]);
 
   const summaries: Record<string, string> = {
     '/dashboard/profile': `${profile.links.length} links, ${profile.facts.length} highlights`,
-    '/dashboard/projects': `${projects.length} projects, ${projects.filter((project) => project.featured).length} featured`,
+    '/dashboard/projects': `${projects.length} projects, ${projects.filter((project) => project.kind === 'client').length} for clients`,
+    '/dashboard/areas': `${areas.length} areas`,
     '/dashboard/experience': `${experience.length} entries`,
     '/dashboard/education': `${education.length} entries`,
     '/dashboard/skills': `${skills.reduce((total, group) => total + group.items.length, 0)} skills in ${skills.length} groups`,

@@ -14,7 +14,8 @@
     "content:check": "tsx scripts/content-check.mts",
     "cv:pdf": "tsx scripts/cv-pdf.mts",
     "media:add": "tsx scripts/media-add.mts",
-    "auth:hash": "tsx scripts/auth-hash.mts"
+    "auth:hash": "tsx scripts/auth-hash.mts",
+    "media:cinematic": "tsx scripts/cinematic.mts"
   },
   "engines": {
     "node": ">=20.9"
@@ -26,6 +27,8 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
+    "cn": "^0.3.0",
+    "embla-carousel-react": "^8.6.0",
     "jose": "^6.2.12",
     "lucide-react": "1.45.0",
     "next": "16.3.5",
@@ -48,6 +51,7 @@
     "@types/react-dom": "^19.3.0",
     "eslint": "^9.39.5",
     "eslint-config-next": "16.3.5",
+    "playwright": "1.63.0",
     "prettier": "^3.9.6",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "4.3.3",

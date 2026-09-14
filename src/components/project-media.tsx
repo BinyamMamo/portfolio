@@ -8,8 +8,11 @@ import { getTech } from '@/lib/tech';
 
 interface ProjectMediaViewProps {
   media: ProjectMedia | undefined;
-  /** `card` crops into a fixed 16:9 frame and plays on hover. `full` keeps the natural ratio and plays in view. */
-  variant: 'card' | 'full';
+  /**
+   * `card` crops into a fixed 16:9 frame and plays on hover. `full` keeps the natural ratio and plays in view.
+   * `slide` fits into a fixed 16:10 frame, so carousel slides of different sizes keep one height.
+   */
+  variant: 'card' | 'full' | 'slide';
   sizes: string;
   /** Shown when there is no media. */
   project?: Pick<Project, 'name' | 'stack'>;
@@ -40,6 +43,7 @@ export function ProjectMediaView({ media, variant, sizes, project, preload, clas
     );
   }
 
+  const isSlide = variant === 'slide';
   const ratio = media.width / media.height;
   const isPortrait = ratio < 1;
   const fit = isCard && !isPortrait ? 'object-cover object-top' : 'object-contain';
@@ -47,9 +51,14 @@ export function ProjectMediaView({ media, variant, sizes, project, preload, clas
 
   return (
     <div
-      className={cn('relative mx-auto w-full overflow-hidden bg-surface-muted', isCard && 'aspect-video', className)}
+      className={cn(
+        'relative mx-auto w-full overflow-hidden bg-surface-muted',
+        isCard && 'aspect-video',
+        isSlide && 'aspect-[16/10]',
+        className,
+      )}
       style={
-        isCard
+        isCard || isSlide
           ? undefined
           : {
               aspectRatio: `${media.width} / ${media.height}`,

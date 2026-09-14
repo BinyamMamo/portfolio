@@ -5,6 +5,7 @@ import {
   GraduationCap,
   LayoutDashboard,
   Layers,
+  Shapes,
   UserRound,
 } from 'lucide-react';
 
@@ -12,6 +13,7 @@ export const dashboardNav = [
   { title: 'Overview', href: '/dashboard', icon: LayoutDashboard },
   { title: 'Profile', href: '/dashboard/profile', icon: UserRound },
   { title: 'Projects', href: '/dashboard/projects', icon: FolderKanban },
+  { title: 'Areas', href: '/dashboard/areas', icon: Shapes },
   { title: 'Experience', href: '/dashboard/experience', icon: BriefcaseBusiness },
   { title: 'Education', href: '/dashboard/education', icon: GraduationCap },
   { title: 'Skills', href: '/dashboard/skills', icon: Layers },

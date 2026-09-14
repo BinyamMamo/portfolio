@@ -31,10 +31,11 @@ export function buildNavigation({ profile, projects, skills, navigation }: Navig
     }))
     .filter((group) => group.items.length > 0);
 
-  // Projects added in the dashboard but not yet placed in a group still show up.
-  const grouped = new Set(navigation.projectGroups.flatMap((group) => group.slugs));
-  const ungrouped = projects.filter((project) => !grouped.has(project.slug));
-  if (ungrouped.length > 0) projectGroups.push({ title: 'More projects', items: ungrouped.map(projectLink) });
+  // Client work always leads; everything else is reachable from "All projects".
+  const clientProjects = projects.filter((project) => project.kind === 'client');
+  if (clientProjects.length > 0) {
+    projectGroups.unshift({ title: 'Client work', items: clientProjects.slice(0, 5).map(projectLink) });
+  }
 
   const featured = navigation.featured ? bySlug.get(navigation.featured.slug) : undefined;
   const featuredCover = featured?.cover;
@@ -68,7 +69,7 @@ export function buildNavigation({ profile, projects, skills, navigation }: Navig
       footer: {
         label: 'All projects',
         href: '/projects',
-        description: `${projects.length} projects across web, AI and desktop`,
+        description: `${projects.length} projects, ${clientProjects.length} of them for clients`,
       },
     },
     {

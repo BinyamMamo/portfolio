@@ -56,6 +56,7 @@ export const tech = {
 
   gemini: { name: 'Gemini', logo: logo('gemini') },
   manim: { name: 'Manim' },
+  colab: { name: 'Google Colab', logo: logo('colab') },
   mcp: { name: 'MCP', logo: logo('mcp', 'mcp-dark') },
   tkinter: { name: 'Tkinter' },
   turtle: { name: 'Turtle Graphics' },

@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ExternalLink, Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
-import { Controller, useForm, useWatch } from 'react-hook-form';
+import { Controller, type Resolver, useForm, useWatch } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import { FormField } from '@/components/dashboard/form-field';
@@ -29,9 +29,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
-import { type Project, projectSchema } from '@/lib/schemas';
+import { type Area, type Project, projectSchema, projectStatuses } from '@/lib/schemas';
 import { slugify } from '@/lib/slug';
 import { deleteProject, saveProject } from '@/server/actions/content';
 
@@ -47,27 +48,56 @@ const emptyProject: Project = {
   liveUrl: '',
   repoUrl: '',
   featured: false,
+  kind: 'personal',
+  areas: [],
+  year: '',
+  notebookUrl: '',
   gallery: [],
   overview: [],
   features: [],
   challenges: [],
 };
 
+const statusLabels: Record<(typeof projectStatuses)[number], string> = {
+  live: 'Live',
+  local: 'Runs locally',
+  archived: 'Archived',
+};
+const NO_STATUS = 'none';
+
+/** Drops the optional groups of fields that were left empty, so they are not validated as half-filled. */
+function normalize(values: Project): Project {
+  const hasDemo = Boolean(values.demo?.url?.trim() || values.demo?.label?.trim());
+  return {
+    ...values,
+    client: values.kind === 'client' ? (values.client ?? { name: '' }) : undefined,
+    demo: hasDemo ? values.demo : undefined,
+    status: values.status || undefined,
+  };
+}
+
+const resolver: Resolver<Project> = (values, context, options) =>
+  zodResolver(projectSchema)(normalize(values), context, options);
+
 interface ProjectEditorProps {
   /** Undefined when creating a new project. */
   project?: Project;
   categories: string[];
   topics: string[];
+  areas: Area[];
 }
 
-export function ProjectEditor({ project, categories, topics }: ProjectEditorProps) {
+export function ProjectEditor({ project, categories, topics, areas }: ProjectEditorProps) {
   const router = useRouter();
   const originalSlug = project?.slug;
   // Optional fields missing from the stored JSON start as empty values, so the form is not dirty on load.
-  const form = useForm<Project>({ resolver: zodResolver(projectSchema), defaultValues: { ...emptyProject, ...project } });
+  const form = useForm<Project>({ resolver, defaultValues: { ...emptyProject, ...project } });
   const [deleting, startDelete] = useTransition();
   const { errors, isDirty } = form.formState;
-  const [savedSlug, cover, gallery] = useWatch({ control: form.control, name: ['slug', 'cover', 'gallery'] });
+  const [savedSlug, cover, gallery, kind] = useWatch({
+    control: form.control,
+    name: ['slug', 'cover', 'gallery', 'kind'],
+  });
 
   const { save, saving } = useSaveAction(
     (data: Project) => saveProject(data, originalSlug),
@@ -199,14 +229,117 @@ export function ProjectEditor({ project, categories, topics }: ProjectEditorProp
 
       <Card>
         <CardHeader>
+          <CardTitle>Placement</CardTitle>
+          <CardDescription>Client work gets its own home page section. Areas group projects by theme.</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-5 sm:grid-cols-2">
+          <FormField label="Kind" htmlFor="kind">
+            <Controller
+              control={form.control}
+              name="kind"
+              render={({ field }) => (
+                <Select value={field.value ?? 'personal'} onValueChange={field.onChange}>
+                  <SelectTrigger id="kind" className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="personal">Personal project</SelectItem>
+                    <SelectItem value="client">Client or team work</SelectItem>
+                  </SelectContent>
+                </Select>
+              )}
+            />
+          </FormField>
+          <div className="grid grid-cols-2 gap-5">
+            <FormField label="Year" htmlFor="year">
+              <Input id="year" placeholder="2026" {...form.register('year')} />
+            </FormField>
+            <FormField label="Status" htmlFor="status">
+              <Controller
+                control={form.control}
+                name="status"
+                render={({ field }) => (
+                  <Select
+                    value={field.value ?? NO_STATUS}
+                    onValueChange={(value) => field.onChange(value === NO_STATUS ? undefined : value)}
+                  >
+                    <SelectTrigger id="status" className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value={NO_STATUS}>Not set</SelectItem>
+                      {projectStatuses.map((status) => (
+                        <SelectItem key={status} value={status}>
+                          {statusLabels[status]}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
+            </FormField>
+          </div>
+          {kind === 'client' && (
+            <>
+              <FormField label="Client" htmlFor="client-name" error={errors.client?.name?.message}>
+                <Input id="client-name" {...form.register('client.name')} />
+              </FormField>
+              <FormField label="Your role" htmlFor="client-role">
+                <Input id="client-role" placeholder="Full-stack developer" {...form.register('client.role')} />
+              </FormField>
+              <FormField label="Client website" htmlFor="client-url" className="sm:col-span-2">
+                <Input id="client-url" type="url" placeholder="https://" {...form.register('client.url')} />
+              </FormField>
+            </>
+          )}
+          <FormField label="Areas" htmlFor="areas" className="sm:col-span-2">
+            <Controller
+              control={form.control}
+              name="areas"
+              render={({ field }) => (
+                <MultiSelect
+                  id="areas"
+                  value={field.value ?? []}
+                  onChange={field.onChange}
+                  options={areas.map((area) => ({ value: area.id, label: area.title }))}
+                  addLabel="Add area"
+                  searchPlaceholder="Search areas"
+                />
+              )}
+            />
+          </FormField>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
           <CardTitle>Links and stack</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-5 sm:grid-cols-2">
           <FormField label="Live site" htmlFor="liveUrl">
             <Input id="liveUrl" type="url" placeholder="https://" {...form.register('liveUrl')} />
           </FormField>
-          <FormField label="Source code" htmlFor="repoUrl">
+          <FormField label="Source code" htmlFor="repoUrl" description="Public repositories only.">
             <Input id="repoUrl" type="url" placeholder="https://github.com/" {...form.register('repoUrl')} />
+          </FormField>
+          <FormField label="Colab notebook" htmlFor="notebookUrl" className="sm:col-span-2">
+            <Input
+              id="notebookUrl"
+              type="url"
+              placeholder="https://colab.research.google.com/github/"
+              {...form.register('notebookUrl')}
+            />
+          </FormField>
+          <FormField
+            label="Interactive demo"
+            htmlFor="demo-url"
+            description="Embedded on the project page, loaded on click."
+            error={errors.demo?.url?.message}
+          >
+            <Input id="demo-url" type="url" placeholder="https://" {...form.register('demo.url')} />
+          </FormField>
+          <FormField label="Demo button label" htmlFor="demo-label" error={errors.demo?.label?.message}>
+            <Input id="demo-label" placeholder="Explore the 3D replay" {...form.register('demo.label')} />
           </FormField>
           <FormField label="Technologies" htmlFor="stack" className="sm:col-span-2">
             <Controller

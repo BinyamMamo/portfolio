@@ -69,6 +69,24 @@ export type Profile = z.infer<typeof profileSchema>;
 
 /* Projects */
 
+export const projectKinds = ['personal', 'client'] as const;
+export type ProjectKind = (typeof projectKinds)[number];
+export const projectStatuses = ['live', 'local', 'archived'] as const;
+
+export const clientSchema = z.object({
+  name: required('Client name'),
+  url: z.string().trim().optional(),
+  role: z.string().trim().optional(),
+});
+
+export const areaSchema = z.object({
+  id: slug,
+  title: required('Title'),
+  summary: z.string().trim(),
+});
+export type Area = z.infer<typeof areaSchema>;
+export const areasSchema = z.array(areaSchema);
+
 export const projectSchema = z.object({
   slug,
   name: required('Name'),
@@ -82,6 +100,17 @@ export const projectSchema = z.object({
   liveUrl: z.string().trim().optional(),
   repoUrl: z.string().trim().optional(),
   featured: z.boolean(),
+  /** Client work is listed in its own section. Missing means personal. */
+  kind: z.enum(projectKinds).optional(),
+  client: clientSchema.optional(),
+  /** Area ids from content/areas.json. */
+  areas: z.array(slug).optional(),
+  year: z.string().trim().optional(),
+  status: z.enum(projectStatuses).optional(),
+  /** A Google Colab notebook for projects that are easier to try there. */
+  notebookUrl: z.string().trim().optional(),
+  /** An interactive demo embedded on the project page. */
+  demo: z.object({ url: required('Demo URL'), label: required('Demo label') }).optional(),
   cover: mediaSchema.optional(),
   gallery: z.array(mediaSchema),
   overview: z.array(z.string().trim().min(1)),
