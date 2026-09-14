@@ -799,5 +799,143 @@
       "Keeping mistakes gentle. Wrong answers show the next correct move with a glowing bead and a pointing hand instead of failing the session, and the pure soroban logic behind these hints is covered by unit tests.",
       "Keeping the lessons varied without hand-writing every screen. Lessons are plain data that combine teach cards and activity steps, and each activity generates its own numbers from a seed, so a new lesson or game type slots into the map without new UI code."
     ]
+  },
+  {
+    "slug": "yakal",
+    "name": "Yakal Education",
+    "tagline": "Tutoring and college counselling, with a dashboard for every person involved.",
+    "summary": "Yakal Education Services sells private tutoring and college admissions counselling. This platform is where families buy those services, students and tutors do the work, and parents, counselors and admins keep track of it.",
+    "category": "Education",
+    "stack": [
+      "react",
+      "vite",
+      "tailwindcss",
+      "nodejs",
+      "express",
+      "postgresql",
+      "recharts",
+      "TypeScript",
+      "Supabase",
+      "Stripe",
+      "Zoom",
+      "Google Classroom",
+      "Resend",
+      "TanStack Query"
+    ],
+    "topics": [
+      "tutoring",
+      "college admissions",
+      "role based dashboards",
+      "payments",
+      "realtime messaging",
+      "PWA"
+    ],
+    "highlight": "Wrote 805 of the 868 commits on the main branch.",
+    "liveUrl": "https://yakal.me",
+    "featured": false,
+    "kind": "client",
+    "client": {
+      "name": "Yakal Education",
+      "url": "https://yakal.me",
+      "role": "Lead full-stack developer"
+    },
+    "areas": [
+      "platforms",
+      "learning"
+    ],
+    "year": "2026",
+    "status": "live",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/yakal/yakal-01-c1baa0.webp",
+      "alt": "The public site where families find tutoring and college counselling",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/yakal/yakal-02-233c57.webp",
+        "alt": "Students browse 1,944 US universities ranked against their own GPA and SAT",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/yakal/yakal-03-50ce11.webp",
+        "alt": "Counselors see what each college still needs from a student",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/yakal/yakal-04-6d0dc9.webp",
+        "alt": "Tutors set the weekly hours families can book",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/yakal/yakal-05-a924e7.webp",
+        "alt": "Parents follow their child's college list, deadlines and costs",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/yakal/yakal-06-3054b9.webp",
+        "alt": "Admins set the counselling plans families buy",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/yakal/yakal-07-b29161.webp",
+        "alt": "A built-in assistant explains how the app works for each role",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "video",
+        "src": "/media/projects/yakal/yakal-08-7de0d4.mp4",
+        "poster": "/media/projects/yakal/yakal-08-7de0d4.webp",
+        "alt": "Asking the assistant where assignments live",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/yakal/yakal-09-1b7dd2.webp",
+        "alt": "A blog for parents and students, managed from the admin dashboard",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/yakal/yakal-10-3bbc18.webp",
+        "alt": "A grade by grade roadmap to college on the phone",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Yakal sells two things: one-on-one tutoring and college admissions counselling. Before this platform, booking, payment, homework, essays and messages were spread across email, chat apps and spreadsheets.",
+      "The app gives each of five roles its own dashboard. Parents pay and follow their children. Students attend sessions, track applications and build a college list. Tutors set availability and run courses. Counselors review essays and application progress. Admins approve staff, set prices and publish the blog.",
+      "It is one React app on top of Supabase for the database, sign-in, file storage and realtime updates, with a small server only for work that needs a secret: charging cards through Stripe, signing Zoom meetings, reading Google Classroom and sending email."
+    ],
+    "features": [
+      "Parents buy courses and monthly counselling plans through Stripe, and tutors and counselors are paid out through Stripe Connect",
+      "Students search 1,944 US universities with cost, admit rate and SAT ranges from the federal College Scorecard, ranked against their own scores",
+      "Students, parents and counselors share one application tracker showing what each college still needs",
+      "Tutors set weekly availability, sessions run on Zoom, and assignments are read from Google Classroom so students never sign in to Google",
+      "Realtime messages between every role, with parents able to read their children's conversations and anyone able to flag a message for review",
+      "An in-app assistant for each role that answers how-to questions by text or voice"
+    ],
+    "challenges": [
+      "Access control lives in Postgres row level security rather than a backend, so a missing policy is a data leak. Every role's reads and writes were written as policies and pinned with verify scripts, one per bug that had already happened.",
+      "A paid order must never depend on the browser coming back from checkout. Only the Stripe webhook grants access, and tutor earnings are recorded when a lesson completes and held before payout so undelivered work can still be refunded.",
+      "The support assistant went silent twice: once when the model provider retired the default model, and once when streamed replies arrived with Windows line endings the parser did not split on. The model became a setting and the stream parser got its own check.",
+      "The audience is often on slow mobile data, so the app installs as a PWA that caches the app shell but never caches private data such as grades or messages, and heavy libraries such as error reporting were trimmed to about half their size."
+    ]
   }
 ]
