@@ -22,6 +22,7 @@ pnpm dev        # http://localhost:3000
 | `pnpm content:check` | Validate every file in `content/` and cross-references |
 | `pnpm cv:pdf`        | Render a CV to `cv-out/` (see below)                 |
 | `pnpm media:add`     | Add an image, GIF or video to a project              |
+| `pnpm media:cinematic` | Frame raw captures into showcase slides (see below) |
 | `pnpm auth:hash`     | Print a password hash for the dashboard login        |
 
 ## Content
@@ -35,6 +36,7 @@ Everything shown on the site and the CV lives in JSON files, validated by the sc
 | `content/experience.json`    | Experience timeline                                       |
 | `content/education.json`     | Education timeline                                        |
 | `content/skills.json`        | Skill groups                                              |
+| `content/areas.json`         | The themes projects cluster into (Focus section and project filters) |
 | `content/navigation.json`    | Project groups and the featured project in the header menu |
 | `content/cv/settings.json`   | Default CV template, file name and projects               |
 | `content/cv/variants/*.json` | Tailored CV versions                                      |
@@ -73,6 +75,22 @@ pnpm cv:pdf                                   # default CV
 pnpm cv:pdf --template sidebar                # another template
 pnpm cv:pdf --variant acme                    # a tailored version
 pnpm cv:pdf --variant acme --out ~/acme.pdf   # custom output path
+```
+
+## Projects
+
+Each project can be personal or client work (`kind`, with `client` name, role and link), belongs to one or more `areas`, and can carry a `year`, a `status`, a Colab `notebookUrl` and an embedded `demo`. Client work gets its own home page section, areas drive the Focus section and the filters on `/projects`, and the project page shows the cover and gallery as a carousel.
+
+Projects that are not ready to show, with what is missing and why, are tracked in [`docs/projects-to-pursue.md`](docs/projects-to-pursue.md).
+
+## Showcase captures
+
+Raw screenshots and clips live in `captures/raw/<slug>/` (gitignored) with a `manifest.json` and a `project.json` draft, as described in [`captures/README.md`](captures/README.md). The cinematic script frames each capture in a browser or phone frame over the site's aurora colors, optimizes it and writes the project:
+
+```bash
+pnpm media:cinematic soroban              # compose, optimize and update content/projects.json
+pnpm media:cinematic soroban --preview    # write framed slides to captures/out/soroban only
+pnpm media:cinematic soroban --text-only  # merge project.json without touching media
 ```
 
 ## Adding media from the terminal
