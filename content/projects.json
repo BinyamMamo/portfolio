@@ -1135,25 +1135,146 @@
     "slug": "manim-generator",
     "name": "Manim Video Generator",
     "tagline": "Describe a math animation in plain language and get a rendered video.",
-    "summary": "Creates mathematical animations from natural language descriptions by generating and rendering Manim scenes with Gemini.",
+    "summary": "Type something like \"show the Pythagorean theorem\" and get back a short animated math video. Gemini writes the animation code and Manim, the engine behind 3Blue1Brown's videos, renders it.",
     "category": "AI and Machine Learning",
     "stack": [
       "python",
-      "manim",
       "gemini",
-      "mcp"
+      "manim",
+      "mcp",
+      "Streamlit"
     ],
+    "topics": [
+      "Math animation",
+      "Code generation",
+      "Education",
+      "Model Context Protocol"
+    ],
+    "highlight": "Runs in the browser through a Colab notebook, with no local install.",
     "repoUrl": "https://github.com/BinyamMamo/manim_generator",
     "featured": false,
-    "gallery": [],
-    "overview": [
-      "Manim Video Generator turns a plain language description into a mathematical animation. Gemini writes the Manim scene, and the tool renders it into a video."
-    ],
-    "features": [],
-    "challenges": [],
+    "kind": "personal",
     "areas": [
       "ai",
       "learning"
+    ],
+    "year": "2025",
+    "status": "prototype",
+    "notebookUrl": "https://colab.research.google.com/github/BinyamMamo/manim_generator/blob/colab-notebook/notebooks/manim_generator_colab.ipynb",
+    "cover": {
+      "kind": "video",
+      "src": "/media/projects/manim-generator/manim-generator-01-74cff9.mp4",
+      "poster": "/media/projects/manim-generator/manim-generator-01-74cff9.webp",
+      "alt": "A sine wave traced by a point on the unit circle, from a one sentence prompt",
+      "width": 1920,
+      "height": 1200
+    },
+    "gallery": [
+      {
+        "kind": "video",
+        "src": "/media/projects/manim-generator/manim-generator-02-aa328f.mp4",
+        "poster": "/media/projects/manim-generator/manim-generator-02-aa328f.webp",
+        "alt": "The derivative as the slope of a moving tangent line",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "video",
+        "src": "/media/projects/manim-generator/manim-generator-03-6f9102.mp4",
+        "poster": "/media/projects/manim-generator/manim-generator-03-6f9102.webp",
+        "alt": "A visual proof of the Pythagorean theorem, written and rendered by Gemini and Manim",
+        "width": 1920,
+        "height": 1200
+      }
+    ],
+    "overview": [
+      "Good math animations make ideas like derivatives or the unit circle click, but making one means learning Manim, a Python library with its own way of describing scenes, timing and transformations. Most teachers and students never get past that.",
+      "Manim Video Generator removes that step. You describe the animation in plain words, Gemini writes a complete Manim scene, and the scene is rendered to an MP4 that plays right away. It started as an MCP server that exposes rendering as a tool for AI assistants, then grew a terminal client and a Streamlit chat app that keeps a history of past animations.",
+      "A Colab notebook packs the whole flow into something anyone can open: it installs Manim and LaTeX, asks for a Gemini key, and shows the finished video inline."
+    ],
+    "features": [
+      "Describe an animation in plain language and get a rendered video back",
+      "Read and copy the generated Manim code to learn from it or tweak it",
+      "Chat with the Streamlit app and revisit earlier animations from the sidebar history",
+      "Let AI assistants render scenes through an MCP server tool",
+      "Run everything in Google Colab with no local setup"
+    ],
+    "challenges": [
+      "Language models often write Manim code that uses outdated or invented APIs. The generator renders each scene, and when Manim fails it sends the error back to Gemini to fix the code, up to three attempts.",
+      "Manim needs Cairo, Pango, FFmpeg and LaTeX installed at the system level, which is the main reason people give up on it. The Colab notebook installs them in one cell and, when LaTeX is skipped, tells the model to avoid formula objects so renders still succeed.",
+      "Gemini models get retired or return busy errors, so the notebook falls back to other models automatically instead of failing the run."
+    ]
+  },
+  {
+    "slug": "yamnet-cough",
+    "name": "Respiratory Sound Classifier",
+    "tagline": "Tells asthma, COPD, pneumonia and healthy lungs apart from short breathing recordings.",
+    "summary": "A model that listens to a few seconds of breathing or coughing and predicts which of five respiratory conditions it sounds like. It reuses Google's YAMNet audio model to understand the sound and trains a small network on top.",
+    "category": "Health",
+    "stack": [
+      "python",
+      "PyTorch",
+      "TensorFlow Hub",
+      "YAMNet",
+      "scikit-learn",
+      "librosa",
+      "flask"
+    ],
+    "topics": [
+      "Audio classification",
+      "Transfer learning",
+      "Respiratory health",
+      "ICBHI dataset"
+    ],
+    "highlight": "Gets 87% of held-out clips right across five classes while training a network of only about 68 thousand parameters.",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "health",
+      "ai"
+    ],
+    "year": "2026",
+    "status": "local",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/yamnet-cough/yamnet-cough-01-dc9981.webp",
+      "alt": "87% of held-out clips classified correctly across five conditions",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/yamnet-cough/yamnet-cough-02-bf2d2a.webp",
+        "alt": "Each condition leaves a different pattern in the sound",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/yamnet-cough/yamnet-cough-03-afe5ef.webp",
+        "alt": "COPD and healthy lungs are the easiest to tell apart",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Doctors learn a lot from how someone breathes, but a stethoscope is only useful when a trained ear is listening. This project explores whether a model can pick up the same patterns from a short recording, as a starting point for low-cost screening tools.",
+      "It uses the balanced ICBHI respiratory sound dataset with five labels: Bronchial, asthma, COPD, healthy and pneumonia. Each clip goes through YAMNet, a model Google trained on millions of everyday sounds, which turns it into 1024 numbers that describe what it hears. A small PyTorch network then learns to map those numbers to a condition.",
+      "The result is a research prototype, not a diagnostic device. A Colab notebook walks through the whole pipeline: loading the data, extracting features, training, and plotting how well it does."
+    ],
+    "features": [
+      "Classify a breathing or cough recording into one of five respiratory conditions",
+      "See confidence scores for every class, not just the top guess",
+      "Retrain the classifier end to end with one script or the Colab notebook",
+      "Inspect results with a confusion matrix, per-class report and learning curves",
+      "Run predictions on new audio through a small inference module"
+    ],
+    "challenges": [
+      "The dataset is small, so a large model memorizes it. Training on frozen YAMNet embeddings with a compact network, batch normalization and 60% dropout kept validation accuracy close to training accuracy.",
+      "Classes are uneven, so the loss uses balanced class weights and label smoothing, and the train and validation split is stratified so every condition shows up in both.",
+      "Recordings vary in length, while the model expects a fixed window. Every clip is resampled to 16 kHz and padded or trimmed to the same 4.35 seconds used in training, both when training and at prediction time.",
+      "An earlier version used PANNs features at 4096 dimensions. Switching to YAMNet's 1024-dimensional embeddings made the model smaller and less prone to overfitting."
     ]
   },
   {

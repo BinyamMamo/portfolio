@@ -197,7 +197,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             Try it
           </h2>
           <div className="mt-8">
-            <DemoFrame url={project.demo.url} label={project.demo.label} title={project.name} />
+            <DemoFrame
+              url={project.demo.url}
+              label={project.demo.label}
+              title={project.name}
+              poster={project.cover && (project.cover.kind === 'video' ? project.cover.poster : project.cover.src)}
+            />
           </div>
         </section>
       )}

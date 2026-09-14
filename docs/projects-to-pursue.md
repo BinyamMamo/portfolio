@@ -44,8 +44,21 @@ Last updated: 2026-09-14.
 - **What is missing**: pick one, merge the best parts, and get a working recognition demo deployed.
 
 ### Revoice and Dub
-- **What exists**: video dubbing pipelines (yt-dlp, Demucs, Whisper, NLLB, TTS). Revoice has a FastAPI backend and a React frontend; Dub (`~/products/es/ind`) has a strong README.
-- **What is missing**: a GPU host or a Colab notebook, and a short demo video.
+- **What exists**: video dubbing pipelines (yt-dlp, Demucs, Whisper, NLLB, TTS). Revoice has a FastAPI backend and a React frontend; Dub (`~/products/es/ind`) has a strong README, and now `dub_colab.ipynb` for a Colab T4 GPU (uncommitted, not yet run).
+- **What is missing**: a short demo made from a video you own the rights to. The only existing outputs are dubs of YouTube videos, which cannot be shown. Then a public repo, so the Colab link works for visitors.
+
+### Aging GAN
+- **What exists**: a CycleGAN trained on UTKFace (`~/aging-gan`, no repo) with a Gradio demo, a trained checkpoint (`serve.pt`, epoch 59) and now `aging_gan_colab.ipynb`. CPU inference works and produces aging, de-aging and round-trip sheets.
+- **What is missing**: showable samples. UTKFace includes web and press photos, and some existing comparison sheets look like well-known people, so the portfolio does not use them yet. Use faces you have consent for, or a synthetic face set. The effect is also mild on some faces.
+- **Next steps**: pick consented sample faces, publish a public repo with the notebook, then add it to the portfolio.
+
+### YAMNet cough classifier
+- **What exists**: on the portfolio with charts from the committed results (87% accuracy, macro F1 0.86 on 243 held-out clips). There is a Colab notebook on the `colab-notebook` branch of the private `yamnet` repo.
+- **What is missing**: a public repo, so the Source and Colab buttons can show. The dataset needs `HF_TOKEN` (`CoughMamba/datasets`); check whether access is gated.
+
+### Manim Generator
+- **What exists**: a Colab notebook on the public `colab-notebook` branch, and three rendered clips on the portfolio.
+- **What is missing**: merge the branch. The repo still uses the retired Gemini Python package, which the notebook replaces with `google-genai`. A Riemann sum prompt failed twice (an invalid Manim option, then busy servers), so the error retry loop could be smarter.
 
 ### Mindwave
 - **What exists**: a React mental wellness micro-interactions app with face-api.js. Its Vercel URL returns 404.

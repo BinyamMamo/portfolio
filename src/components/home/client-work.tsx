@@ -52,7 +52,7 @@ export async function ClientWork({ index }: { index: string }) {
               {project.client?.role && <p className="mt-1 text-sm text-fg">{project.client.role}</p>}
               <p className="mt-3 max-w-2xl leading-relaxed text-fg-muted">{project.summary}</p>
               <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
-                <TechList ids={project.stack} />
+                <TechList ids={project.stack} limit={6} />
                 {project.liveUrl && (
                   <a
                     href={project.liveUrl}

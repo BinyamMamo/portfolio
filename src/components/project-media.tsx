@@ -53,7 +53,8 @@ export function ProjectMediaView({ media, variant, sizes, project, preload, clas
     <div
       className={cn(
         'relative mx-auto w-full overflow-hidden bg-surface-muted',
-        isCard && 'aspect-video',
+        // Showcase captures are framed at 16:10, so cards use the same ratio and nothing is cropped.
+        isCard && 'aspect-[16/10]',
         isSlide && 'aspect-[16/10]',
         className,
       )}

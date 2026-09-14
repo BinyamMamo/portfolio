@@ -45,7 +45,7 @@ function FeaturedRow({ project, reversed }: { project: Project; reversed: boolea
         {project.highlight && (
           <p className="mt-5 border-l-2 border-brand pl-3 text-sm leading-relaxed text-fg">{project.highlight}</p>
         )}
-        <TechList ids={project.stack} className="mt-6" />
+        <TechList ids={project.stack} limit={6} className="mt-6" />
         <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
           <Link href={href} className={cn(textLink, 'font-medium text-fg hover:text-brand')}>
             Project details
