@@ -514,6 +514,101 @@
     ]
   },
   {
+    "slug": "avatar-kit",
+    "name": "Avatar Kit",
+    "tagline": "Cartoon avatars in the browser that copy your face, lip sync to your voice and swing their hair.",
+    "summary": "Avatar Kit draws animated 2D characters that follow your head, eyes and mouth through the webcam and talk when you speak into the microphone. Their hair and bodies move with real physics, so you can grab a strand and flick it.",
+    "category": "Graphics",
+    "stack": [
+      "PixiJS",
+      "MediaPipe",
+      "TypeScript",
+      "vite",
+      "tailwindcss",
+      "Vitest",
+      "Playwright"
+    ],
+    "topics": [
+      "face tracking",
+      "physics simulation",
+      "shaders",
+      "animation"
+    ],
+    "highlight": "Based on Radu Mariescu-Istodor's talking avatar video, rebuilt on PixiJS with markerless face tracking, voice, shader styles and two new characters.",
+    "liveUrl": "https://avatar-kit-eta.vercel.app",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "vision"
+    ],
+    "year": "2026",
+    "status": "live",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/avatar-kit/avatar-kit-01-c275f7.webp",
+      "alt": "The avatar copies the face in the webcam, shown in the corner",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "video",
+        "src": "/media/projects/avatar-kit/avatar-kit-02-d1e53d.mp4",
+        "poster": "/media/projects/avatar-kit/avatar-kit-02-d1e53d.webp",
+        "alt": "The webcam drives the face while flicked hair swings, then the style changes to ink, halftone and glow",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/avatar-kit/avatar-kit-03-1f91ad.webp",
+        "alt": "Three characters to choose from in a swipeable carousel",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/avatar-kit/avatar-kit-04-59adb6.webp",
+        "alt": "Grab a strand of hair and pull it, drawn in the ink style",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/avatar-kit/avatar-kit-05-da1b65.webp",
+        "alt": "A halftone print shader on the jelly character",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/avatar-kit/avatar-kit-06-9e8835.webp",
+        "alt": "Neon glow style in dark mode, still following the webcam",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Avatar Kit started from Radu Mariescu-Istodor's video \"JavaScript Talking Avatar with Face Tracking\", which builds a character with pendulum hair from scratch. The classic avatar ports that character and its hair and head-turn tricks, and the project rebuilds everything on PixiJS so it can grow.",
+      "Open an avatar, turn on the camera and it mirrors you: head turns, blinks, eye direction, eyebrows, smiles and an open mouth all come from MediaPipe face tracking in the browser. Turn on the microphone instead and the mouth moves with your voice. With neither, the avatar breathes, blinks and glances around on its own.",
+      "Each character is a small script that draws with a Canvas-like pen and hangs hair, antennae or a jelly body off a Verlet physics solver. Any style, from flat to ink outlines, a halftone print shader or neon glow, works on every avatar without extra code."
+    ],
+    "features": [
+      "Pick one of three avatars from a swipeable carousel",
+      "Drive the face with your webcam: head pose, blinks, gaze, brows and mouth",
+      "Make it talk by speaking into the microphone",
+      "Grab and flick hair, antennae or a jelly body with the mouse",
+      "Switch between flat, ink, halftone and glow styles with one key",
+      "Works in light and dark mode, with a debug panel for rig sliders and the physics skeleton"
+    ],
+    "challenges": [
+      "Keeping face tracking steady without lag by smoothing every channel with One Euro filters and recentring on your neutral pose",
+      "Matching the original hair physics exactly: a parity test checks the new Verlet solver against the 2022 code step by step",
+      "Mixing idle motion, pointer, face and voice into one rig so drivers never need to know which avatar they control",
+      "Drawing on the CPU with a pen that triangulates each shape, so squashing a head never distorts line widths and shader styles apply to any avatar"
+    ]
+  },
+  {
     "slug": "rima",
     "name": "RIMA",
     "tagline": "A group chat with an assistant that keeps track of tasks, decisions and follow-ups.",

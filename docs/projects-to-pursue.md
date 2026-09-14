@@ -18,9 +18,22 @@ Last updated: 2026-09-14.
 - **Next steps**: define the data model (applicant, document, attestation request, verifier), build the API, deploy it on Render, then replace the frontend mocks.
 
 ### twin
-- **What exists**: step 1 of 7 of a selfie-to-avatar pipeline (Vite, MediaPipe, a Python GPU server). Private repo `BinyamMamo/twin`.
-- **What is missing**: steps 2 to 7 (mesh fitting, rigging, expressions, voice, lip sync).
-- **Why**: a very visual portfolio piece that builds on avatar-kit.
+- **What exists**: step 1 of 7 of a selfie-to-avatar pipeline. Private repo `BinyamMamo/twin`.
+  - The browser analyzes a selfie with MediaPipe: 478 face points, hair, skin and clothes masks, face proportions, glasses, and white-balanced skin, hair, eye and lip colors, with warnings for bad photos.
+  - About 1,300 lines of analysis plus a 950-line screen, with unit and e2e tests on public-domain portraits.
+  - A voice cloning experiment with Chatterbox fits the RTX 5050's 8 GB but runs slower than real time.
+- **What is missing** (about 6 to 10 weeks in total):
+
+  | Step | Work | Effort | GPU server |
+  | --- | --- | --- | --- |
+  | 2. Photo puppet | Your photo on a face mesh driven by the webcam, with blinking eyes, a mouth cavity and hair warping. The hardest graphics step | 1 to 2 weeks | No |
+  | 3. Stylized cartoon | A cartoon fitted to your measurements, hair templates, a gallery | 1 to 2 weeks | No |
+  | 4. Lip sync | A small audio-to-mouth-shape model in a Web Worker, with in-browser speech | About 1 week | No |
+  | 5. Style profile | Guided recording of blink, sway and brow habits, a personal idle animation | About 1 week | No |
+  | 6. Voice clone | FastAPI with Chatterbox, sentence streaming, loudness fixes | 3 to 5 days | Yes, or a rented GPU |
+  | 7. Motion matching | Reusing recorded motion with smooth blends, mouth calibration | 1 to 2 weeks | No |
+
+- **Why**: steps 2 to 4 alone, with no server, would make a standout demo that builds on avatar-kit.
 
 ### Greens Al Madina
 - **What exists**: a Telegram Mini App and PWA for a Dubai restaurant with the full 471-dish menu in English and Arabic (`~/products/et/madina/mini`). The ordering flow is complete, but orders are simulated.
