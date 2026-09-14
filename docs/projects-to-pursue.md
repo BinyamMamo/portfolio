@@ -107,6 +107,21 @@ Last updated: 2026-09-14.
 - **Blocked by**: the web app sends questions to a Tailscale address that now returns 502 (the local service stopped), and the Render deployment never answered.
 - **To fix**: restart the clinical service (Postgres with pgvector in Docker, plus Ollama) or get the Render deploy answering, then recapture the chat, a cited PDF page, the conversation list and the usage page. The portfolio currently shows the landing page, its built-in cited answer demo, and the sign-in screen.
 
+### HealthVault (live demo)
+- **What exists**: public repo [healthvault](https://github.com/BinyamMamo/healthvault), captured on a local Hardhat chain with real transactions and 12 passing contract tests.
+- **Blocked by**: the app needs a running chain and has no demo mode, so it is not deployed.
+- **To fix**: add a demo mode backed by an in-browser chain or a mocked contract, or deploy the contracts to a public testnet, then deploy the frontend to Vercel.
+
+## Needs your decision
+
+### ClipShield push blocked by GitHub
+- **What happened**: `BinyamMamo/clipshield` exists (public, empty). GitHub push protection rejected the push because `tests/test_accuracy.py:25` contains a made-up Stripe key (`sk_live_51H8x...`) used as a test input. The test files also use the standard documentation examples for AWS, GitHub and Slack keys, which may be flagged next.
+- **Options**: approve that key once through GitHub's unblock link and push from `/tmp/showcase/d1/clipshield`, or change the fixtures to keys built at runtime (for example joined from parts), then push. The portfolio shows no source link until then.
+- **Also**: `--style mask` fails its own safety check and redacts nothing.
+
+### Personal email in public history
+- `notebooklm-player` was pushed with its full history, and the commit author email is `binyam2537@gmail.com`. If you prefer it private, rewrite the author in the history or recreate the repo.
+
 ## Needs keys
 
 Keys from one project are never reused for another project's database, so these wait for their own credentials.
@@ -135,6 +150,7 @@ Keys from one project are never reused for another project's database, so these 
 - **KSK Homes**: the facilities carousel uses unrelated stock photos (a walrus, the Statue of Liberty), and the portal's housekeeping, reports and performance pages return 404. The staff portal opens without a login.
 - **UD Students web build**: the two Android-only NFC libraries crash on web, and `App.tsx` is missing a `SafeAreaProvider`. The screenshots come from a patched copy with stubs.
 - **Flight Plan**: the page is titled with the student's first name, so it should stay private or get a generic version before any public deploy. The portfolio uses screenshots only.
+- **mdkan**: the README image `media/preview.png` is an AI-made mockup with nonsense cards ("Deplo API"). Replace it with a real screenshot, such as the portfolio's editor and board capture.
 - **Chess Turtle**: the pieces need a font with chess symbols; on some Linux setups they render as escape text.
 - **PeerSphere** and **QuestEureka**: Firebase config is committed in `.env`. Firebase web config is not secret on its own, but check the security rules before linking the repos.
 - **Dead Vercel deployments** (404): `signspeak`, `mindwave`, `funkey`, `lab` and the old Astro `portfolio`. Delete the ones you do not plan to fix.

@@ -1373,6 +1373,110 @@
     ]
   },
   {
+    "slug": "healthvault",
+    "name": "HealthVault",
+    "tagline": "Patient-controlled health records, encrypted in the browser with a blockchain for permissions.",
+    "summary": "HealthVault lets a patient lock their health records in the browser, share them with a chosen doctor for a set time, and see every visit in a log nobody can change. The blockchain only holds permissions and fingerprints, never the records themselves.",
+    "category": "Health",
+    "stack": [
+      "react",
+      "vite",
+      "typescript",
+      "nodejs",
+      "Solidity",
+      "Hardhat",
+      "viem",
+      "Web Crypto"
+    ],
+    "topics": [
+      "health records",
+      "encryption",
+      "blockchain",
+      "access control"
+    ],
+    "highlight": "A doctor only receives a record's key after their visit has been written to the blockchain.",
+    "repoUrl": "https://github.com/BinyamMamo/healthvault",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "health",
+      "platforms"
+    ],
+    "year": "2026",
+    "status": "local",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/healthvault/healthvault-01-c02d11.webp",
+      "alt": "A doctor opens shared records, and each visit is written to the blockchain",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/healthvault/healthvault-02-beea9b.webp",
+        "alt": "Records are encrypted in the browser before they are saved",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/healthvault/healthvault-03-6883eb.webp",
+        "alt": "The patient shares access with a doctor for a set time",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "video",
+        "src": "/media/projects/healthvault/healthvault-04-574a83.mp4",
+        "poster": "/media/projects/healthvault/healthvault-04-574a83.webp",
+        "alt": "Opening a record: permission check, logged visit, then the key",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/healthvault/healthvault-05-80f2ff.webp",
+        "alt": "An activity log nobody can edit, read straight from the chain",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/healthvault/healthvault-06-939c07.webp",
+        "alt": "Three ways to snoop, and why each one fails",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/healthvault/healthvault-07-3c1d1b.webp",
+        "alt": "Smart contract tests for permissions, expiry and revocation",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Health records usually sit on servers that patients cannot see into, and it is hard to know who has looked at them. HealthVault is a learning prototype that puts the patient in charge: they decide which doctor can open their records, for how long, and they can see every visit.",
+      "Records are encrypted in the browser before they leave it and are stored off-chain. A smart contract keeps only the permission slips, a fingerprint of each file and a visitor log. When a doctor opens a record, the visit is written to the chain first, and only then does the storage server hand over the locked key.",
+      "It runs entirely on your computer with a local test chain and made-up people: a patient, two doctors and a stranger who tries, and fails, to snoop."
+    ],
+    "features": [
+      "Create a vault and add records that are encrypted before they are saved",
+      "Share records with a doctor for an hour, a day, a week or a month, and stop at any time",
+      "Open shared records as a doctor, with the fingerprint checked against the chain",
+      "Read a permanent activity log of shares, revocations and visits",
+      "Try three snooping attempts as a stranger and see what blocks each one",
+      "Tamper with a stored file behind the scenes and watch the app flag it"
+    ],
+    "challenges": [
+      "Keeping health data off a public ledger while still using it for trust: only fingerprints and permissions go on-chain",
+      "Envelope encryption with X25519, HKDF and AES-GCM in Web Crypto, so each record key can be locked separately for each doctor",
+      "Making the storage server release keys only after checking that a visit was logged on-chain, so a stolen server still reveals nothing readable",
+      "Testing permission expiry and revocation in Solidity, plus an end-to-end script that runs the whole flow against a real local chain"
+    ]
+  },
+  {
     "slug": "chess-turtle",
     "name": "Chess Turtle",
     "tagline": "A chessboard drawer and a chess game against an AI, using only Python's standard library.",
@@ -1444,6 +1548,344 @@
       "Making difficulty feel different: easy plays random legal moves, harder levels score material, center control and piece safety",
       "Handling button clicks on a turtle canvas by checking click coordinates against drawn button areas",
       "Passing the chosen theme from the turtle drawer into the Tkinter game window"
+    ]
+  },
+  {
+    "slug": "clipshield",
+    "name": "clipshield",
+    "tagline": "Strips secrets and personal data from your clipboard before you paste into a chat.",
+    "summary": "clipshield scans copied text for API keys, passwords, emails, card numbers and internal hostnames, and swaps them for labels like [HOST_1] in a few milliseconds. It runs entirely on your own computer, and a local vault can put the real values back later.",
+    "category": "Developer tools",
+    "stack": [
+      "python",
+      "PowerShell",
+      "Raycast",
+      "Ollama",
+      "GLiNER"
+    ],
+    "topics": [
+      "privacy",
+      "secret scanning",
+      "clipboard",
+      "command line tool"
+    ],
+    "highlight": "Everything outside a redacted span comes out byte for byte identical, checked before anything reaches the clipboard.",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "devtools"
+    ],
+    "year": "2026",
+    "status": "local",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/clipshield/clipshield-01-2a74d7.webp",
+      "alt": "Keys, hosts and customer data swapped for numbered placeholders",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/clipshield/clipshield-02-3f2c09.webp",
+        "alt": "One command redacts a stack trace in a few milliseconds",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/clipshield/clipshield-03-91d673.webp",
+        "alt": "Paste the model's answer back and the real values return",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/clipshield/clipshield-04-f347a1.webp",
+        "alt": "28 tests, including a fuzzer and a deliberately hostile fake model",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Developers paste logs, stack traces and config files into AI chats all day, and those often carry real keys, database passwords, customer emails and internal server names. clipshield is a hotkey away: it cleans the clipboard first, so the pasted text is safe but still makes sense.",
+      "The fast path uses about 60 pattern rules, checksum checks for things like card numbers and IBANs, and an entropy check for random-looking tokens. It needs nothing beyond Python and finishes in a few milliseconds. Optional deeper passes use a small local model to catch names and addresses.",
+      "Each value gets a stable numbered label, so [USER_1] means the same person everywhere. When the chat answers with those labels, one command swaps the real values back in from a local vault."
+    ],
+    "features": [
+      "Redact the clipboard with one hotkey through Raycast script commands on Windows",
+      "Pipe any file or log through the command line and preview the result with --dry-run",
+      "Keep public documentation links, version numbers and plain prose untouched",
+      "Restore the real values in a model's answer from a local vault",
+      "Switch on optional local model passes for names, organisations and addresses",
+      "Benchmark installed Ollama models on your own machine and pin the best one"
+    ],
+    "challenges": [
+      "Guaranteeing the text is never rewritten: detectors return character offsets only, and every run checks that all untouched text survived before writing the clipboard",
+      "Letting a language model help without letting it write output: its suggestions are only used if they match the source exactly, and a test suite runs against a deliberately hostile fake model",
+      "Keeping false positives low so logs stay readable, by skipping git hashes, version strings, timestamps and public docs links",
+      "Splitting long pastes into overlapping chunks so an entity on a chunk boundary is still found and mapped back to the right offset"
+    ]
+  },
+  {
+    "slug": "notebooklm-player",
+    "name": "NotebookLM Player",
+    "tagline": "A YouTube-style player and keyboard shortcuts for NotebookLM Video Overviews.",
+    "summary": "A Chrome extension that swaps the plain video controls in Google's NotebookLM for a player that feels like YouTube, with keyboard shortcuts, speed control, loops and resume. It also adds a distraction-free Zen mode and slash commands for common study prompts.",
+    "category": "Developer tools",
+    "stack": [
+      "typescript",
+      "esbuild",
+      "Chrome Extensions (Manifest V3)",
+      "Shadow DOM"
+    ],
+    "topics": [
+      "browser extension",
+      "video player",
+      "keyboard shortcuts",
+      "studying"
+    ],
+    "repoUrl": "https://github.com/BinyamMamo/notebooklm-player",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "devtools"
+    ],
+    "year": "2026",
+    "status": "local",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/notebooklm-player/notebooklm-player-01-7264ae.webp",
+      "alt": "A YouTube-style player with an A to B loop on a Video Overview",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "video",
+        "src": "/media/projects/notebooklm-player/notebooklm-player-02-ff6365.mp4",
+        "poster": "/media/projects/notebooklm-player/notebooklm-player-02-ff6365.webp",
+        "alt": "Seek, change speed and loop without touching the mouse",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/notebooklm-player/notebooklm-player-03-7fd997.webp",
+        "alt": "Every shortcut flashes a short confirmation over the video",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/notebooklm-player/notebooklm-player-04-c34444.webp",
+        "alt": "Playback speed from 0.25x to 2x, remembered between sessions",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/notebooklm-player/notebooklm-player-05-2cd124.webp",
+        "alt": "Type / in the chat to pick a study prompt like Quiz or Flashcards",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/notebooklm-player/notebooklm-player-06-cef171.webp",
+        "alt": "Zen mode toggles and the full shortcut list in the popup",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "NotebookLM can turn your sources into a narrated Video Overview, but the player only has the browser's basic controls. If you study with it, you end up clicking around to rewind, slow down or repeat a part.",
+      "This extension keeps NotebookLM's own video element and lays a new control bar over it: a scrubber with time previews, volume, speed, picture-in-picture, fullscreen and an A to B loop. Every action also has a YouTube-style keyboard shortcut, and the player remembers your speed, volume and where you stopped in each notebook.",
+      "It also adds a Zen mode that hides panels and clutter for focused chatting, and a slash menu in the chat box that inserts prompts like Quiz, Flashcards or Explain simply."
+    ],
+    "features": [
+      "Control Video Overviews with YouTube shortcuts like K, J, L, arrows and 0 to 9",
+      "Loop a section with [ and ], step frame by frame and open picture-in-picture",
+      "Resume each notebook's video where you left off, with speed and volume remembered",
+      "Hide the sources panel, top bars and citations with one Zen mode toggle (Alt+Z)",
+      "Type / in the chat to insert study prompts such as Quiz, Flashcards or Compare"
+    ],
+    "challenges": [
+      "Working on a single-page app that mounts and removes its player as you navigate, handled with a DOM observer that attaches and tears down cleanly",
+      "Styling injected controls without clashing with Google's CSS by putting all UI inside a Shadow DOM",
+      "Targeting the generic video element instead of obfuscated class names so the extension survives NotebookLM redesigns",
+      "Keeping shortcuts from firing while the user is typing in the chat, using capture-phase listeners that only claim keys the player owns"
+    ]
+  },
+  {
+    "slug": "live-captions",
+    "name": "Live Subtitles",
+    "tagline": "Live captions for any video playing in a Chrome tab, with a transcript you can export.",
+    "summary": "A Chrome extension that listens to the audio of the current tab, not the microphone, and shows captions over the video as people speak. Every line is saved with its timestamp, so you can jump back to it or download subtitles as SRT, VTT or text.",
+    "category": "Developer tools",
+    "stack": [
+      "javascript",
+      "Chrome Extensions (Manifest V3)",
+      "Web Speech API",
+      "Web Audio API"
+    ],
+    "topics": [
+      "captions",
+      "accessibility",
+      "speech recognition",
+      "browser extension"
+    ],
+    "highlight": "Uses Chrome's newer ability to run speech recognition on a tab's audio track, on-device when a language pack is installed.",
+    "repoUrl": "https://github.com/BinyamMamo/live-captions-extension",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "devtools",
+      "ai"
+    ],
+    "year": "2026",
+    "status": "local",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/live-captions/live-captions-01-187049.webp",
+      "alt": "Live captions over a video that has no subtitles",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "video",
+        "src": "/media/projects/live-captions/live-captions-02-10be1c.mp4",
+        "poster": "/media/projects/live-captions/live-captions-02-10be1c.webp",
+        "alt": "Words appear as they are spoken, then settle into the transcript",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/live-captions/live-captions-03-abd3e9.webp",
+        "alt": "A timestamped transcript you can click to jump back",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/live-captions/live-captions-04-4ad834.webp",
+        "alt": "Export the transcript as SRT, VTT or plain text",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/live-captions/live-captions-05-0f79a7.webp",
+        "alt": "Start and stop from the popup and see if recognition runs on-device",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/live-captions/live-captions-06-ec7c9c.webp",
+        "alt": "Pick the font, size, colors and position of the captions",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Plenty of lectures, talks and recorded meetings have no subtitles. Live Subtitles adds them on the fly for whatever is playing in the current Chrome tab, so you can follow along with the sound low or keep a written record.",
+      "When you press Start, the extension captures the tab's audio, keeps it playing through your speakers or headphones, and passes the same audio to Chrome's speech recognition. Captions appear in a draggable band over the video, with words still being recognized shown dimmed.",
+      "A side panel keeps every line with the video time it was spoken at. Click a line to jump there, or export the whole transcript as SRT, VTT or TXT. The popup shows whether recognition runs on-device or in Google's cloud, and can refuse to start unless it stays on-device."
+    ],
+    "features": [
+      "Caption any tab's audio without using or asking for the microphone",
+      "Drag the captions anywhere, with the position remembered per site",
+      "Open a timestamped transcript and click a line to seek the video",
+      "Download subtitles as SRT, VTT or plain text that line up with the video",
+      "Change font, size, colors, opacity and line count from the popup",
+      "Require on-device recognition so audio never leaves the computer"
+    ],
+    "challenges": [
+      "Capturing tab audio from a Manifest V3 extension, which needs an offscreen document because service workers have no DOM",
+      "Keeping the video audible, since Chrome mutes a tab while it is captured, by routing the stream back to the speakers",
+      "Timing cues from the video's own playhead so exported subtitles stay in sync even if you pause or seek",
+      "Restarting recognition when Chrome ends long sessions on its own, with backoff so captions do not stop after a few minutes",
+      "Testing the whole session flow in Node by running the real service worker against a mocked chrome API"
+    ]
+  },
+  {
+    "slug": "mdkan",
+    "name": "Markdown Kanban",
+    "tagline": "A VS Code extension that turns a Markdown TODO file into a live Kanban board.",
+    "summary": "Markdown Kanban opens any TODO.md as a board next to the editor. Headings become columns and checklist items become cards, and moving or ticking a card writes the change straight back into the Markdown file.",
+    "category": "Developer tools",
+    "stack": [
+      "typescript",
+      "VS Code Extension API",
+      "esbuild",
+      "Vitest"
+    ],
+    "topics": [
+      "kanban",
+      "markdown",
+      "task tracking",
+      "editor extension"
+    ],
+    "highlight": "The Markdown file stays the only source of truth, with no database or hidden board format.",
+    "repoUrl": "https://github.com/BinyamMamo/mdkan",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "devtools"
+    ],
+    "year": "2026",
+    "status": "prototype",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/mdkan/mdkan-01-5fb06c.webp",
+      "alt": "A plain TODO.md on the left becomes a live Kanban board on the right",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/mdkan/mdkan-02-548619.webp",
+        "alt": "Headings become columns, checklists become cards with subtasks",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/mdkan/mdkan-03-1fd1da.webp",
+        "alt": "Filter the board by tag, person or priority",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/mdkan/mdkan-04-3a9363.webp",
+        "alt": "Follows your VS Code theme, light or dark",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Many developers keep their tasks in a TODO.md next to the code, because it is simple and lives in git. The downside is that a long checklist is hard to scan. Markdown Kanban shows the same file as a board without changing how you write it.",
+      "Level 2 headings become boards, and level 3 headings such as Todo, In Progress, Review, Blocked or Done become columns. Checklist items become cards, indented items become subtasks with a progress bar, and tags, people, priorities and due dates are picked up from the text.",
+      "The board updates as you type in the editor, and changes on the board are written back to the file. Drag a card to Done and its checkbox gets ticked, click a title and the editor jumps to that line."
+    ],
+    "features": [
+      "Open a Kanban board beside any Markdown task file from the editor title bar",
+      "Drag cards between columns, with the Markdown rewritten to match",
+      "See subtasks, tags, assignees, priorities and due dates on each card",
+      "Search and filter by tag, person or priority, with progress per board",
+      "Click a card title to jump to its line in the file",
+      "Match any VS Code theme through its built-in color variables"
+    ],
+    "challenges": [
+      "Parsing free-form Markdown into boards, columns and nested tasks while tolerating messy or malformed files, covered by parser tests with fixtures",
+      "Writing board edits back as small, precise text edits so the rest of the file, including comments and formatting, is left alone",
+      "Keeping the editor and the webview in sync in both directions without update loops",
+      "Styling the board only with VS Code theme variables so it looks native in light, dark and high contrast themes"
     ]
   },
   {
