@@ -1,170 +1,100 @@
 [
   {
-    "slug": "certiscan",
-    "name": "CertiScan",
-    "tagline": "AI-assisted education attestation with real-time verification.",
-    "summary": "A web platform that streamlines education attestation using AI document analysis and digital twin verification, with real-time cross-checks against institutions and a dashboard-driven workflow.",
-    "category": "Web",
-    "stack": [
-      "react",
-      "vite",
-      "tailwindcss",
-      "azure"
-    ],
-    "topics": [
-      "Document AI",
-      "Verification"
-    ],
-    "liveUrl": "https://certiscan.vercel.app",
-    "repoUrl": "https://github.com/BinyamMamo/certiscan",
-    "featured": true,
-    "cover": {
-      "kind": "video",
-      "src": "/media/projects/certiscan/analysis.mp4",
-      "poster": "/media/projects/certiscan/analysis.webp",
-      "alt": "Running AI analysis on an uploaded transcript",
-      "width": 1280,
-      "height": 652
-    },
-    "gallery": [
-      {
-        "kind": "video",
-        "src": "/media/projects/certiscan/verify.mp4",
-        "poster": "/media/projects/certiscan/verify.webp",
-        "alt": "Verification flow",
-        "width": 1280,
-        "height": 634
-      },
-      {
-        "kind": "video",
-        "src": "/media/projects/certiscan/documentdetails.mp4",
-        "poster": "/media/projects/certiscan/documentdetails.webp",
-        "alt": "Document details view",
-        "width": 1280,
-        "height": 632
-      },
-      {
-        "kind": "video",
-        "src": "/media/projects/certiscan/analysis2.mp4",
-        "poster": "/media/projects/certiscan/analysis2.webp",
-        "alt": "Extracted analysis results",
-        "width": 1280,
-        "height": 622
-      },
-      {
-        "kind": "video",
-        "src": "/media/projects/certiscan/chatbot.mp4",
-        "poster": "/media/projects/certiscan/chatbot.webp",
-        "alt": "Assistant for attestation questions",
-        "width": 1280,
-        "height": 634
-      },
-      {
-        "kind": "video",
-        "src": "/media/projects/certiscan/chat2.mp4",
-        "poster": "/media/projects/certiscan/chat2.webp",
-        "alt": "Conversation with the assistant",
-        "width": 1280,
-        "height": 660
-      },
-      {
-        "kind": "video",
-        "src": "/media/projects/certiscan/admindashboard.mp4",
-        "poster": "/media/projects/certiscan/admindashboard.webp",
-        "alt": "Admin dashboard",
-        "width": 1280,
-        "height": 658
-      }
-    ],
-    "overview": [
-      "CertiScan digitizes the education attestation process. Instead of moving paper documents between offices, applicants upload their certificates and transcripts and the platform analyzes them with AI.",
-      "Each document is cross-verified with the issuing institution in real time using a digital twin approach, and predictive processing keeps applications moving. Applicants and administrators work from a clean, dashboard-driven interface."
-    ],
-    "features": [],
-    "challenges": []
-  },
-  {
     "slug": "visionaid",
     "name": "VisionAid",
-    "tagline": "Cross-platform assistant that helps visually impaired people navigate the world.",
-    "summary": "An accessibility app that combines computer vision, language processing and spatial audio to help visually impaired users read text, recognize objects and avoid hazards.",
+    "tagline": "A phone assistant that reads, recognizes and warns for people with low vision.",
+    "summary": "VisionAid turns a phone camera into a talking guide for people who are blind or have low vision. It reads text out loud, finds objects, describes the scene and warns about traffic, and it is driven by voice rather than by looking at a screen.",
     "category": "AI and Machine Learning",
     "stack": [
       "flutter",
-      "firebase"
+      "TensorFlow Lite",
+      "YOLO",
+      "Google ML Kit",
+      "gemini",
+      "Astro",
+      "react",
+      "tailwindcss"
     ],
     "topics": [
+      "Accessibility",
       "Computer vision",
       "OCR",
-      "Accessibility"
+      "Voice interface",
+      "On-device AI"
     ],
     "highlight": "Built for the 19th IEEE Student Day competition with supervisors from the University of Dubai.",
     "liveUrl": "https://visionaid.vercel.app",
-    "repoUrl": "https://github.com/orgs/VISUAL-AID/repositories",
+    "repoUrl": "https://github.com/VISUAL-AID/landing-page",
     "featured": true,
+    "kind": "personal",
+    "areas": [
+      "ai",
+      "vision"
+    ],
+    "year": "2025",
+    "status": "prototype",
     "cover": {
-      "kind": "video",
-      "src": "/media/projects/visionaid/visionaid.mp4",
-      "poster": "/media/projects/visionaid/visionaid.webp",
-      "alt": "VisionAid landing page",
-      "width": 1280,
-      "height": 614
+      "kind": "image",
+      "src": "/media/projects/visionaid/visionaid-01-acb743.webp",
+      "alt": "Reads printed text aloud, translates it to Arabic and summarizes it",
+      "width": 2400,
+      "height": 1500
     },
     "gallery": [
       {
-        "kind": "video",
-        "src": "/media/projects/visionaid/ocr.mp4",
-        "poster": "/media/projects/visionaid/ocr.webp",
-        "alt": "Text recognition with translation and summaries",
-        "width": 1254,
-        "height": 564
+        "kind": "image",
+        "src": "/media/projects/visionaid/visionaid-02-c3b783.webp",
+        "alt": "Finds a named object and talks the user toward it",
+        "width": 2400,
+        "height": 1500
       },
       {
-        "kind": "video",
-        "src": "/media/projects/visionaid/object.mp4",
-        "poster": "/media/projects/visionaid/object.webp",
-        "alt": "Object detection with spatial audio guidance",
-        "width": 1280,
-        "height": 550
+        "kind": "image",
+        "src": "/media/projects/visionaid/visionaid-03-16b797.webp",
+        "alt": "Describes the surroundings, weather included",
+        "width": 2400,
+        "height": 1500
       },
       {
-        "kind": "video",
-        "src": "/media/projects/visionaid/scene.mp4",
-        "poster": "/media/projects/visionaid/scene.webp",
-        "alt": "Scene description",
-        "width": 1280,
-        "height": 550
+        "kind": "image",
+        "src": "/media/projects/visionaid/visionaid-04-7182c1.webp",
+        "alt": "Warns about cars, cyclists and pedestrians in the way",
+        "width": 2400,
+        "height": 1500
       },
       {
-        "kind": "video",
-        "src": "/media/projects/visionaid/hazard.mp4",
-        "poster": "/media/projects/visionaid/hazard.webp",
-        "alt": "Hazard detection with voice alerts",
-        "width": 1280,
-        "height": 550
+        "kind": "image",
+        "src": "/media/projects/visionaid/visionaid-05-4c2c98.webp",
+        "alt": "The landing page on a phone",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/visionaid/visionaid-06-0feba8.webp",
+        "alt": "An assistant for people who are blind or have low vision",
+        "width": 2400,
+        "height": 1500
       }
     ],
     "overview": [
-      "VisionAid helps visually impaired users interact with their surroundings more independently. The app provides real-time assistance for everyday navigation and reading tasks.",
-      "It was developed for the 19th IEEE Student Day Competition as a collaboration between student developers and academic supervisors at the University of Dubai.",
-      "The app combines computer vision, natural language processing and spatial audio into a single audio-first experience."
+      "Everyday things like reading a letter, finding a chair or crossing a street near traffic are hard without sight. VisionAid puts help for those moments into one Flutter app that talks back instead of expecting the user to read a screen.",
+      "The user speaks a command and a small language model running on the phone decides which tool to open: reading text, finding an object, describing the scene or watching for hazards. Every answer comes back as speech, with vibration used for direction.",
+      "Object detection, hazard detection and scene recognition run on the phone with TensorFlow Lite models. Gemini is used where language matters: cleaning up scanned text, writing summaries and turning a camera frame into a natural description. The app was built by a student team for the 19th IEEE Student Day competition, supervised by faculty from the University of Dubai."
     ],
     "features": [
-      "Real-time text scanning and recognition",
-      "Arabic translation of recognized text",
-      "AI-generated summaries for faster comprehension",
-      "Object detection with spatial audio guidance",
-      "Scene analysis with context-aware descriptions",
-      "Hazard detection with immediate voice alerts",
-      "Distance estimation for safer navigation",
-      "Custom object training for personalized recognition"
+      "Point the camera at a page and hear the text read aloud, with an Arabic translation or a short summary on request",
+      "Say what you are looking for and get spoken and vibration cues that guide you toward it",
+      "Ask what is around you and hear a description of the place, including the current weather",
+      "Get an immediate spoken warning when a car, cyclist or pedestrian is in your path",
+      "Control the whole app by voice, and long-press any button to hear its name",
+      "Use the interface in English or Arabic"
     ],
     "challenges": [
-      "Running computer vision in real time on mobile devices",
-      "Producing accurate spatial audio cues for object locations",
-      "Supporting multiple languages, with a focus on Arabic",
-      "Keeping models fast on mobile without losing accuracy",
-      "Designing an interface that works entirely through audio"
+      "Running a YOLO11 object detector on live camera frames on a mid-range phone, using a float16 TensorFlow Lite model and throttling spoken guidance so the user is not flooded with repeated messages.",
+      "Raw OCR output from signs and packaging is noisy, so a Gemini pass filters the recognized text before it is read aloud, instead of speaking every stray character.",
+      "Mapping free-form speech to app actions without a network round trip, by training a small text classifier in Python and shipping it with its tokenizer as a TensorFlow Lite model inside the app.",
+      "Designing an interface that works without looking at it: large targets, spoken labels on long-press, audio and haptic feedback for every state change."
     ]
   },
   {
@@ -288,71 +218,6 @@
       "Handling availability conflicts in the booking flow",
       "Managing shared state across multiple user roles",
       "Structuring the front end so a real backend can be added later"
-    ]
-  },
-  {
-    "slug": "mindwave",
-    "name": "MindWave",
-    "tagline": "Bite-sized, science-backed mental wellness in a scrollable feed.",
-    "summary": "A mobile-first wellness app that pairs micro-habits, quick relief tools and fractal progress visuals with a familiar vertical feed of 15 to 30 second interactions.",
-    "category": "Web",
-    "stack": [
-      "react",
-      "vite",
-      "tailwindcss",
-      "framerMotion",
-      "reactRouter"
-    ],
-    "topics": [
-      "Health",
-      "Habits"
-    ],
-    "liveUrl": "https://mindwaveuae.vercel.app",
-    "featured": false,
-    "cover": {
-      "kind": "video",
-      "src": "/media/projects/mindwave/overview.mp4",
-      "poster": "/media/projects/mindwave/overview.webp",
-      "alt": "MindWave feed",
-      "width": 1280,
-      "height": 664
-    },
-    "gallery": [
-      {
-        "kind": "video",
-        "src": "/media/projects/mindwave/tools.mp4",
-        "poster": "/media/projects/mindwave/tools.webp",
-        "alt": "Quick relief tools",
-        "width": 1280,
-        "height": 664
-      },
-      {
-        "kind": "video",
-        "src": "/media/projects/mindwave/habits.mp4",
-        "poster": "/media/projects/mindwave/habits.webp",
-        "alt": "Habit tracking with fractal visualization",
-        "width": 1280,
-        "height": 664
-      }
-    ],
-    "overview": [
-      "MindWave delivers science-backed approaches to mental wellness through short interactions designed for modern attention spans, presented in a vertical scrolling feed.",
-      "Completing micro-habits grows a fractal visualization, giving users a visible sense of progress. All data stays in local storage, so the app needs no account and no backend."
-    ],
-    "features": [
-      "Vertical feed of 15 to 30 second wellness exercises",
-      "Guided micro-breathing and perspective reset visualizations",
-      "Micro-habit builder with a growing fractal visualization",
-      "Quick relief tools including a breathing pacer and color therapy",
-      "Single-prompt journaling for focused reflection",
-      "Habit streaks and completion history"
-    ],
-    "challenges": [
-      "Fitting meaningful exercises into 30 seconds or less",
-      "Making feed scrolling feel as smooth as native social apps",
-      "Designing visuals that respond to real user progress",
-      "Keeping animations smooth on mobile devices",
-      "Building a privacy-first app on local storage alone"
     ]
   },
   {
@@ -526,6 +391,413 @@
       "Implementing complete chess rules and move validation",
       "Tuning the AI to feel different at each difficulty",
       "Making turtle graphics and Tkinter work together in one app"
+    ]
+  },
+  {
+    "slug": "clixa-tools",
+    "name": "Clixa Tools",
+    "tagline": "63 clinical calculators, cancer staging and an assistant that shows its working.",
+    "summary": "Clixa gives doctors, nurses and students 63 medical calculators, from kidney function to cancer staging, in one fast app that works offline. You can pick a tool yourself or describe the case in plain words and the assistant runs the right calculator for you.",
+    "category": "Health",
+    "stack": [
+      "Preact",
+      "TypeScript",
+      "vite",
+      "Cloudflare Workers",
+      "gemini",
+      "PWA",
+      "Chrome Extension"
+    ],
+    "topics": [
+      "Clinical calculators",
+      "Cancer staging",
+      "WHO growth standards",
+      "Ethiopian calendar",
+      "PWA",
+      "Browser extension"
+    ],
+    "highlight": "Every calculator is checked against 6,653 recorded cases from the original app, so moving the code never changed a single result.",
+    "liveUrl": "https://clixa-tools.vercel.app",
+    "featured": true,
+    "kind": "personal",
+    "areas": [
+      "health",
+      "ai"
+    ],
+    "year": "2026",
+    "status": "live",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/clixa-tools/clixa-tools-01-d5411c.webp",
+      "alt": "Search 63 calculators, or describe the case and let the assistant pick",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "video",
+        "src": "/media/projects/clixa-tools/clixa-tools-02-30c885.mp4",
+        "poster": "/media/projects/clixa-tools/clixa-tools-02-30c885.webp",
+        "alt": "The assistant runs the real calculator and shows each step",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/clixa-tools/clixa-tools-03-7d3fbf.webp",
+        "alt": "Breast cancer staged from T, N and M in a few clicks",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/clixa-tools/clixa-tools-04-0dcaca.webp",
+        "alt": "WHO z-scores and malnutrition classification for a child",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/clixa-tools/clixa-tools-05-fb3a76.webp",
+        "alt": "Every answer comes with the working, so it can be checked",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/clixa-tools/clixa-tools-06-0c7cdc.webp",
+        "alt": "Due dates shown in both the Gregorian and Ethiopian calendars",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/clixa-tools/clixa-tools-07-ca31bc.webp",
+        "alt": "Installs on a phone as an app",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Clinicians in Ethiopia were using a single HTML file full of medical calculators. It worked, but it was hard to maintain, impossible to install and easy to break. Clixa rebuilds it as a proper product without changing the maths.",
+      "The 63 calculators, the AJCC and FIGO cancer staging rules, the WHO child growth standards and the Ethiopian calendar live in one small TypeScript package with no dependencies. The same package powers an installable web app, a sidebar extension for Chrome, Edge and Firefox, and an Android app that wraps the web app.",
+      "On top of that sits an assistant. You type something like \"eGFR for a 54 year old man, creatinine 1.4\" and it picks the calculator, checks which inputs it needs, runs it and shows each step so the answer can be checked. The calculators themselves run on the device and keep working without a connection."
+    ],
+    "features": [
+      "Search 63 calculators and scores by name, specialty or symptom",
+      "Stage 14 common cancers from T, N and M categories, with a plain-language meaning for each stage",
+      "Classify child malnutrition with WHO z-scores, MUAC and edema, following the Ethiopian national guideline",
+      "Enter and read dates in the Ethiopian or Gregorian calendar for due dates and gestational age",
+      "Describe a case in plain words and let the assistant run the right calculator, with every step shown",
+      "Install it on a phone or add it to the browser as a sidebar that works offline"
+    ],
+    "challenges": [
+      "Moving 63 calculators out of a single HTML file without changing any result. A script ran the original file across 6,653 input combinations, and the new package has to reproduce every output byte for byte, alongside 301 ported self-checks.",
+      "Keeping the assistant honest. The language model never does the arithmetic; it can only search the tool list, ask for missing inputs and call the real calculators, and the app shows that trace so a clinician can verify it.",
+      "Keeping the API key off the client. The chat goes through a Cloudflare Worker that holds the Gemini key and runs the tool loop, so the browser bundle contains no secret.",
+      "Shipping one codebase to three places. The extension shares all of its code between Chrome and Firefox except a single file that handles their different sidebar APIs, and the Android app is a thin Trusted Web Activity that updates whenever the site is deployed."
+    ]
+  },
+  {
+    "slug": "rima",
+    "name": "RIMA",
+    "tagline": "A group chat with an assistant that keeps track of tasks, decisions and follow-ups.",
+    "summary": "RIMA is a chat-first workspace where friends, families and teams talk normally and an assistant quietly turns the conversation into tasks, reminders and summaries. Instead of filling in forms, you mention @RIMA and ask.",
+    "category": "AI and Machine Learning",
+    "stack": [
+      "Next.js",
+      "react",
+      "TypeScript",
+      "tailwindcss",
+      "Zustand",
+      "gemini",
+      "PWA"
+    ],
+    "topics": [
+      "AI assistant",
+      "Group chat",
+      "Task tracking",
+      "Voice",
+      "PWA"
+    ],
+    "highlight": "Ask @RIMA to summarize a room and it reads the recent conversation and answers in plain language, with who is blocked and what is due.",
+    "liveUrl": "https://rima-chi.vercel.app",
+    "repoUrl": "https://github.com/BinyamMamo/rima",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "ai",
+      "platforms"
+    ],
+    "year": "2026",
+    "status": "prototype",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/rima/rima-01-082c9d.webp",
+      "alt": "Every part of life in one place: trips, family, work and health",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/rima/rima-02-f267c0.webp",
+        "alt": "Rima turns a normal group chat into tracked tasks and reminders",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/rima/rima-03-65c17c.webp",
+        "alt": "Focused rooms keep one project's decisions and follow-ups together",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/rima/rima-04-cbff35.webp",
+        "alt": "A dashboard that spots open questions, urgent items and blockers",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/rima/rima-05-09eb48.webp",
+        "alt": "Workspaces and rooms grouped by work, life, study and health",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/rima/rima-06-5d6aaf.webp",
+        "alt": "Ask who needs attention and get a straight answer",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Plans get lost in group chats. Someone says they will book the flights by Friday, someone else is waiting on a survey, and a week later nobody remembers who owed what. RIMA keeps the chat but adds an assistant that listens for those moments.",
+      "Each workspace, such as a trip, a family, a company program or a personal health space, has a main conversation and smaller rooms for focused topics. Mentioning @RIMA lets you create rooms, add people, or ask for a recap, and the assistant replies in the thread using the recent messages as context.",
+      "A dashboard view for each workspace pulls out open questions, urgent messages and blocked work, so you can see where things stand without scrolling back. The app is built as an installable phone app, and a voice mode lets you talk to the assistant out loud."
+    ],
+    "features": [
+      "Organize life into workspaces with focused rooms, grouped by work, life, study and health",
+      "Mention @RIMA to create a room, add a member or get a summary of the discussion",
+      "Ask open questions in a room and get an answer based on the latest messages",
+      "See a dashboard of open questions, urgent items and blocked work for each workspace",
+      "Talk to the assistant by voice instead of typing",
+      "Try everything in a demo mode with sample workspaces, no account needed"
+    ],
+    "challenges": [
+      "Making the assistant useful inside a busy chat without answering every message. RIMA only responds when it is mentioned, handles simple commands like creating rooms and adding people directly, and sends everything else to Gemini with the last few messages as context.",
+      "Pulling tasks out of casual writing. Messages like \"@Maryam please book flights due Friday\" are parsed into an owner, a task and a deadline, which feed the workspace dashboard.",
+      "Keeping a realistic demo without a backend. Sample workspaces are seeded from a SQLite script, exported to JSON and kept in a persisted client store, so every visitor gets the same populated app and their changes stay on their own device.",
+      "Supporting real-time voice. The voice mode streams microphone audio to Gemini's native audio model and plays the reply back, with clear states for connecting, listening and speaking."
+    ]
+  },
+  {
+    "slug": "quest-eureka",
+    "name": "QuestEureka",
+    "tagline": "Turns a textbook into short lessons, quizzes and streaks, like a language app for any subject.",
+    "summary": "QuestEureka breaks a textbook into chapters and bite-sized lessons that students unlock one by one, with quick quizzes, daily goals, gems and a weekly leaderboard. The idea is to make studying feel more like a game than a chore.",
+    "category": "Education",
+    "stack": [
+      "react",
+      "vite",
+      "tailwindcss",
+      "firebase",
+      "gemini"
+    ],
+    "topics": [
+      "Gamified learning",
+      "Quizzes",
+      "Leaderboards",
+      "EdTech"
+    ],
+    "highlight": "Uses the streaks, leagues and unlockable paths that make language apps sticky, applied to ordinary course textbooks.",
+    "liveUrl": "https://quest-eureka.vercel.app",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "learning",
+      "ai"
+    ],
+    "year": "2025",
+    "status": "prototype",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/quest-eureka/quest-eureka-01-26e3a3.webp",
+      "alt": "Each textbook section becomes a path of lessons to unlock",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/quest-eureka/quest-eureka-02-4bde44.webp",
+        "alt": "Chapters broken into short lessons, finished ones marked off",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/quest-eureka/quest-eureka-03-4fb232.webp",
+        "alt": "Quick multiple-choice checks with hints",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/quest-eureka/quest-eureka-04-56ed5c.webp",
+        "alt": "Weekly leagues keep classmates competing",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/quest-eureka/quest-eureka-05-31b4d5.webp",
+        "alt": "Streaks, XP, gems and badges in one profile",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/quest-eureka/quest-eureka-06-420b39.webp",
+        "alt": "The public landing page",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Most students open a textbook, read a few pages and lose focus. Apps like Duolingo keep people coming back every day with small lessons, streaks and friendly competition. QuestEureka applies the same ideas to course material.",
+      "A course is split into chapters, and each chapter into short lessons laid out as a path. Finishing a lesson unlocks the next one, and a chapter exam unlocks the following chapter. Each lesson ends with a few multiple-choice questions, with hints and a link back to the reading.",
+      "Progress earns XP and gems. Students keep a daily streak, protect it with streak freezes, climb weekly leagues and spend gems in a shop. Sign-in and progress are stored in Firebase, and Gemini prompts were written to turn uploaded textbook text into chapters, questions, flashcards and summaries."
+    ],
+    "features": [
+      "Follow a course as a path of short lessons that unlock in order",
+      "Answer quick multiple-choice questions after each lesson, with hints when stuck",
+      "Keep a daily streak and set a daily goal for how many lessons to finish",
+      "Compete on weekly, monthly and all-time leaderboards grouped into leagues",
+      "Track XP, gems and badges on a personal profile",
+      "Sign in with Google and pick up progress on any device"
+    ],
+    "challenges": [
+      "Turning unstructured textbook text into a clean course. The Gemini prompts ask for a fixed JSON shape of chapters, subchapters, questions with explanations, and a final exam, so the app can render whatever comes back.",
+      "Designing progression that feels fair: lessons unlock in sequence, a chapter exam gates the next chapter, and streak freezes and hints give students a way to recover without losing momentum.",
+      "Keeping user progress consistent across pages. Streak, gems, hints and XP live in a single Firestore progress document that is created on first sign-in and read by the dashboard, lessons, shop and leaderboard."
+    ]
+  },
+  {
+    "slug": "soroban",
+    "name": "Soroban for Kids",
+    "tagline": "A friendly web app that teaches children the Japanese abacus, one bead at a time.",
+    "summary": "Children aged about 5 to 10 learn to read and build numbers on a soroban, then add and take away, through short lessons and games. It shows first, lets the child copy, then plays, and a wrong answer never ends a session.",
+    "category": "Education",
+    "stack": [
+      "react",
+      "vite",
+      "tailwindcss",
+      "TypeScript",
+      "Framer Motion",
+      "Zustand",
+      "Web Audio API",
+      "Edge TTS",
+      "Vitest"
+    ],
+    "topics": [
+      "early math",
+      "abacus",
+      "gamified learning",
+      "accessibility",
+      "narration"
+    ],
+    "highlight": "10 lessons and 16 activity types, with spoken help in English and Amharic, and no backend or account needed.",
+    "liveUrl": "https://soroban-kids.vercel.app",
+    "repoUrl": "https://github.com/BinyamMamo/soroban",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "learning"
+    ],
+    "year": "2026",
+    "status": "live",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/soroban/soroban-01-074978.webp",
+      "alt": "Ten lessons that unlock in order, with stars and mastery",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/soroban/soroban-02-53f875.webp",
+        "alt": "A guided demo shows how to build 23, one bead at a time",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/soroban/soroban-03-c72fe8.webp",
+        "alt": "Story problems turn subtraction into beads on the rods",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/soroban/soroban-04-9741e6.webp",
+        "alt": "Match Up asks which soroban shows the number",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/soroban/soroban-05-82780d.webp",
+        "alt": "Secret Vault: set the code on the soroban before time runs out",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "video",
+        "src": "/media/projects/soroban/soroban-06-73f499.mp4",
+        "poster": "/media/projects/soroban/soroban-06-73f499.webp",
+        "alt": "Building numbers bead by bead with the keyboard",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/soroban/soroban-07-ff2bca.webp",
+        "alt": "Finishing a lesson earns stars, badges and the next lesson",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/soroban/soroban-08-9ce6ed.webp",
+        "alt": "Streaks, stars and progress on a phone",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "A soroban is a simple abacus with one bead worth 5 and four beads worth 1 on each rod. It is a lovely way for young children to see what numbers mean, but most apps drop a child straight into a quiz. Soroban for Kids teaches first: an animated demo with a pointing hand shows each move, the child copies it with gentle guidance, and only then do the games begin.",
+      "The course runs from \"What is a soroban?\" through single digits, two-digit numbers, adding, taking away, speed practice and a mixed review. Each lesson mixes different kinds of activities, so a child reads beads, builds numbers, remembers what changed and solves little story problems in the same sitting. Parents and teachers can see stars, mastery and streaks for each lesson.",
+      "Everything runs in the browser. Progress is saved on the device, music is generated live with Web Audio, and narration uses pre-recorded voice clips, so it works without an account or a server."
+    ],
+    "features": [
+      "Follow a guided demo, then copy it on a real-looking soroban by tapping, dragging or using the keyboard",
+      "Play 16 activity types, from Match Up and story problems to a timed Secret Vault that opens when the right code is set",
+      "Hear every instruction read aloud by a choice of English or Amharic narrators, with separate switches for narration, sound effects and music",
+      "Earn stars, badges and daily streaks, and unlock the next lesson when one is finished",
+      "Switch on dark mode, pick a colour theme, or calm the animations with a reduced motion setting",
+      "Practise freely in the Games tab or a free explore mode without affecting lesson progress"
+    ],
+    "challenges": [
+      "Making the abacus usable without a mouse or sight. Each rod is an ARIA spinbutton that takes arrow keys or a typed digit, the whole soroban announces its value, and a live region reads out changes for screen readers.",
+      "Building narration that sounds warm and still covers every number. Short Edge TTS clips for phrases and numbers are generated ahead of time and stitched together at runtime, with the browser's own voice as a fallback when a clip is missing.",
+      "Keeping mistakes gentle. Wrong answers show the next correct move with a glowing bead and a pointing hand instead of failing the session, and the pure soroban logic behind these hints is covered by unit tests.",
+      "Keeping the lessons varied without hand-writing every screen. Lessons are plain data that combine teach cards and activity steps, and each activity generates its own numbers from a seed, so a new lesson or game type slots into the map without new UI code."
     ]
   }
 ]

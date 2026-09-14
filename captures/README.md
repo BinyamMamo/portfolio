@@ -62,6 +62,7 @@ A draft entry matching `projectSchema` in `src/lib/schemas.ts`, without media (t
 
 - `areas`: any of `health`, `platforms`, `ai`, `vision`, `robotics`, `learning`, `devtools`.
 - `kind`: `client` for work done for a company or team (include `client`), otherwise `personal`.
+- `status`: `live` (deployed and working), `prototype` (deployed or runnable, but unfinished), `local` or `archived`.
 - `stack`: tech ids from `src/lib/tech.ts` where one exists (`react`, `nodejs`, `express`, `nestjs`, `flask`, `django`, `postgresql`, `mongodb`, `firebase`, `tailwindcss`, `vite`, `flutter`, `docker`, `gemini`, `python`, `javascript`, ...), otherwise the plain name (`Next.js`, `Supabase`, `Prisma`, `FastAPI`, `PixiJS`, `MediaPipe`, `Webots`).
 
 ## Writing style

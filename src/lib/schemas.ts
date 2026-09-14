@@ -71,7 +71,8 @@ export type Profile = z.infer<typeof profileSchema>;
 
 export const projectKinds = ['personal', 'client'] as const;
 export type ProjectKind = (typeof projectKinds)[number];
-export const projectStatuses = ['live', 'local', 'archived'] as const;
+/** `live` is deployed and working, `prototype` is deployed or runnable but unfinished. */
+export const projectStatuses = ['live', 'prototype', 'local', 'archived'] as const;
 
 export const clientSchema = z.object({
   name: required('Client name'),

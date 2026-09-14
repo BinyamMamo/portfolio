@@ -60,6 +60,7 @@ const emptyProject: Project = {
 
 const statusLabels: Record<(typeof projectStatuses)[number], string> = {
   live: 'Live',
+  prototype: 'Prototype',
   local: 'Runs locally',
   archived: 'Archived',
 };

@@ -4,7 +4,6 @@
       "title": "AI and computer vision",
       "slugs": [
         "visionaid",
-        "certiscan",
         "labaid",
         "manim-generator"
       ]
@@ -13,8 +12,7 @@
       "title": "Web platforms",
       "slugs": [
         "funkey",
-        "peersphere",
-        "mindwave"
+        "peersphere"
       ]
     },
     {

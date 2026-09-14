@@ -9,7 +9,7 @@
  *   pnpm media:cinematic funkey --text-only       merge project.json without touching media
  */
 import { execFile } from 'node:child_process';
-import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { parseArgs, promisify } from 'node:util';
@@ -319,6 +319,28 @@ if (!existing && !draft && !values.preview) {
   process.exit(1);
 }
 
+const buildEntry = (media: ProjectMedia[]) =>
+  projectSchema.parse({
+    featured: false,
+    overview: [],
+    features: [],
+    challenges: [],
+    ...existing,
+    ...draft,
+    slug,
+    cover: media[0],
+    gallery: media.slice(1),
+  });
+
+// Validate the text before any media is processed, so a bad draft leaves no files behind.
+if (!values.preview) {
+  const check = projectSchema.safeParse({ featured: false, overview: [], features: [], challenges: [], ...existing, ...draft, slug, gallery: [] });
+  if (!check.success) {
+    console.error(`captures/raw/${slug}/project.json is invalid:\n${z.prettifyError(check.error)}`);
+    process.exit(1);
+  }
+}
+
 let composed: ProjectMedia[] | undefined;
 
 if (!values['text-only']) {
@@ -365,29 +387,22 @@ if (!values['text-only']) {
 const previousMedia = existing ? [existing.cover, ...existing.gallery].filter((media) => media !== undefined) : [];
 const media = composed ? [...(values.append ? previousMedia : []), ...composed] : previousMedia;
 
-const entry = projectSchema.parse({
-  featured: false,
-  overview: [],
-  features: [],
-  challenges: [],
-  ...existing,
-  ...draft,
-  slug,
-  cover: media[0],
-  gallery: media.slice(1),
-});
+const entry = buildEntry(media);
 
 if (index === -1) projects.push(entry);
 else projects[index] = entry;
 await writeContent('projects', projects);
 
-// Replaced media files are removed so repeated runs do not pile up old captures.
-if (composed && !values.append) {
+// Files in the project's folder that the entry no longer uses (replaced captures, earlier failed runs) are removed.
+if (composed) {
+  const folder = path.join(process.cwd(), 'public', 'media', 'projects', slug);
   const kept = new Set(media.flatMap((item) => (item.kind === 'video' ? [item.src, item.poster] : [item.src])));
-  const stale = previousMedia
-    .flatMap((item) => (item.kind === 'video' ? [item.src, item.poster] : [item.src]))
-    .filter((src) => !kept.has(src) && src.startsWith(`/media/projects/${slug}/`));
-  await Promise.all(stale.map((src) => rm(path.join(process.cwd(), 'public', src), { force: true })));
+  const files = await readdir(folder).catch(() => []);
+  await Promise.all(
+    files
+      .filter((file) => !kept.has(`/media/projects/${slug}/${file}`))
+      .map((file) => rm(path.join(folder, file), { force: true })),
+  );
 }
 
 console.log(`${slug}: ${media.length} media items, ${index === -1 ? 'added' : 'updated'} in content/projects.json`);
