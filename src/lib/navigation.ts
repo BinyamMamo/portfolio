@@ -85,6 +85,7 @@ export function buildNavigation({ profile, projects, skills, navigation }: Navig
   });
 
   return [
+    { label: 'Home', href: '/' },
     {
       label: 'Projects',
       href: '/projects',
