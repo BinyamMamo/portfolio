@@ -1,32 +1,26 @@
 {
   "projectGroups": [
     {
-      "title": "AI and computer vision",
+      "title": "Highlights",
       "slugs": [
-        "visionaid",
-        "certiscan",
-        "labaid",
-        "manim-generator"
+        "clixa-tools",
+        "soroban",
+        "rima",
+        "funkey"
       ]
     },
     {
-      "title": "Web platforms",
+      "title": "Simulations and AI",
       "slugs": [
-        "funkey",
-        "peersphere",
-        "mindwave"
-      ]
-    },
-    {
-      "title": "Simulations and games",
-      "slugs": [
-        "birthday-paradox",
-        "chess-turtle"
+        "solar-farm-drone",
+        "drone-hunter",
+        "flight-plan",
+        "visionaid"
       ]
     }
   ],
   "featured": {
-    "slug": "funkey",
-    "eyebrow": "Top 5 at ALX"
+    "slug": "solar-farm-drone",
+    "eyebrow": "Interactive 3D replay"
   }
 }

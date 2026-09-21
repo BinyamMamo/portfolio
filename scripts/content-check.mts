@@ -17,18 +17,24 @@ for (const name of contentNames) {
 }
 
 try {
-  const [projects, experience, navigation, settings, variants] = await Promise.all([
+  const [projects, experience, navigation, settings, variants, areas] = await Promise.all([
     readContent('projects'),
     readContent('experience'),
     readContent('navigation'),
     readContent('cvSettings'),
     listCvVariants(),
+    readContent('areas'),
   ]);
   const slugs = new Set(projects.map((project) => project.slug));
+  const areaIds = new Set(areas.map((area) => area.id));
   const experienceIds = new Set(experience.map((entry) => entry.id));
   const missing = (label: string, values: string[], known: Set<string>) =>
     values.filter((value) => !known.has(value)).forEach((value) => problems.push(`${label}: unknown "${value}"`));
 
+  for (const project of projects) missing(`projects.${project.slug}.areas`, project.areas ?? [], areaIds);
+  for (const project of projects.filter((item) => item.kind === 'client' && !item.client)) {
+    problems.push(`projects.${project.slug}: client projects need a client name`);
+  }
   missing('navigation.projectGroups', navigation.projectGroups.flatMap((group) => group.slugs), slugs);
   if (navigation.featured) missing('navigation.featured', [navigation.featured.slug], slugs);
   missing('cv/settings.projectSlugs', settings.projectSlugs, slugs);

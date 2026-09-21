@@ -33,7 +33,7 @@ export function ProjectCard({ project }: { project: Project }) {
         </div>
         <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-fg-muted">{project.tagline}</p>
         <div className="mt-auto pt-5">
-          <TechList ids={project.stack} />
+          <TechList ids={project.stack} limit={4} />
         </div>
       </div>
     </article>

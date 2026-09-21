@@ -8,6 +8,8 @@ import path from 'node:path';
 import { z } from 'zod';
 
 import {
+  type Area,
+  areasSchema,
   type CvSettings,
   cvSettingsSchema,
   type CvVariant,
@@ -33,6 +35,7 @@ interface ContentMap {
   experience: TimelineEntry[];
   education: TimelineEntry[];
   skills: SkillGroup[];
+  areas: Area[];
   navigation: NavigationContent;
   cvSettings: CvSettings;
 }
@@ -45,6 +48,7 @@ const sources: { [Name in ContentName]: { file: string; schema: z.ZodType<Conten
   experience: { file: 'experience.json', schema: timelineSchema },
   education: { file: 'education.json', schema: timelineSchema },
   skills: { file: 'skills.json', schema: skillGroupsSchema },
+  areas: { file: 'areas.json', schema: areasSchema },
   navigation: { file: 'navigation.json', schema: navigationSchema },
   cvSettings: { file: 'cv/settings.json', schema: cvSettingsSchema },
 };

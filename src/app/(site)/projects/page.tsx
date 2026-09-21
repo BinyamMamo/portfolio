@@ -1,23 +1,34 @@
 import type { Metadata } from 'next';
 
 import { ProjectCard } from '@/components/project-card';
-import { type BrowserItem, ProjectsBrowser } from '@/components/projects-browser';
+import { type BrowserItem, type BrowserTab, ProjectsBrowser } from '@/components/projects-browser';
 import { Eyebrow } from '@/components/section';
 import { getTech } from '@/lib/tech';
-import { getProjects } from '@/server/content';
+import { getAreas, getProjects } from '@/server/content';
 
 export const metadata: Metadata = {
   title: 'Projects',
-  description: 'Web platforms, AI tools and experiments.',
+  description: 'Client products, health and learning tools, AI experiments and simulations.',
 };
 
+const CLIENT_TAB = 'client';
+
 export default async function ProjectsPage() {
-  const projects = await getProjects();
-  const categories = [...new Set(projects.map((project) => project.category))];
+  const [projects, areas] = await Promise.all([getProjects(), getAreas()]);
+  const tabs: BrowserTab[] = [
+    { id: CLIENT_TAB, label: 'Client work' },
+    ...areas.map((area) => ({ id: area.id, label: area.title })),
+  ];
   const items: BrowserItem[] = projects.map((project) => ({
     slug: project.slug,
-    category: project.category,
-    keywords: [project.name, project.tagline, ...project.stack.map((id) => getTech(id).name), ...(project.topics ?? [])]
+    groups: [...(project.areas ?? []), ...(project.kind === 'client' ? [CLIENT_TAB] : [])],
+    keywords: [
+      project.name,
+      project.tagline,
+      project.client?.name ?? '',
+      ...project.stack.map((id) => getTech(id).name),
+      ...(project.topics ?? []),
+    ]
       .join(' ')
       .toLowerCase(),
     card: <ProjectCard project={project} />,
@@ -29,10 +40,11 @@ export default async function ProjectsPage() {
         <Eyebrow>Projects</Eyebrow>
         <h1 className="heading mt-4 text-4xl sm:text-5xl">Things I have built</h1>
         <p className="mt-5 text-lg leading-relaxed text-fg-muted">
-          Web platforms, AI tools and a few experiments, from university competitions to side projects.
+          Products for clients and teams, tools for health and learning, and experiments with AI, robots and
+          simulations.
         </p>
       </header>
-      <ProjectsBrowser items={items} categories={categories} />
+      <ProjectsBrowser items={items} tabs={tabs} />
     </div>
   );
 }

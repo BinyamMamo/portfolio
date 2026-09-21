@@ -10,7 +10,7 @@ export async function Skills() {
   return (
     <Section
       id="skills"
-      index="02"
+      index="04"
       label="Skills"
       title="Tools of the trade"
       description="Backend first, with enough frontend and infrastructure to ship complete products."

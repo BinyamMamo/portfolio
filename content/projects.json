@@ -1,480 +1,1486 @@
 [
   {
-    "slug": "certiscan",
-    "name": "CertiScan",
-    "tagline": "AI-assisted education attestation with real-time verification.",
-    "summary": "A web platform that streamlines education attestation using AI document analysis and digital twin verification, with real-time cross-checks against institutions and a dashboard-driven workflow.",
-    "category": "Web",
+    "slug": "clixa-tools",
+    "name": "Clixa Tools",
+    "tagline": "63 clinical calculators, cancer staging and an assistant that shows its working.",
+    "summary": "Clixa gives doctors, nurses and students 63 medical calculators, from kidney function to cancer staging, in one fast app that works offline. You can pick a tool yourself or describe the case in plain words and the assistant runs the right calculator for you.",
+    "category": "Health",
+    "stack": [
+      "Preact",
+      "TypeScript",
+      "vite",
+      "Cloudflare Workers",
+      "gemini",
+      "PWA",
+      "Chrome Extension"
+    ],
+    "topics": [
+      "Clinical calculators",
+      "Cancer staging",
+      "WHO growth standards",
+      "Ethiopian calendar",
+      "PWA",
+      "Browser extension"
+    ],
+    "highlight": "Every calculator is checked against 6,653 recorded cases from the original app, so moving the code never changed a single result.",
+    "liveUrl": "https://clixa-tools.vercel.app",
+    "featured": true,
+    "kind": "personal",
+    "areas": [
+      "health",
+      "ai"
+    ],
+    "year": "2026",
+    "status": "live",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/clixa-tools/clixa-tools-01-d5411c.webp",
+      "alt": "Search 63 calculators, or describe the case and let the assistant pick",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "video",
+        "src": "/media/projects/clixa-tools/clixa-tools-02-30c885.mp4",
+        "poster": "/media/projects/clixa-tools/clixa-tools-02-30c885.webp",
+        "alt": "The assistant runs the real calculator and shows each step",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/clixa-tools/clixa-tools-03-7d3fbf.webp",
+        "alt": "Breast cancer staged from T, N and M in a few clicks",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/clixa-tools/clixa-tools-04-0dcaca.webp",
+        "alt": "WHO z-scores and malnutrition classification for a child",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/clixa-tools/clixa-tools-05-fb3a76.webp",
+        "alt": "Every answer comes with the working, so it can be checked",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/clixa-tools/clixa-tools-06-0c7cdc.webp",
+        "alt": "Due dates shown in both the Gregorian and Ethiopian calendars",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/clixa-tools/clixa-tools-07-ca31bc.webp",
+        "alt": "Installs on a phone as an app",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Clinicians in Ethiopia were using a single HTML file full of medical calculators. It worked, but it was hard to maintain, impossible to install and easy to break. Clixa rebuilds it as a proper product without changing the maths.",
+      "The 63 calculators, the AJCC and FIGO cancer staging rules, the WHO child growth standards and the Ethiopian calendar live in one small TypeScript package with no dependencies. The same package powers an installable web app, a sidebar extension for Chrome, Edge and Firefox, and an Android app that wraps the web app.",
+      "On top of that sits an assistant. You type something like \"eGFR for a 54 year old man, creatinine 1.4\" and it picks the calculator, checks which inputs it needs, runs it and shows each step so the answer can be checked. The calculators themselves run on the device and keep working without a connection."
+    ],
+    "features": [
+      "Search 63 calculators and scores by name, specialty or symptom",
+      "Stage 14 common cancers from T, N and M categories, with a plain-language meaning for each stage",
+      "Classify child malnutrition with WHO z-scores, MUAC and edema, following the Ethiopian national guideline",
+      "Enter and read dates in the Ethiopian or Gregorian calendar for due dates and gestational age",
+      "Describe a case in plain words and let the assistant run the right calculator, with every step shown",
+      "Install it on a phone or add it to the browser as a sidebar that works offline"
+    ],
+    "challenges": [
+      "Moving 63 calculators out of a single HTML file without changing any result. A script ran the original file across 6,653 input combinations, and the new package has to reproduce every output byte for byte, alongside 301 ported self-checks.",
+      "Keeping the assistant honest. The language model never does the arithmetic; it can only search the tool list, ask for missing inputs and call the real calculators, and the app shows that trace so a clinician can verify it.",
+      "Keeping the API key off the client. The chat goes through a Cloudflare Worker that holds the Gemini key and runs the tool loop, so the browser bundle contains no secret.",
+      "Shipping one codebase to three places. The extension shares all of its code between Chrome and Firefox except a single file that handles their different sidebar APIs, and the Android app is a thin Trusted Web Activity that updates whenever the site is deployed."
+    ]
+  },
+  {
+    "slug": "soroban",
+    "name": "Soroban for Kids",
+    "tagline": "A friendly web app that teaches children the Japanese abacus, one bead at a time.",
+    "summary": "Children aged about 5 to 10 learn to read and build numbers on a soroban, then add and take away, through short lessons and games. It shows first, lets the child copy, then plays, and a wrong answer never ends a session.",
+    "category": "Education",
     "stack": [
       "react",
       "vite",
       "tailwindcss",
-      "azure"
+      "TypeScript",
+      "Framer Motion",
+      "Zustand",
+      "Web Audio API",
+      "Edge TTS",
+      "Vitest"
     ],
     "topics": [
-      "Document AI",
-      "Verification"
+      "early math",
+      "abacus",
+      "gamified learning",
+      "accessibility",
+      "narration"
     ],
-    "liveUrl": "https://certiscan.vercel.app",
-    "repoUrl": "https://github.com/BinyamMamo/certiscan",
+    "highlight": "10 lessons and 16 activity types, with spoken help in English and Amharic, and no backend or account needed.",
+    "liveUrl": "https://soroban-kids.vercel.app",
+    "repoUrl": "https://github.com/BinyamMamo/soroban",
     "featured": true,
+    "kind": "personal",
+    "areas": [
+      "learning"
+    ],
+    "year": "2026",
+    "status": "live",
     "cover": {
-      "kind": "video",
-      "src": "/media/projects/certiscan/analysis.mp4",
-      "poster": "/media/projects/certiscan/analysis.webp",
-      "alt": "Running AI analysis on an uploaded transcript",
-      "width": 1280,
-      "height": 652
+      "kind": "image",
+      "src": "/media/projects/soroban/soroban-01-074978.webp",
+      "alt": "Ten lessons that unlock in order, with stars and mastery",
+      "width": 2400,
+      "height": 1500
     },
     "gallery": [
       {
-        "kind": "video",
-        "src": "/media/projects/certiscan/verify.mp4",
-        "poster": "/media/projects/certiscan/verify.webp",
-        "alt": "Verification flow",
-        "width": 1280,
-        "height": 634
+        "kind": "image",
+        "src": "/media/projects/soroban/soroban-02-53f875.webp",
+        "alt": "A guided demo shows how to build 23, one bead at a time",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/soroban/soroban-03-c72fe8.webp",
+        "alt": "Story problems turn subtraction into beads on the rods",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/soroban/soroban-04-9741e6.webp",
+        "alt": "Match Up asks which soroban shows the number",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/soroban/soroban-05-82780d.webp",
+        "alt": "Secret Vault: set the code on the soroban before time runs out",
+        "width": 2400,
+        "height": 1500
       },
       {
         "kind": "video",
-        "src": "/media/projects/certiscan/documentdetails.mp4",
-        "poster": "/media/projects/certiscan/documentdetails.webp",
-        "alt": "Document details view",
-        "width": 1280,
-        "height": 632
+        "src": "/media/projects/soroban/soroban-06-73f499.mp4",
+        "poster": "/media/projects/soroban/soroban-06-73f499.webp",
+        "alt": "Building numbers bead by bead with the keyboard",
+        "width": 1920,
+        "height": 1200
       },
       {
-        "kind": "video",
-        "src": "/media/projects/certiscan/analysis2.mp4",
-        "poster": "/media/projects/certiscan/analysis2.webp",
-        "alt": "Extracted analysis results",
-        "width": 1280,
-        "height": 622
+        "kind": "image",
+        "src": "/media/projects/soroban/soroban-07-ff2bca.webp",
+        "alt": "Finishing a lesson earns stars, badges and the next lesson",
+        "width": 2400,
+        "height": 1500
       },
       {
-        "kind": "video",
-        "src": "/media/projects/certiscan/chatbot.mp4",
-        "poster": "/media/projects/certiscan/chatbot.webp",
-        "alt": "Assistant for attestation questions",
-        "width": 1280,
-        "height": 634
-      },
-      {
-        "kind": "video",
-        "src": "/media/projects/certiscan/chat2.mp4",
-        "poster": "/media/projects/certiscan/chat2.webp",
-        "alt": "Conversation with the assistant",
-        "width": 1280,
-        "height": 660
-      },
-      {
-        "kind": "video",
-        "src": "/media/projects/certiscan/admindashboard.mp4",
-        "poster": "/media/projects/certiscan/admindashboard.webp",
-        "alt": "Admin dashboard",
-        "width": 1280,
-        "height": 658
+        "kind": "image",
+        "src": "/media/projects/soroban/soroban-08-9ce6ed.webp",
+        "alt": "Streaks, stars and progress on a phone",
+        "width": 2400,
+        "height": 1500
       }
     ],
     "overview": [
-      "CertiScan digitizes the education attestation process. Instead of moving paper documents between offices, applicants upload their certificates and transcripts and the platform analyzes them with AI.",
-      "Each document is cross-verified with the issuing institution in real time using a digital twin approach, and predictive processing keeps applications moving. Applicants and administrators work from a clean, dashboard-driven interface."
-    ],
-    "features": [],
-    "challenges": []
-  },
-  {
-    "slug": "visionaid",
-    "name": "VisionAid",
-    "tagline": "Cross-platform assistant that helps visually impaired people navigate the world.",
-    "summary": "An accessibility app that combines computer vision, language processing and spatial audio to help visually impaired users read text, recognize objects and avoid hazards.",
-    "category": "AI and Machine Learning",
-    "stack": [
-      "flutter",
-      "firebase"
-    ],
-    "topics": [
-      "Computer vision",
-      "OCR",
-      "Accessibility"
-    ],
-    "highlight": "Built for the 19th IEEE Student Day competition with supervisors from the University of Dubai.",
-    "liveUrl": "https://visionaid.vercel.app",
-    "repoUrl": "https://github.com/orgs/VISUAL-AID/repositories",
-    "featured": true,
-    "cover": {
-      "kind": "video",
-      "src": "/media/projects/visionaid/visionaid.mp4",
-      "poster": "/media/projects/visionaid/visionaid.webp",
-      "alt": "VisionAid landing page",
-      "width": 1280,
-      "height": 614
-    },
-    "gallery": [
-      {
-        "kind": "video",
-        "src": "/media/projects/visionaid/ocr.mp4",
-        "poster": "/media/projects/visionaid/ocr.webp",
-        "alt": "Text recognition with translation and summaries",
-        "width": 1254,
-        "height": 564
-      },
-      {
-        "kind": "video",
-        "src": "/media/projects/visionaid/object.mp4",
-        "poster": "/media/projects/visionaid/object.webp",
-        "alt": "Object detection with spatial audio guidance",
-        "width": 1280,
-        "height": 550
-      },
-      {
-        "kind": "video",
-        "src": "/media/projects/visionaid/scene.mp4",
-        "poster": "/media/projects/visionaid/scene.webp",
-        "alt": "Scene description",
-        "width": 1280,
-        "height": 550
-      },
-      {
-        "kind": "video",
-        "src": "/media/projects/visionaid/hazard.mp4",
-        "poster": "/media/projects/visionaid/hazard.webp",
-        "alt": "Hazard detection with voice alerts",
-        "width": 1280,
-        "height": 550
-      }
-    ],
-    "overview": [
-      "VisionAid helps visually impaired users interact with their surroundings more independently. The app provides real-time assistance for everyday navigation and reading tasks.",
-      "It was developed for the 19th IEEE Student Day Competition as a collaboration between student developers and academic supervisors at the University of Dubai.",
-      "The app combines computer vision, natural language processing and spatial audio into a single audio-first experience."
+      "A soroban is a simple abacus with one bead worth 5 and four beads worth 1 on each rod. It is a lovely way for young children to see what numbers mean, but most apps drop a child straight into a quiz. Soroban for Kids teaches first: an animated demo with a pointing hand shows each move, the child copies it with gentle guidance, and only then do the games begin.",
+      "The course runs from \"What is a soroban?\" through single digits, two-digit numbers, adding, taking away, speed practice and a mixed review. Each lesson mixes different kinds of activities, so a child reads beads, builds numbers, remembers what changed and solves little story problems in the same sitting. Parents and teachers can see stars, mastery and streaks for each lesson.",
+      "Everything runs in the browser. Progress is saved on the device, music is generated live with Web Audio, and narration uses pre-recorded voice clips, so it works without an account or a server."
     ],
     "features": [
-      "Real-time text scanning and recognition",
-      "Arabic translation of recognized text",
-      "AI-generated summaries for faster comprehension",
-      "Object detection with spatial audio guidance",
-      "Scene analysis with context-aware descriptions",
-      "Hazard detection with immediate voice alerts",
-      "Distance estimation for safer navigation",
-      "Custom object training for personalized recognition"
+      "Follow a guided demo, then copy it on a real-looking soroban by tapping, dragging or using the keyboard",
+      "Play 16 activity types, from Match Up and story problems to a timed Secret Vault that opens when the right code is set",
+      "Hear every instruction read aloud by a choice of English or Amharic narrators, with separate switches for narration, sound effects and music",
+      "Earn stars, badges and daily streaks, and unlock the next lesson when one is finished",
+      "Switch on dark mode, pick a colour theme, or calm the animations with a reduced motion setting",
+      "Practise freely in the Games tab or a free explore mode without affecting lesson progress"
     ],
     "challenges": [
-      "Running computer vision in real time on mobile devices",
-      "Producing accurate spatial audio cues for object locations",
-      "Supporting multiple languages, with a focus on Arabic",
-      "Keeping models fast on mobile without losing accuracy",
-      "Designing an interface that works entirely through audio"
+      "Making the abacus usable without a mouse or sight. Each rod is an ARIA spinbutton that takes arrow keys or a typed digit, the whole soroban announces its value, and a live region reads out changes for screen readers.",
+      "Building narration that sounds warm and still covers every number. Short Edge TTS clips for phrases and numbers are generated ahead of time and stitched together at runtime, with the browser's own voice as a fallback when a clip is missing.",
+      "Keeping mistakes gentle. Wrong answers show the next correct move with a glowing bead and a pointing hand instead of failing the session, and the pure soroban logic behind these hints is covered by unit tests.",
+      "Keeping the lessons varied without hand-writing every screen. Lessons are plain data that combine teach cards and activity steps, and each activity generates its own numbers from a seed, so a new lesson or game type slots into the map without new UI code."
+    ]
+  },
+  {
+    "slug": "solar-farm-drone",
+    "name": "Solar Farm Drone",
+    "tagline": "A simulated drone that flies a full inspection of an 80-table solar farm and lands itself.",
+    "summary": "A Webots simulation of a DJI Mavic 2 Pro surveying an L shaped solar farm. It plans its own lawnmower route from the farm layout, checks off every table its camera passes over, and returns to its pad.",
+    "category": "Robotics",
+    "stack": [
+      "python",
+      "Webots"
+    ],
+    "topics": [
+      "drone inspection",
+      "path planning",
+      "flight control",
+      "simulation",
+      "solar energy"
+    ],
+    "highlight": "One sortie covers all 80 tables: 452 m of route, 6 survey passes and about 190 s in the air.",
+    "repoUrl": "https://github.com/BinyamMamo/solar-farm-drone",
+    "featured": true,
+    "kind": "personal",
+    "areas": [
+      "robotics"
+    ],
+    "year": "2026",
+    "status": "live",
+    "demo": {
+      "url": "https://solar-farm-drone-replay.vercel.app",
+      "label": "Explore the 3D replay"
+    },
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/solar-farm-drone/solar-farm-drone-01-33dfad.webp",
+      "alt": "The drone climbs off its pad beside the solar farm",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/solar-farm-drone/solar-farm-drone-02-ce13ed.webp",
+        "alt": "Flying the first survey pass at 12 m over the south arm",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "video",
+        "src": "/media/projects/solar-farm-drone/solar-farm-drone-03-d62c10.mp4",
+        "poster": "/media/projects/solar-farm-drone/solar-farm-drone-03-d62c10.webp",
+        "alt": "Replay of a survey pass, straight from the Webots recording",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/solar-farm-drone/solar-farm-drone-04-40aa1a.webp",
+        "alt": "Looking down on the drone as it tracks a row of panels",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/solar-farm-drone/solar-farm-drone-05-2d577f.webp",
+        "alt": "Turning at the end of a pass to start the next one",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/solar-farm-drone/solar-farm-drone-06-0b908b.webp",
+        "alt": "Each table: two 72-cell panels on a 25 degree rack",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/solar-farm-drone/solar-farm-drone-07-a69230.webp",
+        "alt": "The corner of the L where the two arms meet",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/solar-farm-drone/solar-farm-drone-08-1efa24.webp",
+        "alt": "The first version: fenced site, service roads and a live sun clock",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Solar farms are inspected by drones that fly slow, overlapping passes so a camera can spot dirty or damaged panels. This project builds that job in the Webots robot simulator: an L shaped farm of 80 fixed-tilt tables, about 74 kWp of panels, and a stock DJI Mavic 2 Pro with real propellers, GPS, IMU and a gimbal camera.",
+      "The drone takes off, flies three passes over each arm of the farm, transits between them, and lands back on its pad. The route is not hard coded. A single Python generator describes the farm, writes the world file and a layout file from the same numbers, and the controller plans its passes from that layout, so changing the row count or spacing changes the flight automatically.",
+      "Coverage is measured rather than assumed. As the camera footprint sweeps the array, the controller ticks off each table and prints the final count on landing, along with distance flown and time in the air."
+    ],
+    "features": [
+      "Watch a replay of the flight in 3D in the browser, orbit around it and scrub through the timeline",
+      "Generate a new farm layout from one Python file and the survey route follows it",
+      "Preview every leg of the route as an ASCII map without opening Webots",
+      "Get a flight log with position, speed and tables covered every 15 seconds",
+      "Render preview images headless from a supervisor camera that moves between set poses",
+      "Spot soiled tables, since selected panels carry a generated dust layer"
+    ],
+    "challenges": [
+      "Holding a steady 3 m/s was harder than nudging the stick, because the simulated air drags the drone to a stop. The guidance loop asks for an acceleration that cancels the drag and then converts it into the bank angle that produces it, which is what a real multirotor has to do.",
+      "Stepping straight to a 15 degree bank out-torqued the inner attitude loop and flipped the airframe. Ramping the tilt command at a fixed rate fixed it without making the drone feel sluggish.",
+      "Chasing corner waypoints made the drone cut across the rows. It now follows a point 6 m ahead along the current leg and slows down while its nose swings round at the end of a pass, so each pass is a straight line over the panels.",
+      "An earlier version tumbled out of the sky whenever it tried to cruise, because the sample controller's rate damping was far too low for real speeds. Raising the damping to about critical and slew-limiting the forward command made it stable."
     ]
   },
   {
     "slug": "funkey",
     "name": "Funkey",
-    "tagline": "Learn to type with song lyrics, a piano mode and AI-generated practice.",
-    "summary": "A typing trainer that replaces dull drills with song lyrics, a piano-style keyboard mode and AI-generated practice text that adapts to your level.",
+    "tagline": "Learn to type along to song lyrics, a piano mode and AI-written practice text.",
+    "summary": "Funkey turns typing practice into something you want to do. You type the lyrics of a song while it plays, play melodies on a keyboard piano, or practice with generated text, and it tracks your speed and progress.",
     "category": "Web",
     "stack": [
       "react",
-      "nestjs",
-      "tailwindcss"
+      "tailwindcss",
+      "nodejs",
+      "express",
+      "mongodb",
+      "gemini"
+    ],
+    "topics": [
+      "typing practice",
+      "music",
+      "gamification"
     ],
     "highlight": "Selected as one of the top 5 capstone projects in the ALX Software Engineering program.",
     "liveUrl": "https://funkey-frontend.vercel.app",
     "repoUrl": "https://github.com/BinyamMamo/funkey-backend",
     "featured": true,
+    "kind": "personal",
+    "areas": [
+      "learning"
+    ],
+    "year": "2024",
+    "status": "prototype",
     "cover": {
-      "kind": "video",
-      "src": "/media/projects/funkey/browse.mp4",
-      "poster": "/media/projects/funkey/browse.webp",
-      "alt": "Browsing songs to type along with",
-      "width": 1280,
-      "height": 614
+      "kind": "image",
+      "src": "/media/projects/funkey/funkey-01-ef0467.webp",
+      "alt": "Pick a song to type along with, filtered by level and genre",
+      "width": 2400,
+      "height": 1500
     },
     "gallery": [
       {
         "kind": "video",
-        "src": "/media/projects/funkey/practice.mp4",
-        "poster": "/media/projects/funkey/practice.webp",
-        "alt": "Practice mode",
-        "width": 1280,
-        "height": 614
+        "src": "/media/projects/funkey/funkey-02-5075fa.mp4",
+        "poster": "/media/projects/funkey/funkey-02-5075fa.webp",
+        "alt": "Practice mode lights up each word as you type it",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/funkey/funkey-03-a9a182.webp",
+        "alt": "A profile with streaks, favorite genres and progress",
+        "width": 2400,
+        "height": 1500
       },
       {
         "kind": "video",
-        "src": "/media/projects/funkey/piano.mp4",
-        "poster": "/media/projects/funkey/piano.webp",
-        "alt": "Piano typing mode",
-        "width": 1280,
-        "height": 612
+        "src": "/media/projects/funkey/funkey-04-a73d47.mp4",
+        "poster": "/media/projects/funkey/funkey-04-a73d47.webp",
+        "alt": "Piano mode in the original full-stack app",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "video",
+        "src": "/media/projects/funkey/funkey-05-83b123.mp4",
+        "poster": "/media/projects/funkey/funkey-05-83b123.webp",
+        "alt": "Typing along to lyrics in the original app",
+        "width": 1920,
+        "height": 1200
       }
     ],
     "overview": [
-      "Funkey makes learning to type fun. Instead of repeating random words, you type along to real song lyrics, play a piano-style keyboard, or practice with AI-generated text that sounds familiar.",
-      "It works for beginners learning the home row and for experienced typists chasing speed."
+      "Typing drills get boring fast, which is why many people never get past hunting for keys. Funkey swaps random words for things people already enjoy: song lyrics, music and text that reads like real sentences.",
+      "In lyrics mode a music video plays while you type the words in time with it. Practice mode gives you timed or word-count runs with live words per minute. Piano mode maps keys to notes so typing a melody plays it.",
+      "The first version was a full-stack Express and MongoDB app with accounts, song uploads and Gemini-generated practice text. It was later rebuilt as a React front end with a song gallery, leaderboard and profile pages."
     ],
     "features": [
-      "Lyrics-based typing practice using popular songs",
-      "Piano-style keyboard mode for a musical typing experience",
-      "AI-generated practice content that adapts to your skill level",
-      "Real-time performance tracking and statistics",
-      "Customizable practice sessions"
+      "Browse songs by difficulty and genre, including Ethiopian music",
+      "Type lyrics in sync with the music video, with speed and volume controls",
+      "Timed and word-count practice runs with live words per minute",
+      "Choose the cursor style and add capitals, numbers or symbols",
+      "Play melodies in piano mode",
+      "Track streaks, favorite genres and progress on a profile and leaderboard"
     ],
     "challenges": [
-      "Keeping the typing interface responsive across devices",
-      "Synchronizing typing progress with song lyrics",
-      "Generating practice content that fits the user and the context",
-      "Handling rapid keystrokes without dropping updates"
+      "Lining up lyric lines with the video by turning subtitle files into timed text",
+      "Handling fast keystrokes without dropped letters by tracking the cursor per character",
+      "Generating practice text with Gemini that suits the chosen level",
+      "Moving from server-rendered EJS pages to a React front end without losing features"
+    ]
+  },
+  {
+    "slug": "drone-hunter",
+    "name": "Drone Hunter",
+    "tagline": "A simulated drone that finds and chases a moving rover using only its camera.",
+    "summary": "A Webots simulation where a Mavic 2 Pro hunts a wandering ground rover. A reinforcement learning policy decides where to steer, classic control keeps the aircraft flying, and the rover is found by colour in the camera image.",
+    "category": "Robotics",
+    "stack": [
+      "python",
+      "Webots",
+      "Stable-Baselines3",
+      "Gymnasium",
+      "NumPy"
+    ],
+    "topics": [
+      "reinforcement learning",
+      "PPO",
+      "drone pursuit",
+      "computer vision",
+      "simulation"
+    ],
+    "highlight": "One sign flip between training and deployment took time on target from almost nothing to 87%.",
+    "repoUrl": "https://github.com/BinyamMamo/drone-hunter",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "robotics",
+      "ai"
+    ],
+    "year": "2026",
+    "status": "live",
+    "demo": {
+      "url": "https://drone-hunter-replay.vercel.app",
+      "label": "Explore the 3D replay"
+    },
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/drone-hunter/drone-hunter-01-3c2885.webp",
+      "alt": "The drone closes in on the rover it spotted with its camera",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/drone-hunter/drone-hunter-02-1d8522.webp",
+        "alt": "A trained PPO policy steers the chase from above",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "video",
+        "src": "/media/projects/drone-hunter/drone-hunter-03-d2ff13.mp4",
+        "poster": "/media/projects/drone-hunter/drone-hunter-03-d2ff13.webp",
+        "alt": "Replay of the chase, straight from the Webots recording",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/drone-hunter/drone-hunter-04-af0906.webp",
+        "alt": "Locking on right after takeoff, with the rover in frame",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/drone-hunter/drone-hunter-05-c97930.webp",
+        "alt": "Top view of the walled arena, the rover and the drone",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/drone-hunter/drone-hunter-06-70bbef.webp",
+        "alt": "Range drifts too far and the rover slips out of view",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "A drone that follows a moving target has two jobs: stay in the air, and decide where to go. This project keeps the first job classical, because attitude and altitude hold are a solved problem, and hands the second to a reinforcement learning policy trained with PPO. About 15 times a second, the policy outputs just two numbers: how hard to turn and how hard to push forward.",
+      "Training uses a shortcut. The trainer reads the rover's position straight from the simulator, so it never renders a camera frame, which is the slowest part of the simulation. When the drone flies for real, the same inputs are rebuilt from pixels: a magenta blob gives the bearing, and the blob's height in the image plus the altimeter gives the range.",
+      "After 120,000 training steps the drone keeps the rover in its sights about 87% of the time and centres it smoothly. Keeping the right distance is still weak: range drifts out past the 9 m target until the rover slips out of view and the search sweep has to find it again."
+    ],
+    "features": [
+      "Watch a replay of the chase in 3D in the browser, orbit around it and scrub through the timeline",
+      "Train the pursuit policy with PPO inside Webots in about 800 episodes",
+      "Fly the trained policy from the camera alone, with coast and search modes when the rover is lost",
+      "Compare against the earlier hand-tuned controller in a sibling world on the same task",
+      "Reuse the Gymnasium environment, reward and observation for other guidance experiments"
+    ],
+    "challenges": [
+      "Webots returns garbage sensor readings until the simulation has stepped once. Feeding that into the motor mix made the physics explode, with altitudes of 9,320 m and speeds of 1,464 m/s, so the controllers now step before reading anything.",
+      "A policy that reverses the stick every 64 ms drove the pitch to 66 degrees, where lift collapses. Smoothing the command with a 100 ms filter and quadrupling the rate damping kept the aircraft flyable under any command sequence.",
+      "Two well meant changes to the observations, clamping the bearing at the frame edge and holding the last range, made learning flatline near 7% time on target. Honest geometry plus a separate visibility flag reached 54% in training.",
+      "The trained policy turned the wrong way when flying from the camera, because image columns grow to the right while the trainer measured angles with left as positive. Every logged bearing came out negative, which gave it away, and one minus sign fixed it."
+    ]
+  },
+  {
+    "slug": "avatar-kit",
+    "name": "Avatar Kit",
+    "tagline": "Cartoon avatars in the browser that copy your face, lip sync to your voice and swing their hair.",
+    "summary": "Avatar Kit draws animated 2D characters that follow your head, eyes and mouth through the webcam and talk when you speak into the microphone. Their hair and bodies move with real physics, so you can grab a strand and flick it.",
+    "category": "Graphics",
+    "stack": [
+      "PixiJS",
+      "MediaPipe",
+      "TypeScript",
+      "vite",
+      "tailwindcss",
+      "Vitest",
+      "Playwright"
+    ],
+    "topics": [
+      "face tracking",
+      "physics simulation",
+      "shaders",
+      "animation"
+    ],
+    "highlight": "Based on Radu Mariescu-Istodor's talking avatar video, rebuilt on PixiJS with markerless face tracking, voice, shader styles and two new characters.",
+    "liveUrl": "https://avatar-kit-eta.vercel.app",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "vision"
+    ],
+    "year": "2026",
+    "status": "live",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/avatar-kit/avatar-kit-01-c275f7.webp",
+      "alt": "The avatar copies the face in the webcam, shown in the corner",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "video",
+        "src": "/media/projects/avatar-kit/avatar-kit-02-d1e53d.mp4",
+        "poster": "/media/projects/avatar-kit/avatar-kit-02-d1e53d.webp",
+        "alt": "The webcam drives the face while flicked hair swings, then the style changes to ink, halftone and glow",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/avatar-kit/avatar-kit-03-1f91ad.webp",
+        "alt": "Three characters to choose from in a swipeable carousel",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/avatar-kit/avatar-kit-04-59adb6.webp",
+        "alt": "Grab a strand of hair and pull it, drawn in the ink style",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/avatar-kit/avatar-kit-05-da1b65.webp",
+        "alt": "A halftone print shader on the jelly character",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/avatar-kit/avatar-kit-06-9e8835.webp",
+        "alt": "Neon glow style in dark mode, still following the webcam",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Avatar Kit started from Radu Mariescu-Istodor's video \"JavaScript Talking Avatar with Face Tracking\", which builds a character with pendulum hair from scratch. The classic avatar ports that character and its hair and head-turn tricks, and the project rebuilds everything on PixiJS so it can grow.",
+      "Open an avatar, turn on the camera and it mirrors you: head turns, blinks, eye direction, eyebrows, smiles and an open mouth all come from MediaPipe face tracking in the browser. Turn on the microphone instead and the mouth moves with your voice. With neither, the avatar breathes, blinks and glances around on its own.",
+      "Each character is a small script that draws with a Canvas-like pen and hangs hair, antennae or a jelly body off a Verlet physics solver. Any style, from flat to ink outlines, a halftone print shader or neon glow, works on every avatar without extra code."
+    ],
+    "features": [
+      "Pick one of three avatars from a swipeable carousel",
+      "Drive the face with your webcam: head pose, blinks, gaze, brows and mouth",
+      "Make it talk by speaking into the microphone",
+      "Grab and flick hair, antennae or a jelly body with the mouse",
+      "Switch between flat, ink, halftone and glow styles with one key",
+      "Works in light and dark mode, with a debug panel for rig sliders and the physics skeleton"
+    ],
+    "challenges": [
+      "Keeping face tracking steady without lag by smoothing every channel with One Euro filters and recentring on your neutral pose",
+      "Matching the original hair physics exactly: a parity test checks the new Verlet solver against the 2022 code step by step",
+      "Mixing idle motion, pointer, face and voice into one rig so drivers never need to know which avatar they control",
+      "Drawing on the CPU with a pen that triangulates each shape, so squashing a head never distorts line widths and shader styles apply to any avatar"
+    ]
+  },
+  {
+    "slug": "rima",
+    "name": "RIMA",
+    "tagline": "A group chat with an assistant that keeps track of tasks, decisions and follow-ups.",
+    "summary": "RIMA is a chat-first workspace where friends, families and teams talk normally and an assistant quietly turns the conversation into tasks, reminders and summaries. Instead of filling in forms, you mention @RIMA and ask.",
+    "category": "AI and Machine Learning",
+    "stack": [
+      "Next.js",
+      "react",
+      "TypeScript",
+      "tailwindcss",
+      "Zustand",
+      "gemini",
+      "PWA"
+    ],
+    "topics": [
+      "AI assistant",
+      "Group chat",
+      "Task tracking",
+      "Voice",
+      "PWA"
+    ],
+    "highlight": "Ask @RIMA to summarize a room and it reads the recent conversation and answers in plain language, with who is blocked and what is due.",
+    "liveUrl": "https://rima-chi.vercel.app",
+    "repoUrl": "https://github.com/BinyamMamo/rima",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "ai",
+      "platforms"
+    ],
+    "year": "2026",
+    "status": "prototype",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/rima/rima-01-082c9d.webp",
+      "alt": "Every part of life in one place: trips, family, work and health",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/rima/rima-02-f267c0.webp",
+        "alt": "Rima turns a normal group chat into tracked tasks and reminders",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/rima/rima-03-65c17c.webp",
+        "alt": "Focused rooms keep one project's decisions and follow-ups together",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/rima/rima-04-cbff35.webp",
+        "alt": "A dashboard that spots open questions, urgent items and blockers",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/rima/rima-05-09eb48.webp",
+        "alt": "Workspaces and rooms grouped by work, life, study and health",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/rima/rima-06-5d6aaf.webp",
+        "alt": "Ask who needs attention and get a straight answer",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Plans get lost in group chats. Someone says they will book the flights by Friday, someone else is waiting on a survey, and a week later nobody remembers who owed what. RIMA keeps the chat but adds an assistant that listens for those moments.",
+      "Each workspace, such as a trip, a family, a company program or a personal health space, has a main conversation and smaller rooms for focused topics. Mentioning @RIMA lets you create rooms, add people, or ask for a recap, and the assistant replies in the thread using the recent messages as context.",
+      "A dashboard view for each workspace pulls out open questions, urgent messages and blocked work, so you can see where things stand without scrolling back. The app is built as an installable phone app, and a voice mode lets you talk to the assistant out loud."
+    ],
+    "features": [
+      "Organize life into workspaces with focused rooms, grouped by work, life, study and health",
+      "Mention @RIMA to create a room, add a member or get a summary of the discussion",
+      "Ask open questions in a room and get an answer based on the latest messages",
+      "See a dashboard of open questions, urgent items and blocked work for each workspace",
+      "Talk to the assistant by voice instead of typing",
+      "Try everything in a demo mode with sample workspaces, no account needed"
+    ],
+    "challenges": [
+      "Making the assistant useful inside a busy chat without answering every message. RIMA only responds when it is mentioned, handles simple commands like creating rooms and adding people directly, and sends everything else to Gemini with the last few messages as context.",
+      "Pulling tasks out of casual writing. Messages like \"@Maryam please book flights due Friday\" are parsed into an owner, a task and a deadline, which feed the workspace dashboard.",
+      "Keeping a realistic demo without a backend. Sample workspaces are seeded from a SQLite script, exported to JSON and kept in a persisted client store, so every visitor gets the same populated app and their changes stay on their own device.",
+      "Supporting real-time voice. The voice mode streams microphone audio to Gemini's native audio model and plays the reply back, with clear states for connecting, listening and speaking."
+    ]
+  },
+  {
+    "slug": "quest-eureka",
+    "name": "QuestEureka",
+    "tagline": "Turns a textbook into short lessons, quizzes and streaks, like a language app for any subject.",
+    "summary": "QuestEureka breaks a textbook into chapters and bite-sized lessons that students unlock one by one, with quick quizzes, daily goals, gems and a weekly leaderboard. The idea is to make studying feel more like a game than a chore.",
+    "category": "Education",
+    "stack": [
+      "react",
+      "vite",
+      "tailwindcss",
+      "firebase",
+      "gemini"
+    ],
+    "topics": [
+      "Gamified learning",
+      "Quizzes",
+      "Leaderboards",
+      "EdTech"
+    ],
+    "highlight": "Uses the streaks, leagues and unlockable paths that make language apps sticky, applied to ordinary course textbooks.",
+    "liveUrl": "https://quest-eureka.vercel.app",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "learning",
+      "ai"
+    ],
+    "year": "2025",
+    "status": "prototype",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/quest-eureka/quest-eureka-01-26e3a3.webp",
+      "alt": "Each textbook section becomes a path of lessons to unlock",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/quest-eureka/quest-eureka-02-4bde44.webp",
+        "alt": "Chapters broken into short lessons, finished ones marked off",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/quest-eureka/quest-eureka-03-4fb232.webp",
+        "alt": "Quick multiple-choice checks with hints",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/quest-eureka/quest-eureka-04-56ed5c.webp",
+        "alt": "Weekly leagues keep classmates competing",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/quest-eureka/quest-eureka-05-31b4d5.webp",
+        "alt": "Streaks, XP, gems and badges in one profile",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/quest-eureka/quest-eureka-06-420b39.webp",
+        "alt": "The public landing page",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Most students open a textbook, read a few pages and lose focus. Apps like Duolingo keep people coming back every day with small lessons, streaks and friendly competition. QuestEureka applies the same ideas to course material.",
+      "A course is split into chapters, and each chapter into short lessons laid out as a path. Finishing a lesson unlocks the next one, and a chapter exam unlocks the following chapter. Each lesson ends with a few multiple-choice questions, with hints and a link back to the reading.",
+      "Progress earns XP and gems. Students keep a daily streak, protect it with streak freezes, climb weekly leagues and spend gems in a shop. Sign-in and progress are stored in Firebase, and Gemini prompts were written to turn uploaded textbook text into chapters, questions, flashcards and summaries."
+    ],
+    "features": [
+      "Follow a course as a path of short lessons that unlock in order",
+      "Answer quick multiple-choice questions after each lesson, with hints when stuck",
+      "Keep a daily streak and set a daily goal for how many lessons to finish",
+      "Compete on weekly, monthly and all-time leaderboards grouped into leagues",
+      "Track XP, gems and badges on a personal profile",
+      "Sign in with Google and pick up progress on any device"
+    ],
+    "challenges": [
+      "Turning unstructured textbook text into a clean course. The Gemini prompts ask for a fixed JSON shape of chapters, subchapters, questions with explanations, and a final exam, so the app can render whatever comes back.",
+      "Designing progression that feels fair: lessons unlock in sequence, a chapter exam gates the next chapter, and streak freezes and hints give students a way to recover without losing momentum.",
+      "Keeping user progress consistent across pages. Streak, gems, hints and XP live in a single Firestore progress document that is created on first sign-in and read by the dashboard, lessons, shop and leaderboard."
+    ]
+  },
+  {
+    "slug": "visionaid",
+    "name": "VisionAid",
+    "tagline": "A phone assistant that reads, recognizes and warns for people with low vision.",
+    "summary": "VisionAid turns a phone camera into a talking guide for people who are blind or have low vision. It reads text out loud, finds objects, describes the scene and warns about traffic, and it is driven by voice rather than by looking at a screen.",
+    "category": "AI and Machine Learning",
+    "stack": [
+      "flutter",
+      "TensorFlow Lite",
+      "YOLO",
+      "Google ML Kit",
+      "gemini",
+      "Astro",
+      "react",
+      "tailwindcss"
+    ],
+    "topics": [
+      "Accessibility",
+      "Computer vision",
+      "OCR",
+      "Voice interface",
+      "On-device AI"
+    ],
+    "highlight": "Built for the 19th IEEE Student Day competition with supervisors from the University of Dubai.",
+    "liveUrl": "https://visionaid.vercel.app",
+    "repoUrl": "https://github.com/VISUAL-AID/landing-page",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "ai",
+      "vision"
+    ],
+    "year": "2025",
+    "status": "prototype",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/visionaid/visionaid-01-acb743.webp",
+      "alt": "Reads printed text aloud, translates it to Arabic and summarizes it",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/visionaid/visionaid-02-c3b783.webp",
+        "alt": "Finds a named object and talks the user toward it",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/visionaid/visionaid-03-16b797.webp",
+        "alt": "Describes the surroundings, weather included",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/visionaid/visionaid-04-7182c1.webp",
+        "alt": "Warns about cars, cyclists and pedestrians in the way",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/visionaid/visionaid-05-4c2c98.webp",
+        "alt": "The landing page on a phone",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/visionaid/visionaid-06-0feba8.webp",
+        "alt": "An assistant for people who are blind or have low vision",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Everyday things like reading a letter, finding a chair or crossing a street near traffic are hard without sight. VisionAid puts help for those moments into one Flutter app that talks back instead of expecting the user to read a screen.",
+      "The user speaks a command and a small language model running on the phone decides which tool to open: reading text, finding an object, describing the scene or watching for hazards. Every answer comes back as speech, with vibration used for direction.",
+      "Object detection, hazard detection and scene recognition run on the phone with TensorFlow Lite models. Gemini is used where language matters: cleaning up scanned text, writing summaries and turning a camera frame into a natural description. The app was built by a student team for the 19th IEEE Student Day competition, supervised by faculty from the University of Dubai."
+    ],
+    "features": [
+      "Point the camera at a page and hear the text read aloud, with an Arabic translation or a short summary on request",
+      "Say what you are looking for and get spoken and vibration cues that guide you toward it",
+      "Ask what is around you and hear a description of the place, including the current weather",
+      "Get an immediate spoken warning when a car, cyclist or pedestrian is in your path",
+      "Control the whole app by voice, and long-press any button to hear its name",
+      "Use the interface in English or Arabic"
+    ],
+    "challenges": [
+      "Running a YOLO11 object detector on live camera frames on a mid-range phone, using a float16 TensorFlow Lite model and throttling spoken guidance so the user is not flooded with repeated messages.",
+      "Raw OCR output from signs and packaging is noisy, so a Gemini pass filters the recognized text before it is read aloud, instead of speaking every stray character.",
+      "Mapping free-form speech to app actions without a network round trip, by training a small text classifier in Python and shipping it with its tokenizer as a TensorFlow Lite model inside the app.",
+      "Designing an interface that works without looking at it: large targets, spoken labels on long-press, audio and haptic feedback for every state change."
+    ]
+  },
+  {
+    "slug": "flight-plan",
+    "name": "Flight Plan",
+    "tagline": "A hands-on guide for a high school student designing a reusable spaceplane.",
+    "summary": "Flight Plan is a one-page website that walks a secondary school student through designing a spaceplane that launches like a rocket, lands on a runway and flies again. It mixes a step by step plan with simulations you can drag, learning paths, free resources and career advice.",
+    "category": "Education",
+    "stack": [
+      "javascript",
+      "Three.js"
+    ],
+    "topics": [
+      "aerospace",
+      "physics simulations",
+      "self-directed learning"
+    ],
+    "highlight": "Three physics simulations built from real equations in plain JavaScript, with no framework or build step.",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "learning"
+    ],
+    "year": "2026",
+    "status": "local",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/flight-plan/flight-plan-01-3d53a5.webp",
+      "alt": "The whole mission, from launch to runway, in one picture",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/flight-plan/flight-plan-02-bde210.webp",
+        "alt": "Change the sideways speed and watch the orbit stretch",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "video",
+        "src": "/media/projects/flight-plan/flight-plan-03-a0fb1c.mp4",
+        "poster": "/media/projects/flight-plan/flight-plan-03-a0fb1c.webp",
+        "alt": "Dragging speed from a crash, to an ellipse, to escape",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/flight-plan/flight-plan-04-3f7200.webp",
+        "alt": "The rocket equation shows why rockets are mostly fuel",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/flight-plan/flight-plan-05-06bac9.webp",
+        "alt": "Finding the narrow angle that makes reentry survivable",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/flight-plan/flight-plan-06-1d27a9.webp",
+        "alt": "A short quiz that suggests which aerospace track fits",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "A student in Addis Ababa wanted to design a reusable spaceplane but had no clear place to start. Flight Plan breaks that big goal into seven phases, each with one deliverable, the free tools to use and what to do in the first week.",
+      "The Basics tab has three simulations you move with sliders. You can see how speed turns an orbit into a crash, an ellipse or an escape. You can see why a rocket has to be mostly fuel, and how narrow the safe angle for reentry is. Each one uses the real equation and says where it simplifies.",
+      "The rest of the site covers short learning roadmaps, a filterable shelf of about 50 free resources, a quiz that suggests aerospace careers, ways to get noticed and competitions open to students in Ethiopia. Everything lives in one HTML file."
+    ],
+    "features": [
+      "Follow a seven-phase plan from first idea to a vehicle that flies again",
+      "Drag orbital speed and watch the path become a crash, circle, ellipse or escape",
+      "Change engine type and fuel share to see if a rocket reaches orbit",
+      "Pick a reentry angle and see heating and g-forces for that path",
+      "Take a six-question quiz that suggests two aerospace career tracks",
+      "Filter about 50 free courses, tools and trackers"
+    ],
+    "challenges": [
+      "Simulating two-body orbits in the browser accurately enough to report apogee, perigee and period",
+      "Keeping seven tabs, three simulations and a Three.js hero in one self-contained HTML file that stays fast",
+      "Writing a validation script that checks the JavaScript parses, ids are unique and no em dashes slip in before each deploy",
+      "Explaining physics in plain language for a 16 year old without hiding where the numbers come from"
     ]
   },
   {
     "slug": "peersphere",
     "name": "PeerSphere",
-    "tagline": "Peer tutoring platform connecting university students with qualified tutors.",
-    "summary": "A peer tutoring platform with separate experiences for students, tutors and administrators, covering discovery, booking, session management and progress tracking.",
+    "tagline": "Peer tutoring for university students, with student, tutor and admin views.",
+    "summary": "PeerSphere helps students find a fellow student who can tutor them and book a session in a few clicks. Tutors manage their calendar and earnings, and admins approve tutors and watch how the platform is doing.",
     "category": "Web",
     "stack": [
       "react",
       "vite",
       "tailwindcss",
       "reactRouter",
+      "recharts",
       "javascript"
     ],
     "topics": [
-      "Education"
+      "peer tutoring",
+      "role-based dashboards",
+      "booking"
     ],
     "liveUrl": "https://peersphere.vercel.app",
     "repoUrl": "https://github.com/BinyamMamo/PeerSphere",
     "featured": false,
+    "kind": "personal",
+    "areas": [
+      "learning",
+      "platforms"
+    ],
+    "year": "2025",
+    "status": "prototype",
     "cover": {
-      "kind": "video",
-      "src": "/media/projects/peersphere/overview.mp4",
-      "poster": "/media/projects/peersphere/overview.webp",
-      "alt": "Student dashboard and tutor booking",
-      "width": 1280,
-      "height": 664
+      "kind": "image",
+      "src": "/media/projects/peersphere/peersphere-01-a769b3.webp",
+      "alt": "Admins track sessions, revenue and popular subjects",
+      "width": 2400,
+      "height": 1500
     },
     "gallery": [
       {
-        "kind": "video",
-        "src": "/media/projects/peersphere/admin.mp4",
-        "poster": "/media/projects/peersphere/admin.webp",
-        "alt": "Administrator oversight tools",
-        "width": 1280,
-        "height": 664
+        "kind": "image",
+        "src": "/media/projects/peersphere/peersphere-02-297d9b.webp",
+        "alt": "Students browse peer tutors by subject and rating",
+        "width": 2400,
+        "height": 1500
       },
       {
         "kind": "image",
-        "src": "/media/projects/peersphere/screenshot-1.webp",
-        "alt": "PeerSphere dashboard",
-        "width": 1600,
-        "height": 830
-      }
-    ],
-    "overview": [
-      "PeerSphere connects university students with qualified peer tutors, making academic support more accessible and affordable by drawing on the knowledge of fellow students.",
-      "Students find and book sessions, tutors manage their availability and earnings, and administrators approve tutors and monitor platform activity. A demo mode lets you switch between roles to explore each one."
-    ],
-    "features": [
-      "Role-based experience for students, tutors and administrators",
-      "Tutor discovery and booking for students",
-      "Session management with progress tracking",
-      "Tutor availability management and earnings dashboard",
-      "Tutor approval and session monitoring for administrators",
-      "Platform analytics and performance metrics",
-      "Demo mode with role switching"
-    ],
-    "challenges": [
-      "Designing three distinct experiences that still feel like one product",
-      "Handling availability conflicts in the booking flow",
-      "Managing shared state across multiple user roles",
-      "Structuring the front end so a real backend can be added later"
-    ]
-  },
-  {
-    "slug": "mindwave",
-    "name": "MindWave",
-    "tagline": "Bite-sized, science-backed mental wellness in a scrollable feed.",
-    "summary": "A mobile-first wellness app that pairs micro-habits, quick relief tools and fractal progress visuals with a familiar vertical feed of 15 to 30 second interactions.",
-    "category": "Web",
-    "stack": [
-      "react",
-      "vite",
-      "tailwindcss",
-      "framerMotion",
-      "reactRouter"
-    ],
-    "topics": [
-      "Health",
-      "Habits"
-    ],
-    "liveUrl": "https://mindwaveuae.vercel.app",
-    "featured": false,
-    "cover": {
-      "kind": "video",
-      "src": "/media/projects/mindwave/overview.mp4",
-      "poster": "/media/projects/mindwave/overview.webp",
-      "alt": "MindWave feed",
-      "width": 1280,
-      "height": 664
-    },
-    "gallery": [
-      {
-        "kind": "video",
-        "src": "/media/projects/mindwave/tools.mp4",
-        "poster": "/media/projects/mindwave/tools.webp",
-        "alt": "Quick relief tools",
-        "width": 1280,
-        "height": 664
+        "src": "/media/projects/peersphere/peersphere-03-de3a23.webp",
+        "alt": "Booking a session with subject, date, time and place",
+        "width": 2400,
+        "height": 1500
       },
       {
         "kind": "video",
-        "src": "/media/projects/mindwave/habits.mp4",
-        "poster": "/media/projects/mindwave/habits.webp",
-        "alt": "Habit tracking with fractal visualization",
-        "width": 1280,
-        "height": 664
+        "src": "/media/projects/peersphere/peersphere-04-714fb1.mp4",
+        "poster": "/media/projects/peersphere/peersphere-04-714fb1.webp",
+        "alt": "From tutor list to a confirmed session",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/peersphere/peersphere-05-6ff8fe.webp",
+        "alt": "Tutors see upcoming sessions on their calendar",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/peersphere/peersphere-06-6d6b80.webp",
+        "alt": "Every session across the platform in one table",
+        "width": 2400,
+        "height": 1500
       }
     ],
     "overview": [
-      "MindWave delivers science-backed approaches to mental wellness through short interactions designed for modern attention spans, presented in a vertical scrolling feed.",
-      "Completing micro-habits grows a fractal visualization, giving users a visible sense of progress. All data stays in local storage, so the app needs no account and no backend."
+      "Getting help from a student who took the same course last year is often cheaper and more useful than a formal tutor, but finding that person is hard. PeerSphere puts those tutors in one place, with their subjects, ratings and open time slots.",
+      "The app has three sides. Students search for tutors, book a session and keep track of what is coming up. Tutors set their availability and see their sessions and earnings. Admins review tutor applications, monitor every session and read charts on sessions, revenue and popular subjects.",
+      "It runs on mock data, and a role switcher in the corner lets anyone walk through all three views without signing up."
     ],
     "features": [
-      "Vertical feed of 15 to 30 second wellness exercises",
-      "Guided micro-breathing and perspective reset visualizations",
-      "Micro-habit builder with a growing fractal visualization",
-      "Quick relief tools including a breathing pacer and color therapy",
-      "Single-prompt journaling for focused reflection",
-      "Habit streaks and completion history"
+      "Browse tutors by subject, rating and year, and save favorites",
+      "Book a session by picking a subject, date, time slot and location",
+      "See upcoming, completed and cancelled sessions, with reschedule and cancel buttons",
+      "Tutors get a calendar, a session list and an earnings page",
+      "Admins approve or reject tutor applications and see every session in one table",
+      "Analytics with sessions over time, revenue trends, subject popularity and locations"
     ],
     "challenges": [
-      "Fitting meaningful exercises into 30 seconds or less",
-      "Making feed scrolling feel as smooth as native social apps",
-      "Designing visuals that respond to real user progress",
-      "Keeping animations smooth on mobile devices",
-      "Building a privacy-first app on local storage alone"
+      "Keeping three very different dashboards consistent by sharing one layout, sidebar pattern and color per role",
+      "Making a booking immediately show up for both the student and the tutor using shared app state instead of a backend",
+      "Offering only time slots that fit a tutor's availability once a date is chosen",
+      "Keeping mock data in JSON files behind one context so a real API can replace it later"
     ]
   },
   {
     "slug": "labaid",
     "name": "LabAId",
-    "tagline": "Lightweight lab workflow assistant with camera-based search.",
-    "summary": "A React and Vite web app that assists with lab workflows through a camera-enabled search interface, built with a modular structure and tuned for fast load times.",
+    "tagline": "A pocket electronics toolbox for students in the lab.",
+    "summary": "LabAId puts the things you look up during an electronics lab on your phone: a resistor color decoder, chip pinouts, circuit calculators, datasheets and short guides. It was also built to identify parts from a photo using Google's Gemini.",
     "category": "Web",
     "stack": [
       "react",
       "vite",
-      "tailwindcss"
+      "tailwindcss",
+      "reactRouter",
+      "gemini"
     ],
     "topics": [
-      "Education"
+      "electronics",
+      "lab tools",
+      "mobile web app"
     ],
     "liveUrl": "https://lab-aid.vercel.app",
     "repoUrl": "https://github.com/BinyamMamo/lab-aid",
     "featured": false,
-    "cover": {
-      "kind": "video",
-      "src": "/media/projects/labaid/overview.mp4",
-      "poster": "/media/projects/labaid/overview.webp",
-      "alt": "Camera-based search on mobile",
-      "width": 402,
-      "height": 826
-    },
-    "gallery": [],
-    "overview": [
-      "LabAId is a minimal app for lab workflows. Point your camera at equipment or materials to search for what you need.",
-      "The project is built with a modular, developer-friendly structure, with minified builds and a streamlined ESLint setup to keep it fast and maintainable."
+    "kind": "personal",
+    "areas": [
+      "learning"
     ],
-    "features": [],
-    "challenges": []
+    "year": "2025",
+    "status": "prototype",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/labaid/labaid-01-225033.webp",
+      "alt": "Tap the color bands and read the resistor value",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/labaid/labaid-02-6e7d10.webp",
+        "alt": "Datasheets grouped by component type",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/labaid/labaid-03-a14b76.webp",
+        "alt": "Every tool one tap from home",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "In an electronics lab you keep stopping to look something up: what a resistor's color bands mean, which pin on a 555 timer is the trigger, or what resistor an LED needs. LabAId gathers those answers in one app designed for a phone.",
+      "The resistor tool shows a live drawing of the resistor as you pick each band and prints the value and tolerance. The IC finder lists common chips with their packages, pinout diagrams and what every pin does. There are also calculators, a datasheet library and short tutorials.",
+      "The search bar sends you straight to the right tool, and the camera and upload buttons were meant to let Gemini recognize a part or read a resistor from a photo."
+    ],
+    "features": [
+      "Decode 4 and 5 band resistors by tapping colors, with a live preview",
+      "Look up pinouts and pin roles for common ICs such as the 555, 741 and 74 series",
+      "Filter chips by family, like timers, op-amps and logic gates",
+      "Open datasheets by component type and star the ones you use",
+      "Read short guides on multimeters, breadboards and op-amp circuits",
+      "Switch to a dark theme for dim labs"
+    ],
+    "challenges": [
+      "Drawing the resistor so every band change shows up instantly and matches the value table",
+      "Designing a bottom navigation layout that fits many tools on a small screen",
+      "Turning free-text searches like \"ne555\" or \"color code\" into the right tool with simple keyword rules",
+      "Sending camera photos to Gemini and turning its reply into a resistor value or part name"
+    ]
+  },
+  {
+    "slug": "birthday-paradox",
+    "name": "Birthday Paradox Simulator",
+    "tagline": "Watch random rooms prove that 23 people are enough for a likely shared birthday.",
+    "summary": "Most people guess you need hundreds of people before two share a birthday. This simulator fills virtual rooms with random birthdays, counts the matches and shows the results closing in on the real probability.",
+    "category": "Data Visualization",
+    "stack": [
+      "react",
+      "vite",
+      "tailwindcss",
+      "recharts",
+      "javascript"
+    ],
+    "topics": [
+      "probability",
+      "simulation",
+      "statistics"
+    ],
+    "highlight": "600 simulated rooms landed within 3% of the exact probability.",
+    "liveUrl": "https://birthday-paradox.vercel.app",
+    "repoUrl": "https://github.com/BinyamMamo/birthday_paradox",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "learning"
+    ],
+    "year": "2025",
+    "status": "live",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/birthday-paradox/birthday-paradox-01-08a202.webp",
+      "alt": "The chance of a shared birthday passes 50% at 23 people",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "video",
+        "src": "/media/projects/birthday-paradox/birthday-paradox-02-72416d.mp4",
+        "poster": "/media/projects/birthday-paradox/birthday-paradox-02-72416d.webp",
+        "alt": "Rooms fill with random birthdays and matches light up",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/birthday-paradox/birthday-paradox-03-ab92ba.webp",
+        "alt": "600 simulated rooms land within 3% of the math",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/birthday-paradox/birthday-paradox-04-a103d6.webp",
+        "alt": "Every room in a round, marked match or no match",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "The birthday paradox says that in a room of just 23 people there is about a 50% chance that two share a birthday. It sounds wrong because we think about one person matching us, not about every possible pair in the room.",
+      "Instead of asking you to trust the formula, the simulator runs the experiment. You choose how many people go in each room and how many rooms to generate, then press start. Each round fills the rooms with random birthdays, highlights the matches and adds the result to a running total.",
+      "One chart shows the observed rate settling onto the theoretical line. Another plots the full curve from 1 to 100 people, with 23 marked where it crosses 50%."
+    ],
+    "features": [
+      "Set the number of people per room and rooms per round",
+      "Run the simulation continuously and stop it at any time",
+      "See each room's birthdays with shared days highlighted",
+      "Browse every room in a round, marked match or no match",
+      "Compare observed and theoretical probability as the rounds add up",
+      "Explore the full probability curve for group sizes up to 100"
+    ],
+    "challenges": [
+      "Computing the exact probability without huge factorials by multiplying the chance of no match one person at a time",
+      "Running rounds on a timer while keeping charts and counters in sync without freezing the page",
+      "Keeping the convergence chart readable as hundreds of rooms pile up",
+      "Explaining the result in plain words next to the numbers, so the charts make sense to non-mathematicians"
+    ]
   },
   {
     "slug": "manim-generator",
     "name": "Manim Video Generator",
     "tagline": "Describe a math animation in plain language and get a rendered video.",
-    "summary": "Creates mathematical animations from natural language descriptions by generating and rendering Manim scenes with Gemini.",
+    "summary": "Type something like \"show the Pythagorean theorem\" and get back a short animated math video. Gemini writes the animation code and Manim, the engine behind 3Blue1Brown's videos, renders it.",
     "category": "AI and Machine Learning",
     "stack": [
       "python",
-      "manim",
       "gemini",
-      "mcp"
-    ],
-    "repoUrl": "https://github.com/BinyamMamo/manim_generator",
-    "featured": false,
-    "gallery": [],
-    "overview": [
-      "Manim Video Generator turns a plain language description into a mathematical animation. Gemini writes the Manim scene, and the tool renders it into a video."
-    ],
-    "features": [],
-    "challenges": []
-  },
-  {
-    "slug": "birthday-paradox",
-    "name": "Birthday Paradox Simulator",
-    "tagline": "Interactive simulations that make a counterintuitive probability result click.",
-    "summary": "An interactive web app that demonstrates the Birthday Paradox with real-time simulations, convergence charts and a full probability curve.",
-    "category": "Data Visualization",
-    "stack": [
-      "react",
-      "recharts",
-      "javascript"
+      "manim",
+      "mcp",
+      "Streamlit"
     ],
     "topics": [
-      "Probability",
-      "Statistics"
+      "Math animation",
+      "Code generation",
+      "Education",
+      "Model Context Protocol"
     ],
-    "liveUrl": "https://birthday-paradox.vercel.app",
-    "repoUrl": "https://github.com/BinyamMamo/birthday_paradox",
+    "highlight": "Runs in the browser through a Colab notebook, with no local install.",
+    "repoUrl": "https://github.com/BinyamMamo/manim_generator",
     "featured": false,
+    "kind": "personal",
+    "areas": [
+      "ai",
+      "learning"
+    ],
+    "year": "2025",
+    "status": "prototype",
+    "notebookUrl": "https://colab.research.google.com/github/BinyamMamo/manim_generator/blob/colab-notebook/notebooks/manim_generator_colab.ipynb",
     "cover": {
       "kind": "video",
-      "src": "/media/projects/birthday-paradox/overview.mp4",
-      "poster": "/media/projects/birthday-paradox/overview.webp",
-      "alt": "Running birthday paradox simulations",
-      "width": 1280,
-      "height": 664
+      "src": "/media/projects/manim-generator/manim-generator-01-74cff9.mp4",
+      "poster": "/media/projects/manim-generator/manim-generator-01-74cff9.webp",
+      "alt": "A sine wave traced by a point on the unit circle, from a one sentence prompt",
+      "width": 1920,
+      "height": 1200
+    },
+    "gallery": [
+      {
+        "kind": "video",
+        "src": "/media/projects/manim-generator/manim-generator-02-aa328f.mp4",
+        "poster": "/media/projects/manim-generator/manim-generator-02-aa328f.webp",
+        "alt": "The derivative as the slope of a moving tangent line",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "video",
+        "src": "/media/projects/manim-generator/manim-generator-03-6f9102.mp4",
+        "poster": "/media/projects/manim-generator/manim-generator-03-6f9102.webp",
+        "alt": "A visual proof of the Pythagorean theorem, written and rendered by Gemini and Manim",
+        "width": 1920,
+        "height": 1200
+      }
+    ],
+    "overview": [
+      "Good math animations make ideas like derivatives or the unit circle click, but making one means learning Manim, a Python library with its own way of describing scenes, timing and transformations. Most teachers and students never get past that.",
+      "Manim Video Generator removes that step. You describe the animation in plain words, Gemini writes a complete Manim scene, and the scene is rendered to an MP4 that plays right away. It started as an MCP server that exposes rendering as a tool for AI assistants, then grew a terminal client and a Streamlit chat app that keeps a history of past animations.",
+      "A Colab notebook packs the whole flow into something anyone can open: it installs Manim and LaTeX, asks for a Gemini key, and shows the finished video inline."
+    ],
+    "features": [
+      "Describe an animation in plain language and get a rendered video back",
+      "Read and copy the generated Manim code to learn from it or tweak it",
+      "Chat with the Streamlit app and revisit earlier animations from the sidebar history",
+      "Let AI assistants render scenes through an MCP server tool",
+      "Run everything in Google Colab with no local setup"
+    ],
+    "challenges": [
+      "Language models often write Manim code that uses outdated or invented APIs. The generator renders each scene, and when Manim fails it sends the error back to Gemini to fix the code, up to three attempts.",
+      "Manim needs Cairo, Pango, FFmpeg and LaTeX installed at the system level, which is the main reason people give up on it. The Colab notebook installs them in one cell and, when LaTeX is skipped, tells the model to avoid formula objects so renders still succeed.",
+      "Gemini models get retired or return busy errors, so the notebook falls back to other models automatically instead of failing the run."
+    ]
+  },
+  {
+    "slug": "yamnet-cough",
+    "name": "Respiratory Sound Classifier",
+    "tagline": "Tells asthma, COPD, pneumonia and healthy lungs apart from short breathing recordings.",
+    "summary": "A model that listens to a few seconds of breathing or coughing and predicts which of five respiratory conditions it sounds like. It reuses Google's YAMNet audio model to understand the sound and trains a small network on top.",
+    "category": "Health",
+    "stack": [
+      "python",
+      "PyTorch",
+      "TensorFlow Hub",
+      "YAMNet",
+      "scikit-learn",
+      "librosa",
+      "flask"
+    ],
+    "topics": [
+      "Audio classification",
+      "Transfer learning",
+      "Respiratory health",
+      "ICBHI dataset"
+    ],
+    "highlight": "Gets 87% of held-out clips right across five classes while training a network of only about 68 thousand parameters.",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "health",
+      "ai"
+    ],
+    "year": "2026",
+    "status": "local",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/yamnet-cough/yamnet-cough-01-dc9981.webp",
+      "alt": "87% of held-out clips classified correctly across five conditions",
+      "width": 2400,
+      "height": 1500
     },
     "gallery": [
       {
         "kind": "image",
-        "src": "/media/projects/birthday-paradox/screenshot-1.webp",
-        "alt": "Simulation controls and generated rooms",
-        "width": 1600,
-        "height": 834
+        "src": "/media/projects/yamnet-cough/yamnet-cough-02-bf2d2a.webp",
+        "alt": "Each condition leaves a different pattern in the sound",
+        "width": 2400,
+        "height": 1500
       },
       {
         "kind": "image",
-        "src": "/media/projects/birthday-paradox/screenshot-2.webp",
-        "alt": "Probability convergence and paradox curve charts",
-        "width": 1600,
-        "height": 834
+        "src": "/media/projects/yamnet-cough/yamnet-cough-03-afe5ef.webp",
+        "alt": "COPD and healthy lungs are the easiest to tell apart",
+        "width": 2400,
+        "height": 1500
       }
     ],
     "overview": [
-      "In a room of just 23 people there is roughly a 50% chance that two share a birthday. Most people find that hard to believe, so this simulator lets you watch it happen.",
-      "You can run many simulations with different parameters and see empirical results converge on the theoretical probability. One chart tracks convergence over iterations, and another plots the probability for every group size.",
-      "The same idea shows up in computer science, in hash collisions and cryptographic attacks."
+      "Doctors learn a lot from how someone breathes, but a stethoscope is only useful when a trained ear is listening. This project explores whether a model can pick up the same patterns from a short recording, as a starting point for low-cost screening tools.",
+      "It uses the balanced ICBHI respiratory sound dataset with five labels: Bronchial, asthma, COPD, healthy and pneumonia. Each clip goes through YAMNet, a model Google trained on millions of everyday sounds, which turns it into 1024 numbers that describe what it hears. A small PyTorch network then learns to map those numbers to a condition.",
+      "The result is a research prototype, not a diagnostic device. A Colab notebook walks through the whole pipeline: loading the data, extracting features, training, and plotting how well it does."
     ],
     "features": [
-      "Controls for group size and number of simulated rooms",
-      "Real-time simulation with matching birthdays highlighted",
-      "Convergence chart and full paradox curve",
-      "Room view showing individual birthdays and matches",
-      "Statistics on iterations, matches and deviation from theory",
-      "Continuous simulation mode"
+      "Classify a breathing or cough recording into one of five respiratory conditions",
+      "See confidence scores for every class, not just the top guess",
+      "Retrain the classifier end to end with one script or the Colab notebook",
+      "Inspect results with a confusion matrix, per-class report and learning curves",
+      "Run predictions on new audio through a small inference module"
     ],
     "challenges": [
-      "Computing accurate probabilities for large groups",
-      "Updating charts in real time without slowing the page",
-      "Presenting the math in a way that is easy to follow"
+      "The dataset is small, so a large model memorizes it. Training on frozen YAMNet embeddings with a compact network, batch normalization and 60% dropout kept validation accuracy close to training accuracy.",
+      "Classes are uneven, so the loss uses balanced class weights and label smoothing, and the train and validation split is stratified so every condition shows up in both.",
+      "Recordings vary in length, while the model expects a fixed window. Every clip is resampled to 16 kHz and padded or trimmed to the same 4.35 seconds used in training, both when training and at prediction time.",
+      "An earlier version used PANNs features at 4096 dimensions. Switching to YAMNet's 1024-dimensional embeddings made the model smaller and less prone to overfitting."
+    ]
+  },
+  {
+    "slug": "healthvault",
+    "name": "HealthVault",
+    "tagline": "Patient-controlled health records, encrypted in the browser with a blockchain for permissions.",
+    "summary": "HealthVault lets a patient lock their health records in the browser, share them with a chosen doctor for a set time, and see every visit in a log nobody can change. The blockchain only holds permissions and fingerprints, never the records themselves.",
+    "category": "Health",
+    "stack": [
+      "react",
+      "vite",
+      "typescript",
+      "nodejs",
+      "Solidity",
+      "Hardhat",
+      "viem",
+      "Web Crypto"
+    ],
+    "topics": [
+      "health records",
+      "encryption",
+      "blockchain",
+      "access control"
+    ],
+    "highlight": "A doctor only receives a record's key after their visit has been written to the blockchain.",
+    "repoUrl": "https://github.com/BinyamMamo/healthvault",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "health",
+      "platforms"
+    ],
+    "year": "2026",
+    "status": "local",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/healthvault/healthvault-01-c02d11.webp",
+      "alt": "A doctor opens shared records, and each visit is written to the blockchain",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/healthvault/healthvault-02-beea9b.webp",
+        "alt": "Records are encrypted in the browser before they are saved",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/healthvault/healthvault-03-6883eb.webp",
+        "alt": "The patient shares access with a doctor for a set time",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "video",
+        "src": "/media/projects/healthvault/healthvault-04-574a83.mp4",
+        "poster": "/media/projects/healthvault/healthvault-04-574a83.webp",
+        "alt": "Opening a record: permission check, logged visit, then the key",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/healthvault/healthvault-05-80f2ff.webp",
+        "alt": "An activity log nobody can edit, read straight from the chain",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/healthvault/healthvault-06-939c07.webp",
+        "alt": "Three ways to snoop, and why each one fails",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/healthvault/healthvault-07-3c1d1b.webp",
+        "alt": "Smart contract tests for permissions, expiry and revocation",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Health records usually sit on servers that patients cannot see into, and it is hard to know who has looked at them. HealthVault is a learning prototype that puts the patient in charge: they decide which doctor can open their records, for how long, and they can see every visit.",
+      "Records are encrypted in the browser before they leave it and are stored off-chain. A smart contract keeps only the permission slips, a fingerprint of each file and a visitor log. When a doctor opens a record, the visit is written to the chain first, and only then does the storage server hand over the locked key.",
+      "It runs entirely on your computer with a local test chain and made-up people: a patient, two doctors and a stranger who tries, and fails, to snoop."
+    ],
+    "features": [
+      "Create a vault and add records that are encrypted before they are saved",
+      "Share records with a doctor for an hour, a day, a week or a month, and stop at any time",
+      "Open shared records as a doctor, with the fingerprint checked against the chain",
+      "Read a permanent activity log of shares, revocations and visits",
+      "Try three snooping attempts as a stranger and see what blocks each one",
+      "Tamper with a stored file behind the scenes and watch the app flag it"
+    ],
+    "challenges": [
+      "Keeping health data off a public ledger while still using it for trust: only fingerprints and permissions go on-chain",
+      "Envelope encryption with X25519, HKDF and AES-GCM in Web Crypto, so each record key can be locked separately for each doctor",
+      "Making the storage server release keys only after checking that a visit was logged on-chain, so a stolen server still reveals nothing readable",
+      "Testing permission expiry and revocation in Solidity, plus an end-to-end script that runs the whole flow against a real local chain"
     ]
   },
   {
     "slug": "chess-turtle",
     "name": "Chess Turtle",
-    "tagline": "A chessboard drawer and playable chess game with AI, in pure Python.",
-    "summary": "Combines turtle graphics and Tkinter into two connected apps: a themeable chessboard drawer and a full chess game with three AI difficulty levels.",
+    "tagline": "A chessboard drawer and a chess game against an AI, using only Python's standard library.",
+    "summary": "Chess Turtle is two small desktop apps in plain Python. One draws chessboards in different sizes and color themes with turtle graphics, and the other is a chess game where you can play a friend or a computer opponent.",
     "category": "Desktop",
     "stack": [
       "python",
@@ -482,50 +1488,1044 @@
       "turtle"
     ],
     "topics": [
-      "Game AI"
+      "game AI",
+      "desktop app",
+      "chess"
     ],
     "repoUrl": "https://github.com/BinyamMamo/chess_turtle",
     "featured": false,
+    "kind": "personal",
+    "areas": [
+      "learning"
+    ],
+    "year": "2025",
+    "status": "local",
     "cover": {
-      "kind": "video",
-      "src": "/media/projects/chess-turtle/overview.mp4",
-      "poster": "/media/projects/chess-turtle/overview.webp",
-      "alt": "Drawing a chessboard and playing a game",
-      "width": 1008,
-      "height": 876
+      "kind": "image",
+      "src": "/media/projects/chess-turtle/chess-turtle-01-5558bc.webp",
+      "alt": "Playing the AI, with legal moves highlighted for the selected piece",
+      "width": 2400,
+      "height": 1500
     },
     "gallery": [
       {
         "kind": "image",
-        "src": "/media/projects/chess-turtle/screenshot-2.webp",
-        "alt": "Chessboard drawer with theme options",
-        "width": 751,
-        "height": 950
+        "src": "/media/projects/chess-turtle/chess-turtle-02-7d9034.webp",
+        "alt": "The turtle board drawer with the Vintage theme",
+        "width": 2400,
+        "height": 1500
       },
       {
         "kind": "image",
-        "src": "/media/projects/chess-turtle/screenshot-1.webp",
-        "alt": "Chess game against the AI",
-        "width": 805,
-        "height": 878
+        "src": "/media/projects/chess-turtle/chess-turtle-03-bc542d.webp",
+        "alt": "Boards from 4x4 up to 16x16 in any theme",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/chess-turtle/chess-turtle-04-9e25fc.webp",
+        "alt": "A fresh game in the Tkinter chess window",
+        "width": 2400,
+        "height": 1500
       }
     ],
     "overview": [
-      "Chess Turtle shows how far Python's built-in libraries can go. It pairs a turtle graphics chessboard drawer, with adjustable sizes and color themes, with a complete chess game built in Tkinter.",
-      "The AI opponent evaluates positions using piece values, board control and tactical positioning, across easy, normal and hard difficulty levels."
+      "Chess Turtle started as a turtle graphics exercise and grew into a small chess project. It only uses libraries that ship with Python, so it runs anywhere Python does with nothing to install.",
+      "The board drawer draws boards from 4x4 to 16x16 in six color themes, with an optional animation that shows the turtle drawing each square. Its Play Game button opens the chess window with the same theme.",
+      "The chess game is built with Tkinter. Click a piece to see its legal moves, then play another person or switch to the AI on easy, normal or hard. Every move is written to a move history."
     ],
     "features": [
-      "Chessboard drawer with multiple color themes and sizes",
-      "Playable chess game with a Tkinter interface",
-      "AI opponent with easy, normal and hard levels",
-      "Move validation and rule enforcement",
-      "Highlighting of valid moves for the selected piece",
-      "Move history"
+      "Draw boards from 4x4 to 16x16 in six color themes",
+      "Watch the board being drawn square by square with animation on",
+      "Play chess against a friend or an AI opponent",
+      "Pick easy, normal or hard AI difficulty",
+      "See every legal move for the selected piece highlighted",
+      "Follow the game in a move history panel"
     ],
     "challenges": [
-      "Implementing complete chess rules and move validation",
-      "Tuning the AI to feel different at each difficulty",
-      "Making turtle graphics and Tkinter work together in one app"
+      "Writing move rules for every piece, including blocked paths and captures",
+      "Making difficulty feel different: easy plays random legal moves, harder levels score material, center control and piece safety",
+      "Handling button clicks on a turtle canvas by checking click coordinates against drawn button areas",
+      "Passing the chosen theme from the turtle drawer into the Tkinter game window"
+    ]
+  },
+  {
+    "slug": "clipshield",
+    "name": "clipshield",
+    "tagline": "Strips secrets and personal data from your clipboard before you paste into a chat.",
+    "summary": "clipshield scans copied text for API keys, passwords, emails, card numbers and internal hostnames, and swaps them for labels like [HOST_1] in a few milliseconds. It runs entirely on your own computer, and a local vault can put the real values back later.",
+    "category": "Developer tools",
+    "stack": [
+      "python",
+      "PowerShell",
+      "Raycast",
+      "Ollama",
+      "GLiNER"
+    ],
+    "topics": [
+      "privacy",
+      "secret scanning",
+      "clipboard",
+      "command line tool"
+    ],
+    "highlight": "Everything outside a redacted span comes out byte for byte identical, checked before anything reaches the clipboard.",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "devtools"
+    ],
+    "year": "2026",
+    "status": "local",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/clipshield/clipshield-01-2a74d7.webp",
+      "alt": "Keys, hosts and customer data swapped for numbered placeholders",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/clipshield/clipshield-02-3f2c09.webp",
+        "alt": "One command redacts a stack trace in a few milliseconds",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/clipshield/clipshield-03-91d673.webp",
+        "alt": "Paste the model's answer back and the real values return",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/clipshield/clipshield-04-f347a1.webp",
+        "alt": "28 tests, including a fuzzer and a deliberately hostile fake model",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Developers paste logs, stack traces and config files into AI chats all day, and those often carry real keys, database passwords, customer emails and internal server names. clipshield is a hotkey away: it cleans the clipboard first, so the pasted text is safe but still makes sense.",
+      "The fast path uses about 60 pattern rules, checksum checks for things like card numbers and IBANs, and an entropy check for random-looking tokens. It needs nothing beyond Python and finishes in a few milliseconds. Optional deeper passes use a small local model to catch names and addresses.",
+      "Each value gets a stable numbered label, so [USER_1] means the same person everywhere. When the chat answers with those labels, one command swaps the real values back in from a local vault."
+    ],
+    "features": [
+      "Redact the clipboard with one hotkey through Raycast script commands on Windows",
+      "Pipe any file or log through the command line and preview the result with --dry-run",
+      "Keep public documentation links, version numbers and plain prose untouched",
+      "Restore the real values in a model's answer from a local vault",
+      "Switch on optional local model passes for names, organisations and addresses",
+      "Benchmark installed Ollama models on your own machine and pin the best one"
+    ],
+    "challenges": [
+      "Guaranteeing the text is never rewritten: detectors return character offsets only, and every run checks that all untouched text survived before writing the clipboard",
+      "Letting a language model help without letting it write output: its suggestions are only used if they match the source exactly, and a test suite runs against a deliberately hostile fake model",
+      "Keeping false positives low so logs stay readable, by skipping git hashes, version strings, timestamps and public docs links",
+      "Splitting long pastes into overlapping chunks so an entity on a chunk boundary is still found and mapped back to the right offset"
+    ]
+  },
+  {
+    "slug": "notebooklm-player",
+    "name": "NotebookLM Player",
+    "tagline": "A YouTube-style player and keyboard shortcuts for NotebookLM Video Overviews.",
+    "summary": "A Chrome extension that swaps the plain video controls in Google's NotebookLM for a player that feels like YouTube, with keyboard shortcuts, speed control, loops and resume. It also adds a distraction-free Zen mode and slash commands for common study prompts.",
+    "category": "Developer tools",
+    "stack": [
+      "typescript",
+      "esbuild",
+      "Chrome Extensions (Manifest V3)",
+      "Shadow DOM"
+    ],
+    "topics": [
+      "browser extension",
+      "video player",
+      "keyboard shortcuts",
+      "studying"
+    ],
+    "repoUrl": "https://github.com/BinyamMamo/notebooklm-player",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "devtools"
+    ],
+    "year": "2026",
+    "status": "local",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/notebooklm-player/notebooklm-player-01-7264ae.webp",
+      "alt": "A YouTube-style player with an A to B loop on a Video Overview",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "video",
+        "src": "/media/projects/notebooklm-player/notebooklm-player-02-ff6365.mp4",
+        "poster": "/media/projects/notebooklm-player/notebooklm-player-02-ff6365.webp",
+        "alt": "Seek, change speed and loop without touching the mouse",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/notebooklm-player/notebooklm-player-03-7fd997.webp",
+        "alt": "Every shortcut flashes a short confirmation over the video",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/notebooklm-player/notebooklm-player-04-c34444.webp",
+        "alt": "Playback speed from 0.25x to 2x, remembered between sessions",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/notebooklm-player/notebooklm-player-05-2cd124.webp",
+        "alt": "Type / in the chat to pick a study prompt like Quiz or Flashcards",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/notebooklm-player/notebooklm-player-06-cef171.webp",
+        "alt": "Zen mode toggles and the full shortcut list in the popup",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "NotebookLM can turn your sources into a narrated Video Overview, but the player only has the browser's basic controls. If you study with it, you end up clicking around to rewind, slow down or repeat a part.",
+      "This extension keeps NotebookLM's own video element and lays a new control bar over it: a scrubber with time previews, volume, speed, picture-in-picture, fullscreen and an A to B loop. Every action also has a YouTube-style keyboard shortcut, and the player remembers your speed, volume and where you stopped in each notebook.",
+      "It also adds a Zen mode that hides panels and clutter for focused chatting, and a slash menu in the chat box that inserts prompts like Quiz, Flashcards or Explain simply."
+    ],
+    "features": [
+      "Control Video Overviews with YouTube shortcuts like K, J, L, arrows and 0 to 9",
+      "Loop a section with [ and ], step frame by frame and open picture-in-picture",
+      "Resume each notebook's video where you left off, with speed and volume remembered",
+      "Hide the sources panel, top bars and citations with one Zen mode toggle (Alt+Z)",
+      "Type / in the chat to insert study prompts such as Quiz, Flashcards or Compare"
+    ],
+    "challenges": [
+      "Working on a single-page app that mounts and removes its player as you navigate, handled with a DOM observer that attaches and tears down cleanly",
+      "Styling injected controls without clashing with Google's CSS by putting all UI inside a Shadow DOM",
+      "Targeting the generic video element instead of obfuscated class names so the extension survives NotebookLM redesigns",
+      "Keeping shortcuts from firing while the user is typing in the chat, using capture-phase listeners that only claim keys the player owns"
+    ]
+  },
+  {
+    "slug": "live-captions",
+    "name": "Live Subtitles",
+    "tagline": "Live captions for any video playing in a Chrome tab, with a transcript you can export.",
+    "summary": "A Chrome extension that listens to the audio of the current tab, not the microphone, and shows captions over the video as people speak. Every line is saved with its timestamp, so you can jump back to it or download subtitles as SRT, VTT or text.",
+    "category": "Developer tools",
+    "stack": [
+      "javascript",
+      "Chrome Extensions (Manifest V3)",
+      "Web Speech API",
+      "Web Audio API"
+    ],
+    "topics": [
+      "captions",
+      "accessibility",
+      "speech recognition",
+      "browser extension"
+    ],
+    "highlight": "Uses Chrome's newer ability to run speech recognition on a tab's audio track, on-device when a language pack is installed.",
+    "repoUrl": "https://github.com/BinyamMamo/live-captions-extension",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "devtools",
+      "ai"
+    ],
+    "year": "2026",
+    "status": "local",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/live-captions/live-captions-01-187049.webp",
+      "alt": "Live captions over a video that has no subtitles",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "video",
+        "src": "/media/projects/live-captions/live-captions-02-10be1c.mp4",
+        "poster": "/media/projects/live-captions/live-captions-02-10be1c.webp",
+        "alt": "Words appear as they are spoken, then settle into the transcript",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/live-captions/live-captions-03-abd3e9.webp",
+        "alt": "A timestamped transcript you can click to jump back",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/live-captions/live-captions-04-4ad834.webp",
+        "alt": "Export the transcript as SRT, VTT or plain text",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/live-captions/live-captions-05-0f79a7.webp",
+        "alt": "Start and stop from the popup and see if recognition runs on-device",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/live-captions/live-captions-06-ec7c9c.webp",
+        "alt": "Pick the font, size, colors and position of the captions",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Plenty of lectures, talks and recorded meetings have no subtitles. Live Subtitles adds them on the fly for whatever is playing in the current Chrome tab, so you can follow along with the sound low or keep a written record.",
+      "When you press Start, the extension captures the tab's audio, keeps it playing through your speakers or headphones, and passes the same audio to Chrome's speech recognition. Captions appear in a draggable band over the video, with words still being recognized shown dimmed.",
+      "A side panel keeps every line with the video time it was spoken at. Click a line to jump there, or export the whole transcript as SRT, VTT or TXT. The popup shows whether recognition runs on-device or in Google's cloud, and can refuse to start unless it stays on-device."
+    ],
+    "features": [
+      "Caption any tab's audio without using or asking for the microphone",
+      "Drag the captions anywhere, with the position remembered per site",
+      "Open a timestamped transcript and click a line to seek the video",
+      "Download subtitles as SRT, VTT or plain text that line up with the video",
+      "Change font, size, colors, opacity and line count from the popup",
+      "Require on-device recognition so audio never leaves the computer"
+    ],
+    "challenges": [
+      "Capturing tab audio from a Manifest V3 extension, which needs an offscreen document because service workers have no DOM",
+      "Keeping the video audible, since Chrome mutes a tab while it is captured, by routing the stream back to the speakers",
+      "Timing cues from the video's own playhead so exported subtitles stay in sync even if you pause or seek",
+      "Restarting recognition when Chrome ends long sessions on its own, with backoff so captions do not stop after a few minutes",
+      "Testing the whole session flow in Node by running the real service worker against a mocked chrome API"
+    ]
+  },
+  {
+    "slug": "mdkan",
+    "name": "Markdown Kanban",
+    "tagline": "A VS Code extension that turns a Markdown TODO file into a live Kanban board.",
+    "summary": "Markdown Kanban opens any TODO.md as a board next to the editor. Headings become columns and checklist items become cards, and moving or ticking a card writes the change straight back into the Markdown file.",
+    "category": "Developer tools",
+    "stack": [
+      "typescript",
+      "VS Code Extension API",
+      "esbuild",
+      "Vitest"
+    ],
+    "topics": [
+      "kanban",
+      "markdown",
+      "task tracking",
+      "editor extension"
+    ],
+    "highlight": "The Markdown file stays the only source of truth, with no database or hidden board format.",
+    "repoUrl": "https://github.com/BinyamMamo/mdkan",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "devtools"
+    ],
+    "year": "2026",
+    "status": "prototype",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/mdkan/mdkan-01-5fb06c.webp",
+      "alt": "A plain TODO.md on the left becomes a live Kanban board on the right",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/mdkan/mdkan-02-548619.webp",
+        "alt": "Headings become columns, checklists become cards with subtasks",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/mdkan/mdkan-03-1fd1da.webp",
+        "alt": "Filter the board by tag, person or priority",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/mdkan/mdkan-04-3a9363.webp",
+        "alt": "Follows your VS Code theme, light or dark",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Many developers keep their tasks in a TODO.md next to the code, because it is simple and lives in git. The downside is that a long checklist is hard to scan. Markdown Kanban shows the same file as a board without changing how you write it.",
+      "Level 2 headings become boards, and level 3 headings such as Todo, In Progress, Review, Blocked or Done become columns. Checklist items become cards, indented items become subtasks with a progress bar, and tags, people, priorities and due dates are picked up from the text.",
+      "The board updates as you type in the editor, and changes on the board are written back to the file. Drag a card to Done and its checkbox gets ticked, click a title and the editor jumps to that line."
+    ],
+    "features": [
+      "Open a Kanban board beside any Markdown task file from the editor title bar",
+      "Drag cards between columns, with the Markdown rewritten to match",
+      "See subtasks, tags, assignees, priorities and due dates on each card",
+      "Search and filter by tag, person or priority, with progress per board",
+      "Click a card title to jump to its line in the file",
+      "Match any VS Code theme through its built-in color variables"
+    ],
+    "challenges": [
+      "Parsing free-form Markdown into boards, columns and nested tasks while tolerating messy or malformed files, covered by parser tests with fixtures",
+      "Writing board edits back as small, precise text edits so the rest of the file, including comments and formatting, is left alone",
+      "Keeping the editor and the webview in sync in both directions without update loops",
+      "Styling the board only with VS Code theme variables so it looks native in light, dark and high contrast themes"
+    ]
+  },
+  {
+    "slug": "horan-hms",
+    "name": "Horan HMS",
+    "tagline": "Hotel management for Ethiopian hotels, with a Telegram assistant for staff and guests.",
+    "summary": "A hotel management system for mid-range hotels in Ethiopia that covers rooms, bookings, check-in, housekeeping, billing and reports in English and Amharic. Staff can also ask a Telegram assistant questions by text or voice, and guests can book and pay for a room without leaving Telegram.",
+    "category": "Hospitality",
+    "stack": [
+      "nodejs",
+      "express",
+      "postgresql",
+      "Prisma",
+      "TypeScript",
+      "Next.js",
+      "react",
+      "tailwindcss",
+      "recharts",
+      "Socket.io",
+      "gemini",
+      "Groq",
+      "Telegram Bot API",
+      "Chapa",
+      "docker"
+    ],
+    "topics": [
+      "hotel operations",
+      "role based access",
+      "invoicing and VAT",
+      "realtime updates",
+      "LLM tool calling",
+      "voice assistant",
+      "Amharic"
+    ],
+    "highlight": "Wrote the backend: 97 API endpoints, 16 data models and about 580 automated tests.",
+    "featured": false,
+    "kind": "client",
+    "client": {
+      "name": "Horan Technologies",
+      "url": "https://horan.tech",
+      "role": "Backend developer, summer intern"
+    },
+    "areas": [
+      "platforms",
+      "ai"
+    ],
+    "year": "2026",
+    "status": "prototype",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/horan-hms/horan-hms-01-cc4e70.webp",
+      "alt": "Owner dashboard with revenue, occupancy and recent activity",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/horan-hms/horan-hms-02-50612f.webp",
+        "alt": "Monthly occupancy and revenue reports with PDF export",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/horan-hms/horan-hms-03-897056.webp",
+        "alt": "Room types with photos, amenities and seasonal prices",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/horan-hms/horan-hms-04-211467.webp",
+        "alt": "Front desk check-in in three steps, with ID capture",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/horan-hms/horan-hms-05-5c1053.webp",
+        "alt": "Invoice with service charge, VAT and partial payments",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/horan-hms/horan-hms-06-b54bd8.webp",
+        "alt": "The housekeeping board in Amharic",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/horan-hms/horan-hms-07-e188cc.webp",
+        "alt": "Audit log of every change and who made it",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/horan-hms/horan-hms-08-33bd01.webp",
+        "alt": "Guests search free rooms inside Telegram",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Horan HMS was built by Team Alpha during the Horan Technologies summer internship, from June to September 2026. The goal was a hotel management system for mid-range hotels in Ethiopia, where front desk work is often still done on paper, spreadsheets and phone calls.",
+      "Each staff role gets its own view. The owner and manager follow revenue and occupancy, the front desk handles bookings, check-in and check-out, housekeeping works through cleaning and maintenance tasks, and the accountant issues invoices and records payments. Every screen is available in English and Amharic, and prices follow the Ethiopian calendar, with seasonal rates for holidays like Enkutatash and Timkat.",
+      "The team split the work between the Next.js frontend and the Express backend. I built the backend: the API and database for rooms, pricing, guests, reservations, check-in and check-out, housekeeping, invoicing, audit logs, reports and notifications. I also built the Telegram staff assistant, the guest booking bot with its Mini App, and the demo data used to present the system."
+    ],
+    "features": [
+      "Book a room with overlap checks, capacity limits and seasonal pricing worked out per night",
+      "Check a guest in after capturing their ID, then add charges to their folio during the stay",
+      "Check out in one step that creates the invoice, adds 10% service charge and 15% VAT, and emails a branded PDF receipt",
+      "Split a bill across several invoices, take partial payments, or void an unpaid invoice",
+      "Ask the Telegram assistant things like which rooms are free this weekend or what a guest owes, by text or by voice note in English or Amharic",
+      "Let guests pick dates on a calendar in the chat, pay inside Telegram, and receive a QR code that the front desk can forward to the assistant to pull up the booking"
+    ],
+    "challenges": [
+      "The AI assistant must never do more than the person asking is allowed to do. Its 21 tools are filtered by the staff member's role before the model sees them, each tool checks the role again when it runs, and all of them call the same services as the web API so no business rule is written twice.",
+      "Whisper transcribes English voice notes well but turns Amharic into Arabic script or nonsense. The assistant reads the language Whisper detects and sends anything that is not English to Gemini to transcribe again, then replies with an Amharic or English voice depending on the script of the answer.",
+      "Money had to stay correct when several things happen at once. Check-out, invoicing and payments run in single database transactions, unpaid online booking holds are released on a schedule, and a payment that fails can be retried without losing the room.",
+      "A demo needed to look like a real hotel. The seed script builds a four-star hotel in Addis Ababa with 42 rooms, over 2,600 bookings across eight months, invoices, housekeeping history and an audit trail, all driven by the Ethiopian calendar and without calling any outside service."
+    ]
+  },
+  {
+    "slug": "yakal",
+    "name": "Yakal Education",
+    "tagline": "Tutoring and college counselling, with a dashboard for every person involved.",
+    "summary": "Yakal Education Services sells private tutoring and college admissions counselling. This platform is where families buy those services, students and tutors do the work, and parents, counselors and admins keep track of it.",
+    "category": "Education",
+    "stack": [
+      "react",
+      "vite",
+      "tailwindcss",
+      "nodejs",
+      "express",
+      "postgresql",
+      "recharts",
+      "TypeScript",
+      "Supabase",
+      "Stripe",
+      "Zoom",
+      "Google Classroom",
+      "Resend",
+      "TanStack Query"
+    ],
+    "topics": [
+      "tutoring",
+      "college admissions",
+      "role based dashboards",
+      "payments",
+      "realtime messaging",
+      "PWA"
+    ],
+    "highlight": "Wrote 805 of the 868 commits on the main branch.",
+    "liveUrl": "https://yakal.me",
+    "featured": false,
+    "kind": "client",
+    "client": {
+      "name": "Yakal Education",
+      "url": "https://yakal.me",
+      "role": "Lead full-stack developer"
+    },
+    "areas": [
+      "platforms",
+      "learning"
+    ],
+    "year": "2026",
+    "status": "live",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/yakal/yakal-01-c1baa0.webp",
+      "alt": "The public site where families find tutoring and college counselling",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/yakal/yakal-02-233c57.webp",
+        "alt": "Students browse 1,944 US universities ranked against their own GPA and SAT",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/yakal/yakal-03-50ce11.webp",
+        "alt": "Counselors see what each college still needs from a student",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/yakal/yakal-04-6d0dc9.webp",
+        "alt": "Tutors set the weekly hours families can book",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/yakal/yakal-05-a924e7.webp",
+        "alt": "Parents follow their child's college list, deadlines and costs",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/yakal/yakal-06-3054b9.webp",
+        "alt": "Admins set the counselling plans families buy",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/yakal/yakal-07-b29161.webp",
+        "alt": "A built-in assistant explains how the app works for each role",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "video",
+        "src": "/media/projects/yakal/yakal-08-7de0d4.mp4",
+        "poster": "/media/projects/yakal/yakal-08-7de0d4.webp",
+        "alt": "Asking the assistant where assignments live",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/yakal/yakal-09-1b7dd2.webp",
+        "alt": "A blog for parents and students, managed from the admin dashboard",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/yakal/yakal-10-3bbc18.webp",
+        "alt": "A grade by grade roadmap to college on the phone",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Yakal sells two things: one-on-one tutoring and college admissions counselling. Before this platform, booking, payment, homework, essays and messages were spread across email, chat apps and spreadsheets.",
+      "The app gives each of five roles its own dashboard. Parents pay and follow their children. Students attend sessions, track applications and build a college list. Tutors set availability and run courses. Counselors review essays and application progress. Admins approve staff, set prices and publish the blog.",
+      "It is one React app on top of Supabase for the database, sign-in, file storage and realtime updates, with a small server only for work that needs a secret: charging cards through Stripe, signing Zoom meetings, reading Google Classroom and sending email."
+    ],
+    "features": [
+      "Parents buy courses and monthly counselling plans through Stripe, and tutors and counselors are paid out through Stripe Connect",
+      "Students search 1,944 US universities with cost, admit rate and SAT ranges from the federal College Scorecard, ranked against their own scores",
+      "Students, parents and counselors share one application tracker showing what each college still needs",
+      "Tutors set weekly availability, sessions run on Zoom, and assignments are read from Google Classroom so students never sign in to Google",
+      "Realtime messages between every role, with parents able to read their children's conversations and anyone able to flag a message for review",
+      "An in-app assistant for each role that answers how-to questions by text or voice"
+    ],
+    "challenges": [
+      "Access control lives in Postgres row level security rather than a backend, so a missing policy is a data leak. Every role's reads and writes were written as policies and pinned with verify scripts, one per bug that had already happened.",
+      "A paid order must never depend on the browser coming back from checkout. Only the Stripe webhook grants access, and tutor earnings are recorded when a lesson completes and held before payout so undelivered work can still be refunded.",
+      "The support assistant went silent twice: once when the model provider retired the default model, and once when streamed replies arrived with Windows line endings the parser did not split on. The model became a setting and the stream parser got its own check.",
+      "The audience is often on slow mobile data, so the app installs as a PWA that caches the app shell but never caches private data such as grades or messages, and heavy libraries such as error reporting were trimmed to about half their size."
+    ]
+  },
+  {
+    "slug": "hakim-click",
+    "name": "Hakim Click",
+    "tagline": "Clinical answers from Ethiopia's national guidelines, with a citation on every claim.",
+    "summary": "A clinical assistant for doctors in Ethiopia that answers questions only from 38 national treatment guidelines and links each statement to the exact page it came from. It also transcribes consultations and drafts notes the doctor signs off.",
+    "category": "Health",
+    "stack": [
+      "Next.js",
+      "react",
+      "tailwindcss",
+      "Prisma",
+      "postgresql",
+      "python",
+      "FastAPI",
+      "pgvector",
+      "gemini",
+      "Ollama"
+    ],
+    "topics": [
+      "retrieval-augmented generation",
+      "clinical decision support",
+      "citations",
+      "PWA",
+      "Ethiopian languages"
+    ],
+    "highlight": "38 guidelines, 8,076 pages and 13,536 indexed passages, and every answer links back to the page.",
+    "liveUrl": "https://hakim-web-zeta.vercel.app",
+    "featured": false,
+    "kind": "client",
+    "client": {
+      "name": "Hakim Click",
+      "url": "https://hakim-web-zeta.vercel.app",
+      "role": "Full-stack developer: web app and retrieval service"
+    },
+    "areas": [
+      "health",
+      "ai"
+    ],
+    "year": "2026",
+    "status": "live",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/hakim-click/hakim-click-01-30e6d5.webp",
+      "alt": "Clinical AI for notes, dictation and cited answers in five languages",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/hakim-click/hakim-click-02-47bbd6.webp",
+        "alt": "Every sentence carries a citation to the guideline page it came from",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "video",
+        "src": "/media/projects/hakim-click/hakim-click-03-2bef97.mp4",
+        "poster": "/media/projects/hakim-click/hakim-click-03-2bef97.webp",
+        "alt": "A question, a cited answer and the source page, in twelve seconds",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/hakim-click/hakim-click-04-f77df4.webp",
+        "alt": "A copilot raises red flags from the live transcript",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/hakim-click/hakim-click-05-673ada.webp",
+        "alt": "The consultation becomes a SOAP note that stays a draft until signed",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/hakim-click/hakim-click-06-66784f.webp",
+        "alt": "Sign-in with seeded demo accounts for each plan",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/hakim-click/hakim-click-07-9d88aa.webp",
+        "alt": "Installable on a phone",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Doctors in Ethiopia are expected to follow the national treatment guidelines, but those guidelines are spread across dozens of long PDFs. Finding the right dose in the middle of a clinic day means scrolling through hundreds of pages, and a general chatbot might invent an answer that sounds right.",
+      "Hakim Click only answers from the guidelines themselves: the Standard Treatment Guidelines, the malaria, neonatal, obstetric and NCD protocols and others, 38 documents in all. Each sentence in an answer carries a small citation, and clicking it opens the cited page with the passage highlighted, so the doctor can check the claim without leaving the conversation.",
+      "The product has two parts. A Next.js app handles accounts, plans, consultations and chat. A separate Python service does the retrieval, answer generation and grounding checks. Binyam built both."
+    ],
+    "features": [
+      "Ask a clinical question and get a short answer where every statement cites a guideline page",
+      "Open a citation to see the source page with the passage highlighted, or open the full PDF at that page",
+      "Record a consultation in Amharic, Afaan Oromo, Tigrinya, Somali or English and read the transcript with an English line beside it",
+      "Turn a consultation or dictation into a SOAP note, summary or referral letter that stays a draft until the doctor signs it",
+      "Pick a plan with a daily credit allowance and see what the day's credits were spent on",
+      "Install it on a phone as a web app that keeps working through a dropped connection"
+    ],
+    "challenges": [
+      "A wrong dose is a patient-safety problem, not a bad search result. Retrieval combines vector and full-text search, a language model reranks the top candidates for direct relevance, and the assistant declines to answer when nothing in the guidelines supports one.",
+      "Dosing charts and triage grids lose their meaning when split into plain text. Ingestion keeps 2,352 tables as markdown with their column headers intact, so a dose stays attached to its weight band.",
+      "Answers take 7 to 25 seconds, which runs into serverless time limits if proxied. The browser streams straight from the retrieval service using a 15-minute token that carries only a user id and plan, with no personal data.",
+      "Linking to a PDF page can scroll to it but cannot show which paragraph was used. The service renders the cited page as an image and marks the passage the answer drew from."
+    ]
+  },
+  {
+    "slug": "ud-students",
+    "name": "UD Students",
+    "tagline": "A prototype student app with a digital ID card you can tap on an NFC reader.",
+    "summary": "A prototype mobile app for University of Dubai students that puts their ID card on their phone, alongside a campus map, events, careers and everyday services. A companion reader mode lets security staff check a card by tapping or scanning it.",
+    "category": "Platforms",
+    "stack": [
+      "React Native",
+      "Expo",
+      "TypeScript",
+      "tailwindcss",
+      "TanStack Query",
+      "Zustand",
+      "gemini"
+    ],
+    "topics": [
+      "NFC",
+      "host card emulation",
+      "digital ID",
+      "campus app",
+      "wayfinding"
+    ],
+    "highlight": "The phone acts as the ID card itself: hold it near a reader and the card is verified over NFC.",
+    "featured": false,
+    "kind": "client",
+    "client": {
+      "name": "University of Dubai",
+      "role": "Mobile developer"
+    },
+    "areas": [
+      "platforms"
+    ],
+    "year": "2026",
+    "status": "prototype",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/ud-students/ud-students-01-28a59e.webp",
+      "alt": "Home puts the student card, services and campus life on one screen",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/ud-students/ud-students-02-276849.webp",
+        "alt": "Flip the card for a QR code readers can scan instead",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/ud-students/ud-students-03-0e0d5b.webp",
+        "alt": "News, events, photos and clubs in one campus feed",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Students carry a plastic ID card for getting into buildings, borrowing books and proving who they are, and they check several different websites for events, jobs and campus information. This prototype brings those into one app.",
+      "The centrepiece is a digital ID card. On Android the phone emulates an NFC card, so holding it near a reader sends the student's details for verification. The back of the card carries a QR code with the same data for readers without NFC. A separate reader mode shows security staff whether a card is valid and keeps a local log of checks.",
+      "Around the card, the app offers a campus map with room-to-room directions, a feed of news, events and photos, job and internship listings, lost and found, shuttle times and event reminders. Binyam designed and built the app."
+    ],
+    "features": [
+      "Show a digital student ID and flip it to reveal a QR code",
+      "Tap the phone on an NFC reader to present the ID, with valid and denied cards handled differently",
+      "Switch to reader mode to verify other cards and review a history of checks",
+      "Get step-by-step directions between rooms on a campus floor plan",
+      "Browse campus news, events, photos and clubs, and set reminders for upcoming events",
+      "Search jobs, research roles and internships, and report or find lost items"
+    ],
+    "challenges": [
+      "Android lets only one app answer a given NFC card ID at a time. A small native module claims priority while the ID screen is open and releases it when the student leaves, so the right app responds at the reader.",
+      "The NFC broadcast and the QR code needed to be read the same way. Both carry one compact payload with the student's details and a validity flag, so a reader can parse either one identically.",
+      "Screens pull from several sources that can be slow or offline. Data is fetched and cached with TanStack Query and kept on the device, so the app opens with the last known content instead of empty lists."
+    ]
+  },
+  {
+    "slug": "ksk-homes",
+    "name": "KSK Homes",
+    "tagline": "A marketing site and staff portal for a student residence in Dubai.",
+    "summary": "A new website for KSK Homes, a student residence in Dubai International Academic City, showing its rooms, cafe and campus life. Behind it sits a staff portal for managing reservations and room status.",
+    "category": "Platforms",
+    "stack": [
+      "Next.js",
+      "react",
+      "tailwindcss",
+      "framerMotion",
+      "recharts",
+      "TanStack Query",
+      "Zustand",
+      "Zod"
+    ],
+    "topics": [
+      "hospitality",
+      "property management",
+      "reservations",
+      "marketing site"
+    ],
+    "highlight": "One codebase serves both the public website and the staff portal.",
+    "liveUrl": "https://hms-blond-beta.vercel.app",
+    "featured": false,
+    "kind": "client",
+    "client": {
+      "name": "KSK Homes",
+      "role": "Frontend developer: website and staff portal"
+    },
+    "areas": [
+      "platforms"
+    ],
+    "year": "2026",
+    "status": "live",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/ksk-homes/ksk-homes-01-5e2332.webp",
+      "alt": "A video-led home page for a student residence in Dubai",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/ksk-homes/ksk-homes-02-29d9f9.webp",
+        "alt": "Staff see every room's bookings on one timeline",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/ksk-homes/ksk-homes-03-c21ee6.webp",
+        "alt": "Student life laid out as a photo grid",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/ksk-homes/ksk-homes-04-41d2d4.webp",
+        "alt": "The on-site cafe gets its own menu page",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/ksk-homes/ksk-homes-05-d8bd10.webp",
+        "alt": "Room status by building and floor at a glance",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/ksk-homes/ksk-homes-06-dd3efa.webp",
+        "alt": "The home page on a phone",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "KSK Homes runs purpose-built student housing in Dubai. Students choosing a place to live want to see the rooms, the prices and what life there is like. Staff need a way to see who is in which room and what is coming up next.",
+      "Binyam built both sides in one Next.js app. The public site has a video hero, room types with prices, a student life gallery, nearby attractions, a location map and a full menu for the on-site cafe. The staff portal covers reservations, room status, room types and settings.",
+      "The portal currently runs on sample data while the booking backend is connected, so every guest name shown is made up."
+    ],
+    "features": [
+      "Browse room types with sizes, amenities and prices, and open a room for more detail",
+      "Read the cafe menu, grouped into coffees, iced drinks, smoothies and juices",
+      "See every room's reservations on a scrollable timeline, filtered by building and floor",
+      "Search, filter and page through bookings in a list view, with a draft dock for unfinished ones",
+      "Create a reservation through a five-step guided form",
+      "Jump anywhere in the portal with a Ctrl+K command palette, in light or dark mode"
+    ],
+    "challenges": [
+      "The timeline has to show long stays, pending bookings and maintenance blocks across many rooms without clutter. Each booking is drawn as a bar sized to its dates, colour-coded by status.",
+      "Dropdowns and popovers kept getting clipped by the scrolling timeline and bleeding through cards. A shared custom select, solid card surfaces and a clear stacking order fixed it across the portal.",
+      "Remote images on the original site broke often. The images were downloaded and served locally, and the carousels were rebuilt on Embla with autoplay that pauses on hover."
+    ]
+  },
+  {
+    "slug": "ud-smart-building",
+    "name": "UD Smart Lab Dashboard",
+    "tagline": "A 3D digital twin of a university lab, wired to its sensors through Home Assistant.",
+    "summary": "A web dashboard for a smart lab at the University of Dubai that shows the room as an interactive 3D model, with live temperature, energy, weather and camera views around it. It was built by a small team for a research project on smart environments.",
+    "category": "Platforms",
+    "stack": [
+      "react",
+      "vite",
+      "Three.js",
+      "React Three Fiber",
+      "tailwindcss",
+      "Home Assistant",
+      "Vitest"
+    ],
+    "topics": [
+      "digital twin",
+      "IoT",
+      "Home Assistant",
+      "3D visualization",
+      "energy monitoring"
+    ],
+    "highlight": "The lab is rendered as a real 3D model you can orbit, with sensor readings and a camera feed placed inside the scene.",
+    "featured": false,
+    "kind": "client",
+    "client": {
+      "name": "University of Dubai",
+      "role": "Team member: set up the project and built the 3D lab viewer"
+    },
+    "areas": [
+      "platforms",
+      "vision"
+    ],
+    "year": "2026",
+    "status": "prototype",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/ud-smart-building/ud-smart-building-01-c31bd9.webp",
+      "alt": "A 3D model of the lab with live readings and device controls around it",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "video",
+        "src": "/media/projects/ud-smart-building/ud-smart-building-02-e176bb.mp4",
+        "poster": "/media/projects/ud-smart-building/ud-smart-building-02-e176bb.webp",
+        "alt": "Orbiting the digital twin of the lab",
+        "width": 1920,
+        "height": 1200
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/ud-smart-building/ud-smart-building-03-9d1b36.webp",
+        "alt": "Full 3D view with the sensor wall and camera screen inside the room",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/ud-smart-building/ud-smart-building-04-5732b7.webp",
+        "alt": "Solar, battery, grid and load on one energy page",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/ud-smart-building/ud-smart-building-05-022652.webp",
+        "alt": "Outdoor weather station next to indoor climate",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "The University of Dubai is running a research project on smart environments: one physical lab fitted with sensors, smart plugs, a weather station and cameras, all connected through Home Assistant. The team needed a dashboard that makes the room's state easy to read at a glance.",
+      "Instead of a grid of numbers, the dashboard puts a 3D model of the lab in the middle of the screen. Temperature, air quality, power demand and a camera feed sit around it, and a wall of readings is placed inside the model itself. Other pages cover energy, weather, parking and CCTV, and a chat panel sends plain-language commands to Home Assistant.",
+      "This was a team project. Binyam started the repository and built the 3D lab viewer, the model loading and the first Home Assistant connection. Yared Zenebe built most of the pages that followed, including the dashboard panels, energy, weather, parking, the chat widget, login and tests."
+    ],
+    "features": [
+      "Orbit, zoom and auto-tour a 3D model of the lab",
+      "Read indoor and outdoor temperature, humidity, air quality and CO2 at a glance",
+      "Toggle lights, plugs, the fan and the wall screen from a control dock",
+      "Follow solar generation, battery, grid feed-in and building load on the energy page",
+      "Compare the outdoor weather station with indoor climate",
+      "Ask the lab to do something in plain language through Home Assistant's conversation API"
+    ],
+    "challenges": [
+      "The lab model is a large OBJ file with materials. Loading it behind a custom loading screen, and centring it on an infinite grid, keeps the first view clean while the model streams in.",
+      "The camera feed had to appear inside the 3D room, not just beside it. A video texture on a wall-mounted screen in the scene plays the feed where the real screen hangs.",
+      "Without a Home Assistant connection the pages would be empty. The dashboard falls back to a demo mode with realistic readings, so the interface can be shown and tested away from the lab."
     ]
   }
 ]

@@ -7,62 +7,68 @@ import { cn } from '@/lib/cn';
 
 export interface BrowserItem {
   slug: string;
-  category: string;
+  /** Tab ids this project appears under, such as area ids or `client`. */
+  groups: string[];
   /** Lowercased text matched against the search query. */
   keywords: string;
   /** Server-rendered card. */
   card: ReactNode;
 }
 
-const ALL = 'All';
+export interface BrowserTab {
+  id: string;
+  label: string;
+}
 
-export function ProjectsBrowser({ items, categories }: { items: BrowserItem[]; categories: readonly string[] }) {
-  const [category, setCategory] = useState(ALL);
+const ALL = 'all';
+
+export function ProjectsBrowser({ items, tabs: groupTabs }: { items: BrowserItem[]; tabs: readonly BrowserTab[] }) {
+  const [group, setGroup] = useState(ALL);
   const [query, setQuery] = useState('');
 
   const tabs = useMemo(
     () =>
-      [ALL, ...categories]
-        .map((name) => ({
-          name,
-          count: name === ALL ? items.length : items.filter((item) => item.category === name).length,
+      [{ id: ALL, label: 'All' }, ...groupTabs]
+        .map((tab) => ({
+          ...tab,
+          count: tab.id === ALL ? items.length : items.filter((item) => item.groups.includes(tab.id)).length,
         }))
         .filter((tab) => tab.count > 0),
-    [items, categories],
+    [items, groupTabs],
   );
 
   const visible = useMemo(() => {
     const needle = query.trim().toLowerCase();
     return items.filter(
-      (item) => (category === ALL || item.category === category) && (!needle || item.keywords.includes(needle)),
+      (item) => (group === ALL || item.groups.includes(group)) && (!needle || item.keywords.includes(needle)),
     );
-  }, [items, category, query]);
+  }, [items, group, query]);
 
   return (
     <div className="mt-12">
       <div className="flex flex-col-reverse gap-4 border-b sm:flex-row sm:items-end sm:justify-between">
-        <div className="-mb-px flex gap-6 overflow-x-auto" role="group" aria-label="Filter by category">
+        <div className="-mb-px flex gap-6 overflow-x-auto" role="group" aria-label="Filter by area">
           {tabs.map((tab) => {
-            const active = tab.name === category;
+            const active = tab.id === group;
             return (
               <button
-                key={tab.name}
+                key={tab.id}
                 type="button"
                 aria-pressed={active}
-                onClick={() => setCategory(tab.name)}
+                onClick={() => setGroup(tab.id)}
                 className={cn(
                   'flex items-center gap-1.5 border-b py-3 text-sm whitespace-nowrap transition-colors',
                   active ? 'border-fg text-fg' : 'border-transparent text-fg-muted hover:text-fg',
                 )}
               >
-                {tab.name}
+                {tab.label}
                 <span className="font-mono text-xs text-fg-subtle">{tab.count}</span>
               </button>
             );
           })}
         </div>
 
-        <label className="relative block sm:mb-2.5 sm:w-64">
+        <label className="relative block sm:mb-2.5 sm:w-64 sm:shrink-0">
           <span className="sr-only">Search projects</span>
           <Search aria-hidden className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-fg-subtle" />
           <input
@@ -88,7 +94,7 @@ export function ProjectsBrowser({ items, categories }: { items: BrowserItem[]; c
             type="button"
             onClick={() => {
               setQuery('');
-              setCategory(ALL);
+              setGroup(ALL);
             }}
             className="link-underline mt-4 text-sm"
           >

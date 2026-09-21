@@ -32,3 +32,7 @@ cv-out/
 input.txt
 export.sh
 splitter.sh
+
+# Raw project captures (see captures/README.md)
+captures/raw/
+captures/out/

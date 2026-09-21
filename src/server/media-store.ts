@@ -34,6 +34,8 @@ export interface MediaInput {
   /** Destination relative to public/, for example media/projects/funkey */
   folder: string;
   alt?: string;
+  /** Overrides the default maximum width, for example for framed showcase captures. */
+  maxWidth?: number;
 }
 
 async function ffmpeg(args: string[]): Promise<void> {
@@ -45,7 +47,16 @@ async function ffmpeg(args: string[]): Promise<void> {
   }
 }
 
-export async function processMedia({ data, fileName, mimeType, folder, alt = '' }: MediaInput): Promise<ProjectMedia> {
+export async function processMedia({
+  data,
+  fileName,
+  mimeType,
+  folder,
+  alt = '',
+  maxWidth,
+}: MediaInput): Promise<ProjectMedia> {
+  const imageMaxWidth = maxWidth ?? IMAGE_MAX_WIDTH;
+  const videoMaxWidth = maxWidth ?? VIDEO_MAX_WIDTH;
   if (!FOLDER_PATTERN.test(folder)) throw new MediaError('Uploads can only go into a project or profile media folder.');
   if (data.byteLength > MAX_UPLOAD_BYTES) throw new MediaError('Files must be 60 MB or smaller.');
 
@@ -65,7 +76,7 @@ export async function processMedia({ data, fileName, mimeType, folder, alt = '' 
   if (isImage && !animated) {
     const info = await sharp(data)
       .rotate()
-      .resize({ width: IMAGE_MAX_WIDTH, withoutEnlargement: true })
+      .resize({ width: imageMaxWidth, withoutEnlargement: true })
       .webp({ quality: 85 })
       .toFile(posterFile);
     return { kind: 'image', src: publicPath(`${base}.webp`), alt, width: info.width, height: info.height };
@@ -76,7 +87,7 @@ export async function processMedia({ data, fileName, mimeType, folder, alt = '' 
     const input = path.join(workDir, `input${path.extname(fileName) || '.bin'}`);
     await writeFile(input, data);
     // Even dimensions are required by H.264.
-    const scale = `scale='trunc(min(${VIDEO_MAX_WIDTH},iw)/2)*2':-2:flags=lanczos`;
+    const scale = `scale='trunc(min(${videoMaxWidth},iw)/2)*2':-2:flags=lanczos`;
     await ffmpeg([
       '-i', input,
       '-vf', `${scale},format=yuv420p`,
@@ -92,8 +103,8 @@ export async function processMedia({ data, fileName, mimeType, folder, alt = '' 
       src: publicPath(`${base}.mp4`),
       poster: publicPath(`${base}.webp`),
       alt,
-      width: poster.width ?? VIDEO_MAX_WIDTH,
-      height: poster.height ?? Math.round(VIDEO_MAX_WIDTH * 0.5625),
+      width: poster.width ?? videoMaxWidth,
+      height: poster.height ?? Math.round(videoMaxWidth * 0.5625),
     };
   } catch (error) {
     if (!(error instanceof FfmpegMissingError)) throw error;
@@ -101,7 +112,7 @@ export async function processMedia({ data, fileName, mimeType, folder, alt = '' 
 
     // Without ffmpeg, keep the animation as an animated WebP instead.
     await sharp(data, { animated: true })
-      .resize({ width: IMAGE_MAX_WIDTH, withoutEnlargement: true })
+      .resize({ width: imageMaxWidth, withoutEnlargement: true })
       .webp({ quality: 80 })
       .toFile(posterFile);
     const output = await sharp(posterFile, { animated: true }).metadata();
@@ -109,8 +120,8 @@ export async function processMedia({ data, fileName, mimeType, folder, alt = '' 
       kind: 'image',
       src: publicPath(`${base}.webp`),
       alt,
-      width: output.width ?? IMAGE_MAX_WIDTH,
-      height: output.pageHeight ?? output.height ?? IMAGE_MAX_WIDTH,
+      width: output.width ?? imageMaxWidth,
+      height: output.pageHeight ?? output.height ?? imageMaxWidth,
     };
   } finally {
     await rm(workDir, { recursive: true, force: true });

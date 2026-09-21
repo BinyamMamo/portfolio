@@ -45,7 +45,7 @@ function FeaturedRow({ project, reversed }: { project: Project; reversed: boolea
         {project.highlight && (
           <p className="mt-5 border-l-2 border-brand pl-3 text-sm leading-relaxed text-fg">{project.highlight}</p>
         )}
-        <TechList ids={project.stack} className="mt-6" />
+        <TechList ids={project.stack} limit={6} className="mt-6" />
         <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
           <Link href={href} className={cn(textLink, 'font-medium text-fg hover:text-brand')}>
             Project details
@@ -80,7 +80,8 @@ function FeaturedRow({ project, reversed }: { project: Project; reversed: boolea
 }
 
 export async function Work() {
-  const projects = await getProjects();
+  // Client work has its own section below.
+  const projects = (await getProjects()).filter((project) => project.kind !== 'client');
   const featured = projects.filter((project) => project.featured);
   const others = projects.filter((project) => !project.featured);
   if (projects.length === 0) return null;
@@ -91,7 +92,7 @@ export async function Work() {
       index="01"
       label="Work"
       title="Selected projects"
-      description="Platforms and tools I have designed and built, from competition entries to production web apps."
+      description="Things I built on my own, from tools people use every day to experiments with AI, robots and simulations."
     >
       {featured.length > 0 && (
         <div className="space-y-20 sm:space-y-28">

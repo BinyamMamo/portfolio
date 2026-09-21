@@ -11,6 +11,7 @@ export const getProjects = cache(() => readContent('projects'));
 export const getExperience = cache(() => readContent('experience'));
 export const getEducation = cache(() => readContent('education'));
 export const getSkillGroups = cache(() => readContent('skills'));
+export const getAreas = cache(() => readContent('areas'));
 export const getNavigationContent = cache(() => readContent('navigation'));
 export const getCvSettings = cache(() => readContent('cvSettings'));
 export const getCvVariants = cache(() => listCvVariants());

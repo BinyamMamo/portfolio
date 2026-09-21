@@ -1,0 +1,37 @@
+[
+  {
+    "id": "health",
+    "title": "Health and clinical tools",
+    "summary": "Tools that help doctors and patients get to the right answer faster, from guideline search with citations to bedside calculators."
+  },
+  {
+    "id": "platforms",
+    "title": "Full-stack platforms",
+    "summary": "Multi-role products with real accounts, payments and dashboards, built for hotels, schools and tutoring companies."
+  },
+  {
+    "id": "ai",
+    "title": "Applied AI",
+    "summary": "Language models, speech and retrieval put to work on concrete jobs: answering from documents, dubbing video, generating lessons."
+  },
+  {
+    "id": "vision",
+    "title": "Computer vision and accessibility",
+    "summary": "Cameras and sensors that read, track and recognize, often for people who need a little extra help."
+  },
+  {
+    "id": "robotics",
+    "title": "Robotics and simulation",
+    "summary": "Simulated drones and robots that plan, inspect and learn, plus interactive simulations of math and physics."
+  },
+  {
+    "id": "learning",
+    "title": "Learning tools",
+    "summary": "Apps that make learning feel like play, for kids, students and anyone brushing up on a skill."
+  },
+  {
+    "id": "devtools",
+    "title": "Developer and productivity tools",
+    "summary": "Browser and editor extensions and small utilities that remove friction from everyday work."
+  }
+]

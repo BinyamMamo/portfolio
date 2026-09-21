@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 
 import type {
+  Area,
   CvSettings,
   CvVariant,
   NavigationContent,
@@ -53,6 +54,19 @@ export async function saveEducation(entries: TimelineEntry[]): Promise<ActionRes
 
 export async function saveSkills(groups: SkillGroup[]): Promise<ActionResult> {
   return mutate(() => writeContent('skills', groups));
+}
+
+/** Saves the areas and drops ids that no longer exist from every project. */
+export async function saveAreas(areas: Area[]): Promise<ActionResult> {
+  return mutate(async () => {
+    await writeContent('areas', areas);
+    const ids = new Set(areas.map((area) => area.id));
+    const projects = await readContent('projects');
+    const pruned = projects.map((project) =>
+      project.areas ? { ...project, areas: project.areas.filter((id) => ids.has(id)) } : project,
+    );
+    await writeContent('projects', pruned);
+  });
 }
 
 export async function saveNavigation(navigation: NavigationContent): Promise<ActionResult> {
