@@ -113,6 +113,8 @@ export const projectSchema = z.object({
   /** An interactive demo embedded on the project page. */
   demo: z.object({ url: required('Demo URL'), label: required('Demo label') }).optional(),
   cover: mediaSchema.optional(),
+  /** Image for the header menu preview, when a gallery shot reads better there than the cover. */
+  menuImage: z.string().trim().optional(),
   gallery: z.array(mediaSchema),
   overview: z.array(z.string().trim().min(1)),
   features: z.array(z.string().trim().min(1)),

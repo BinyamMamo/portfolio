@@ -1,12 +1,7 @@
 import { RESUME_HREF } from '@/lib/constants';
 import { linkLogos } from '@/lib/links';
 import type { NavEntry, NavLink, NavLinkGroup } from '@/lib/nav';
-import type {
-  NavigationContent,
-  Profile,
-  Project,
-  SkillGroup,
-} from '@/lib/schemas';
+import type { NavigationContent, Profile, Project, SkillGroup } from '@/lib/schemas';
 import { getTech } from '@/lib/tech';
 
 interface NavigationInput {
@@ -46,10 +41,7 @@ const projectLink = (project: Project): NavLink => ({
   description: project.tagline,
   preview: project.cover
     ? {
-        image:
-          project.cover.kind === 'video'
-            ? project.cover.poster
-            : project.cover.src,
+        image: project.menuImage ?? (project.cover.kind === 'video' ? project.cover.poster : project.cover.src),
         eyebrow: project.client?.name ?? project.category,
         summary: project.summary,
       }
@@ -57,12 +49,7 @@ const projectLink = (project: Project): NavLink => ({
 });
 
 /** Builds the top bar, including the Projects, Skills and Contact mega menus, from stored content. */
-export function buildNavigation({
-  profile,
-  projects,
-  skills,
-  navigation,
-}: NavigationInput): NavEntry[] {
+export function buildNavigation({ profile, projects, skills, navigation }: NavigationInput): NavEntry[] {
   const bySlug = new Map(projects.map((project) => [project.slug, project]));
 
   const projectGroups: NavLinkGroup[] = navigation.projectGroups
@@ -76,9 +63,7 @@ export function buildNavigation({
     .filter((group) => group.items.length > 0);
 
   // Client work always leads; everything else is reachable from "All projects".
-  const clientProjects = projects.filter(
-    (project) => project.kind === 'client',
-  );
+  const clientProjects = projects.filter((project) => project.kind === 'client');
   if (clientProjects.length > 0) {
     projectGroups.unshift({
       title: 'Client work',
@@ -86,14 +71,9 @@ export function buildNavigation({
     });
   }
 
-  const featured = navigation.featured
-    ? bySlug.get(navigation.featured.slug)
-    : undefined;
+  const featured = navigation.featured ? bySlug.get(navigation.featured.slug) : undefined;
   const featuredCover = featured?.cover;
-  const skillCount = skills.reduce(
-    (total, group) => total + group.items.length,
-    0,
-  );
+  const skillCount = skills.reduce((total, group) => total + group.items.length, 0);
   const github = profile.links.find((link) => link.icon === 'github');
   const profileLink = (link: Profile['links'][number]): NavLink => ({
     label: link.label,
@@ -117,10 +97,7 @@ export function buildNavigation({
               label: featured.name,
               href: `/projects/${featured.slug}`,
               description: featured.tagline,
-              image:
-                featuredCover.kind === 'video'
-                  ? featuredCover.poster
-                  : featuredCover.src,
+              image: featuredCover.kind === 'video' ? featuredCover.poster : featuredCover.src,
             }
           : undefined,
       footer: {
@@ -187,9 +164,7 @@ export function buildNavigation({
       footer: {
         label: 'Contact section',
         href: '/#contact',
-        description: profile.location
-          ? `Based in ${profile.location}`
-          : undefined,
+        description: profile.location ? `Based in ${profile.location}` : undefined,
       },
     },
   ];
