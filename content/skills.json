@@ -3,12 +3,12 @@
     "id": "languages",
     "title": "Languages",
     "items": [
-      "javascript",
       "typescript",
+      "javascript",
       "python",
+      "bash",
       "cpp",
-      "java",
-      "bash"
+      "java"
     ]
   },
   {
@@ -18,10 +18,10 @@
       "nodejs",
       "express",
       "nestjs",
+      "fastapi",
       "flask",
       "django",
-      "laravel",
-      "graphql"
+      "laravel"
     ]
   },
   {
@@ -31,8 +31,6 @@
       "postgresql",
       "mongodb",
       "mysql",
-      "supabase",
-      "firebase",
       "influxdb"
     ]
   },
@@ -51,11 +49,43 @@
     "id": "ai",
     "title": "AI",
     "items": [
-      "gemini",
-      "ollama",
+      "pytorch",
+      "opencv",
       "rag",
-      "hermes",
-      "openclaw"
+      "ollama",
+      "openclaw",
+      "hermes"
+    ]
+  },
+  {
+    "id": "apis",
+    "title": "APIs",
+    "items": [
+      "rest",
+      "graphql",
+      "socketio",
+      "openapi"
+    ]
+  },
+  {
+    "id": "libraries",
+    "title": "Libraries",
+    "items": [
+      "prisma",
+      "zod",
+      "tanstackQuery",
+      "zustand",
+      "stripe"
+    ]
+  },
+  {
+    "id": "cloud",
+    "title": "Cloud",
+    "items": [
+      "vercel",
+      "supabase",
+      "render",
+      "firebase"
     ]
   },
   {
@@ -63,10 +93,9 @@
     "title": "DevOps",
     "items": [
       "docker",
-      "kubernetes",
-      "nginx",
       "linux",
-      "git"
+      "git",
+      "githubActions"
     ]
   },
   {
@@ -74,7 +103,8 @@
     "title": "Extensions",
     "items": [
       "chromeExtensions",
-      "vscodeExtensions"
+      "vscodeExtensions",
+      "raycast"
     ]
   }
 ]

@@ -1,7 +1,12 @@
 import { RESUME_HREF } from '@/lib/constants';
 import { linkLogos } from '@/lib/links';
 import type { NavEntry, NavLink, NavLinkGroup } from '@/lib/nav';
-import type { NavigationContent, Profile, Project, SkillGroup } from '@/lib/schemas';
+import type {
+  NavigationContent,
+  Profile,
+  Project,
+  SkillGroup,
+} from '@/lib/schemas';
 import { getTech } from '@/lib/tech';
 
 interface NavigationInput {
@@ -11,13 +16,19 @@ interface NavigationInput {
   navigation: NavigationContent;
 }
 
+/** Skills per menu column before the rest fold behind a "more" button; each group is ordered strongest first. */
+const SKILLS_VISIBLE = 4;
+
 const projectLink = (project: Project): NavLink => ({
   label: project.name,
   href: `/projects/${project.slug}`,
   description: project.tagline,
   preview: project.cover
     ? {
-        image: project.cover.kind === 'video' ? project.cover.poster : project.cover.src,
+        image:
+          project.cover.kind === 'video'
+            ? project.cover.poster
+            : project.cover.src,
         eyebrow: project.client?.name ?? project.category,
         summary: project.summary,
       }
@@ -25,7 +36,12 @@ const projectLink = (project: Project): NavLink => ({
 });
 
 /** Builds the top bar, including the Projects, Skills and Contact mega menus, from stored content. */
-export function buildNavigation({ profile, projects, skills, navigation }: NavigationInput): NavEntry[] {
+export function buildNavigation({
+  profile,
+  projects,
+  skills,
+  navigation,
+}: NavigationInput): NavEntry[] {
   const bySlug = new Map(projects.map((project) => [project.slug, project]));
 
   const projectGroups: NavLinkGroup[] = navigation.projectGroups
@@ -39,14 +55,24 @@ export function buildNavigation({ profile, projects, skills, navigation }: Navig
     .filter((group) => group.items.length > 0);
 
   // Client work always leads; everything else is reachable from "All projects".
-  const clientProjects = projects.filter((project) => project.kind === 'client');
+  const clientProjects = projects.filter(
+    (project) => project.kind === 'client',
+  );
   if (clientProjects.length > 0) {
-    projectGroups.unshift({ title: 'Client work', items: clientProjects.slice(0, 5).map(projectLink) });
+    projectGroups.unshift({
+      title: 'Client work',
+      items: clientProjects.slice(0, 5).map(projectLink),
+    });
   }
 
-  const featured = navigation.featured ? bySlug.get(navigation.featured.slug) : undefined;
+  const featured = navigation.featured
+    ? bySlug.get(navigation.featured.slug)
+    : undefined;
   const featuredCover = featured?.cover;
-  const skillCount = skills.reduce((total, group) => total + group.items.length, 0);
+  const skillCount = skills.reduce(
+    (total, group) => total + group.items.length,
+    0,
+  );
   const github = profile.links.find((link) => link.icon === 'github');
   const profileLink = (link: Profile['links'][number]): NavLink => ({
     label: link.label,
@@ -70,7 +96,10 @@ export function buildNavigation({ profile, projects, skills, navigation }: Navig
               label: featured.name,
               href: `/projects/${featured.slug}`,
               description: featured.tagline,
-              image: featuredCover.kind === 'video' ? featuredCover.poster : featuredCover.src,
+              image:
+                featuredCover.kind === 'video'
+                  ? featuredCover.poster
+                  : featuredCover.src,
             }
           : undefined,
       footer: {
@@ -83,13 +112,22 @@ export function buildNavigation({ profile, projects, skills, navigation }: Navig
       label: 'Skills',
       href: '/#skills',
       expandOnMobile: false,
-      groups: skills.map((group) => ({
-        title: group.title,
-        items: group.items.map((id) => {
-          const { name, logo } = getTech(id);
-          return { label: name, href: '/#skills', logo };
-        }),
-      })),
+      columns: 5,
+      // Groups that fit without a "more" button fill the first row, so expanding one only grows the bottom row.
+      groups: skills
+        .toSorted(
+          (a, b) =>
+            Number(a.items.length > SKILLS_VISIBLE) -
+            Number(b.items.length > SKILLS_VISIBLE),
+        )
+        .map((group) => ({
+          title: group.title,
+          visible: SKILLS_VISIBLE,
+          items: group.items.map((id) => {
+            const { name, logo } = getTech(id);
+            return { label: name, href: '/#skills', logo };
+          }),
+        })),
       footer: {
         label: 'Skills section',
         href: '/#skills',
@@ -106,7 +144,13 @@ export function buildNavigation({ profile, projects, skills, navigation }: Navig
         {
           title: 'Get in touch',
           items: [
-            { label: 'Email', href: `mailto:${profile.email}`, description: profile.email, icon: 'mail', external: true },
+            {
+              label: 'Email',
+              href: `mailto:${profile.email}`,
+              description: profile.email,
+              icon: 'mail',
+              external: true,
+            },
             ...profile.links.filter((link) => link !== github).map(profileLink),
           ],
         },
@@ -114,14 +158,22 @@ export function buildNavigation({ profile, projects, skills, navigation }: Navig
           title: 'Profile',
           items: [
             ...(github ? [profileLink(github)] : []),
-            { label: 'Resume', href: RESUME_HREF, description: 'PDF', icon: 'file', external: true },
+            {
+              label: 'Resume',
+              href: RESUME_HREF,
+              description: 'PDF',
+              icon: 'file',
+              external: true,
+            },
           ],
         },
       ],
       footer: {
         label: 'Contact section',
         href: '/#contact',
-        description: profile.location ? `Based in ${profile.location}` : undefined,
+        description: profile.location
+          ? `Based in ${profile.location}`
+          : undefined,
       },
     },
   ];

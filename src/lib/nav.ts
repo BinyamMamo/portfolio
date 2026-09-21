@@ -24,6 +24,8 @@ export interface NavLink {
 export interface NavLinkGroup {
   title: string;
   items: NavLink[];
+  /** Shows only this many at first, with a button for the rest. */
+  visible?: number;
 }
 
 export interface NavFeature {
@@ -44,6 +46,8 @@ export interface NavMega {
   footer: NavLink;
   /** Show every group in the mobile menu instead of a single link to `href`. */
   expandOnMobile: boolean;
+  /** Fixed column count on wide screens, when the groups are meant to fill a grid. */
+  columns?: number;
 }
 
 export type NavEntry = NavLink | NavMega;

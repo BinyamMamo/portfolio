@@ -1,6 +1,13 @@
 'use client';
 
-import { ArrowRight, ArrowUpRight, ChevronDown, FileText, Globe, Mail } from 'lucide-react';
+import {
+  ArrowRight,
+  ArrowUpRight,
+  ChevronDown,
+  FileText,
+  Globe,
+  Mail,
+} from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useId, useRef, useState } from 'react';
@@ -11,7 +18,11 @@ import type { NavIcon, NavLink, NavMega } from '@/lib/nav';
 
 const CLOSE_DELAY_MS = 120;
 
-const icons: Record<NavIcon, typeof Mail> = { mail: Mail, file: FileText, globe: Globe };
+const icons: Record<NavIcon, typeof Mail> = {
+  mail: Mail,
+  file: FileText,
+  globe: Globe,
+};
 
 /** Headings read tighter with an ampersand. */
 const heading = (title: string) => title.replace(/\band\b/g, '&');
@@ -30,13 +41,24 @@ function MenuItem({ item, active, onNavigate, onPreview }: MenuItemProps) {
     'group/item -mx-3 flex gap-3 rounded-control px-3 transition-colors',
     item.description ? 'py-2' : 'items-center py-1.5',
   );
-  const preview = item.preview ? { onPointerEnter: () => onPreview(item), onFocus: () => onPreview(item) } : {};
+  const preview = item.preview
+    ? { onPointerEnter: () => onPreview(item), onFocus: () => onPreview(item) }
+    : {};
   const content = (
     <>
       {(item.logo || Icon || !item.description) && (
         // Plain entries without a logo keep an empty slot, so every name in a column lines up.
-        <span className={cn('flex size-4 shrink-0 items-center justify-center text-fg-muted', item.description && 'mt-0.5')}>
-          {item.logo ? <Logo logo={item.logo} size={16} /> : Icon && <Icon aria-hidden className="size-4" />}
+        <span
+          className={cn(
+            'flex size-4 shrink-0 items-center justify-center text-fg-muted',
+            item.description && 'mt-0.5',
+          )}
+        >
+          {item.logo ? (
+            <Logo logo={item.logo} size={16} />
+          ) : (
+            Icon && <Icon aria-hidden className="size-4" />
+          )}
         </span>
       )}
       <span className="min-w-0">
@@ -50,7 +72,9 @@ function MenuItem({ item, active, onNavigate, onPreview }: MenuItemProps) {
           {item.label}
         </span>
         {item.description && (
-          <span className="mt-0.5 line-clamp-1 text-[13px] leading-snug text-fg-muted">{item.description}</span>
+          <span className="mt-0.5 line-clamp-1 text-[13px] leading-snug text-fg-muted">
+            {item.description}
+          </span>
         )}
       </span>
     </>
@@ -58,14 +82,26 @@ function MenuItem({ item, active, onNavigate, onPreview }: MenuItemProps) {
 
   if (item.external) {
     return (
-      <a href={item.href} target="_blank" rel="noreferrer" onClick={onNavigate} className={className} {...preview}>
+      <a
+        href={item.href}
+        target="_blank"
+        rel="noreferrer"
+        onClick={onNavigate}
+        className={className}
+        {...preview}
+      >
         {content}
       </a>
     );
   }
 
   return (
-    <Link href={item.href} onClick={onNavigate} className={className} {...preview}>
+    <Link
+      href={item.href}
+      onClick={onNavigate}
+      className={className}
+      {...preview}
+    >
       {content}
     </Link>
   );
@@ -87,9 +123,22 @@ interface SidePanel {
  * Opens on hover for mouse users and on click or keyboard for everyone else. Hovering a project
  * swaps the side panel for its screenshot and full summary.
  */
-export function MegaMenu({ label, groups, featured, footer }: NavMega) {
+export function MegaMenu({
+  label,
+  groups,
+  featured,
+  footer,
+  columns,
+}: NavMega) {
   const [open, setOpen] = useState(false);
   const [previewed, setPreviewed] = useState<NavLink | null>(null);
+  const [expandedGroups, setExpandedGroups] = useState<string[]>([]);
+  const expand = (title: string) =>
+    setExpandedGroups((current) =>
+      current.includes(title) ? current : [...current, title],
+    );
+  const collapse = (title: string) =>
+    setExpandedGroups((current) => current.filter((item) => item !== title));
   const rootRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const closeTimer = useRef<number | undefined>(undefined);
@@ -123,13 +172,20 @@ export function MegaMenu({ label, groups, featured, footer }: NavMega) {
     openedByHover.current = false;
     setOpen(false);
     setPreviewed(null);
+    setExpandedGroups([]);
   };
 
-  const hasPreviews = groups.some((group) => group.items.some((item) => item.preview));
+  const hasPreviews = groups.some((group) =>
+    group.items.some((item) => item.preview),
+  );
   const panels: SidePanel[] = [];
   if (featured) panels.push({ ...featured, preview: false });
   for (const item of groups.flatMap((group) => group.items)) {
-    if (!item.preview || panels.some((panel) => panel.preview && panel.href === item.href)) continue;
+    if (
+      !item.preview ||
+      panels.some((panel) => panel.preview && panel.href === item.href)
+    )
+      continue;
     panels.push({
       href: item.href,
       image: item.preview.image,
@@ -141,7 +197,8 @@ export function MegaMenu({ label, groups, featured, footer }: NavMega) {
   }
   const activeHref = previewed?.preview ? previewed.href : featured?.href;
   const activePreview = Boolean(previewed?.preview);
-  const isActive = (panel: SidePanel) => panel.href === activeHref && panel.preview === activePreview;
+  const isActive = (panel: SidePanel) =>
+    panel.href === activeHref && panel.preview === activePreview;
 
   return (
     <div
@@ -178,7 +235,13 @@ export function MegaMenu({ label, groups, featured, footer }: NavMega) {
         className="nav-link gap-1"
       >
         {label}
-        <ChevronDown aria-hidden className={cn('size-3.5 transition-transform duration-200', open && 'rotate-180')} />
+        <ChevronDown
+          aria-hidden
+          className={cn(
+            'size-3.5 transition-transform duration-200',
+            open && 'rotate-180',
+          )}
+        />
       </button>
 
       {/* Kept mounted so it can fade and slide on both open and close; inert keeps it out of reach when shut. */}
@@ -188,31 +251,79 @@ export function MegaMenu({ label, groups, featured, footer }: NavMega) {
         aria-hidden={!open}
         className={cn(
           'absolute inset-x-0 top-full border-b border-border/40 bg-bg/80 shadow-2xl shadow-black/5 backdrop-blur-xl transition-[opacity,transform,visibility] duration-200 ease-out motion-reduce:transition-none dark:shadow-black/50',
-          open ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-1 opacity-0',
+          open
+            ? 'visible translate-y-0 opacity-100'
+            : 'invisible -translate-y-1 opacity-0',
         )}
       >
         <div
-          className={cn('page-container grid gap-10 py-8', panels.length > 0 && 'lg:grid-cols-[minmax(0,1fr)_18rem]')}
+          className={cn(
+            'page-container grid gap-10 py-8',
+            panels.length > 0 && 'lg:grid-cols-[minmax(0,1fr)_18rem]',
+          )}
           onPointerLeave={() => setPreviewed(null)}
         >
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(10.5rem,1fr))] gap-8">
-            {groups.map((group) => (
-              <div key={group.title}>
-                <p className="eyebrow">{heading(group.title)}</p>
-                <ul className="mt-4 space-y-0.5">
-                  {group.items.map((item) => (
-                    <li key={`${item.label}-${item.href}`}>
-                      <MenuItem
-                        item={item}
-                        active={hasPreviews && previewed?.href === item.href}
-                        onNavigate={close}
-                        onPreview={setPreviewed}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          <div
+            className={cn(
+              'grid grid-cols-[repeat(auto-fit,minmax(10.5rem,1fr))] gap-8',
+              columns === 5 && 'lg:grid-cols-5',
+            )}
+          >
+            {groups.map((group) => {
+              const expanded = expandedGroups.includes(group.title);
+              const hiddenCount = group.visible
+                ? Math.max(0, group.items.length - group.visible)
+                : 0;
+              const shown =
+                hiddenCount > 0 && !expanded
+                  ? group.items.slice(0, group.visible)
+                  : group.items;
+              return (
+                <div
+                  key={group.title}
+                  // Hovering anywhere in a column reveals its hidden items; they fold away once the pointer moves on.
+                  onPointerEnter={() => expand(group.title)}
+                  onPointerLeave={() => collapse(group.title)}
+                  onBlur={(event) => {
+                    if (!event.currentTarget.contains(event.relatedTarget))
+                      collapse(group.title);
+                  }}
+                >
+                  <p className="eyebrow">{heading(group.title)}</p>
+                  <ul className="mt-4 space-y-0.5">
+                    {shown.map((item, index) => (
+                      <li
+                        key={`${item.label}-${item.href}`}
+                        // Items revealed by "more" fade in rather than popping into place.
+                        className={cn(
+                          group.visible !== undefined &&
+                            index >= group.visible &&
+                            'animate-in duration-300 fade-in-0 slide-in-from-top-1',
+                        )}
+                      >
+                        <MenuItem
+                          item={item}
+                          active={hasPreviews && previewed?.href === item.href}
+                          onNavigate={close}
+                          onPreview={setPreviewed}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                  {hiddenCount > 0 && !expanded && (
+                    <button
+                      type="button"
+                      aria-expanded={false}
+                      onFocus={() => expand(group.title)}
+                      onClick={() => expand(group.title)}
+                      className="mt-2 text-[13px] text-fg-subtle transition-colors hover:text-brand/80"
+                    >
+                      +{hiddenCount} more
+                    </button>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           {panels.length > 0 && (
@@ -229,8 +340,10 @@ export function MegaMenu({ label, groups, featured, footer }: NavMega) {
                     inert={!active}
                     aria-hidden={!active}
                     className={cn(
-                      'group [grid-area:1/1] transition-[opacity,translate] duration-300 ease-in-out motion-reduce:transition-none',
-                      active ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-1 opacity-0',
+                      'group transition-[opacity,translate] duration-300 ease-in-out [grid-area:1/1] motion-reduce:transition-none',
+                      active
+                        ? 'translate-y-0 opacity-100'
+                        : 'pointer-events-none translate-y-1 opacity-0',
                     )}
                   >
                     <span className="relative block aspect-video overflow-hidden rounded-control border bg-surface-muted">
@@ -242,12 +355,21 @@ export function MegaMenu({ label, groups, featured, footer }: NavMega) {
                         className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
                       />
                     </span>
-                    <span className="eyebrow mt-4 block [--eyebrow-color:var(--brand)]">{panel.eyebrow}</span>
-                    <span className="mt-2 block text-sm font-medium text-fg">{panel.label}</span>
-                    <span className="mt-1 line-clamp-5 text-[13px] leading-snug text-fg-muted">{panel.description}</span>
+                    <span className="mt-4 block eyebrow [--eyebrow-color:var(--brand)]">
+                      {panel.eyebrow}
+                    </span>
+                    <span className="mt-2 block text-sm font-medium text-fg">
+                      {panel.label}
+                    </span>
+                    <span className="mt-1 line-clamp-5 text-[13px] leading-snug text-fg-muted">
+                      {panel.description}
+                    </span>
                     <span className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-medium text-fg transition-colors group-hover:text-brand">
                       Details
-                      <ArrowRight aria-hidden className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+                      <ArrowRight
+                        aria-hidden
+                        className="size-3.5 transition-transform group-hover:translate-x-0.5"
+                      />
                     </span>
                   </Link>
                 );
@@ -258,7 +380,9 @@ export function MegaMenu({ label, groups, featured, footer }: NavMega) {
 
         <div className="border-t border-border/40">
           <div className="page-container flex items-center justify-between gap-6 py-4 text-sm">
-            {footer.description && <span className="text-fg-muted">{footer.description}</span>}
+            {footer.description && (
+              <span className="text-fg-muted">{footer.description}</span>
+            )}
             <Link
               href={footer.href}
               onClick={close}
