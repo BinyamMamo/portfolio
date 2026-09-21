@@ -53,6 +53,8 @@ export const tech = {
   vite: { name: 'Vite', logo: logo('vite') },
   framerMotion: { name: 'Framer Motion', logo: logo('framer', 'framer-dark') },
   recharts: { name: 'Recharts' },
+  electron: { name: 'Electron', logo: logo('electron') },
+  reactNative: { name: 'React Native', logo: logo('react') },
   flutter: { name: 'Flutter', logo: logo('flutter') },
 
   docker: { name: 'Docker', logo: logo('docker') },
