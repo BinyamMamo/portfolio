@@ -64,6 +64,7 @@ export const tech = {
   socketio: { name: 'Socket.IO', logo: logo('socketio', 'socketio-dark') },
   openapi: { name: 'OpenAPI', logo: logo('swagger') },
   raycast: { name: 'Raycast', logo: logo('raycast') },
+  wails: { name: 'Wails (Go)', logo: logo('golang', 'golang-dark') },
   kubernetes: { name: 'Kubernetes', logo: logo('kubernetes') },
   nginx: { name: 'Nginx', logo: logo('nginx') },
   git: { name: 'Git', logo: logo('git') },
