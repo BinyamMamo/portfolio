@@ -896,94 +896,6 @@
     ]
   },
   {
-    "slug": "flight-plan",
-    "name": "Flight Plan",
-    "tagline": "A hands-on guide for a high school student designing a reusable spaceplane.",
-    "summary": "Flight Plan is a one-page website that walks a secondary school student through designing a spaceplane that launches like a rocket, lands on a runway and flies again. It mixes a step by step plan with simulations you can drag, learning paths, free resources and career advice.",
-    "category": "Education",
-    "stack": [
-      "javascript",
-      "Three.js"
-    ],
-    "topics": [
-      "aerospace",
-      "physics simulations",
-      "self-directed learning"
-    ],
-    "highlight": "Three physics simulations built from real equations in plain JavaScript, with no framework or build step.",
-    "featured": false,
-    "kind": "personal",
-    "areas": [
-      "learning"
-    ],
-    "year": "2026",
-    "status": "local",
-    "cover": {
-      "kind": "image",
-      "src": "/media/projects/flight-plan/flight-plan-01-3d53a5.webp",
-      "alt": "The whole mission, from launch to runway, in one picture",
-      "width": 2400,
-      "height": 1500
-    },
-    "gallery": [
-      {
-        "kind": "image",
-        "src": "/media/projects/flight-plan/flight-plan-02-bde210.webp",
-        "alt": "Change the sideways speed and watch the orbit stretch",
-        "width": 2400,
-        "height": 1500
-      },
-      {
-        "kind": "video",
-        "src": "/media/projects/flight-plan/flight-plan-03-a0fb1c.mp4",
-        "poster": "/media/projects/flight-plan/flight-plan-03-a0fb1c.webp",
-        "alt": "Dragging speed from a crash, to an ellipse, to escape",
-        "width": 1920,
-        "height": 1200
-      },
-      {
-        "kind": "image",
-        "src": "/media/projects/flight-plan/flight-plan-04-3f7200.webp",
-        "alt": "The rocket equation shows why rockets are mostly fuel",
-        "width": 2400,
-        "height": 1500
-      },
-      {
-        "kind": "image",
-        "src": "/media/projects/flight-plan/flight-plan-05-06bac9.webp",
-        "alt": "Finding the narrow angle that makes reentry survivable",
-        "width": 2400,
-        "height": 1500
-      },
-      {
-        "kind": "image",
-        "src": "/media/projects/flight-plan/flight-plan-06-1d27a9.webp",
-        "alt": "A short quiz that suggests which aerospace track fits",
-        "width": 2400,
-        "height": 1500
-      }
-    ],
-    "overview": [
-      "A student in Addis Ababa wanted to design a reusable spaceplane but had no clear place to start. Flight Plan breaks that big goal into seven phases, each with one deliverable, the free tools to use and what to do in the first week.",
-      "The Basics tab has three simulations you move with sliders. You can see how speed turns an orbit into a crash, an ellipse or an escape. You can see why a rocket has to be mostly fuel, and how narrow the safe angle for reentry is. Each one uses the real equation and says where it simplifies.",
-      "The rest of the site covers short learning roadmaps, a filterable shelf of about 50 free resources, a quiz that suggests aerospace careers, ways to get noticed and competitions open to students in Ethiopia. Everything lives in one HTML file."
-    ],
-    "features": [
-      "Follow a seven-phase plan from first idea to a vehicle that flies again",
-      "Drag orbital speed and watch the path become a crash, circle, ellipse or escape",
-      "Change engine type and fuel share to see if a rocket reaches orbit",
-      "Pick a reentry angle and see heating and g-forces for that path",
-      "Take a six-question quiz that suggests two aerospace career tracks",
-      "Filter about 50 free courses, tools and trackers"
-    ],
-    "challenges": [
-      "Simulating two-body orbits in the browser accurately enough to report apogee, perigee and period",
-      "Keeping seven tabs, three simulations and a Three.js hero in one self-contained HTML file that stays fast",
-      "Writing a validation script that checks the JavaScript parses, ids are unique and no em dashes slip in before each deploy",
-      "Explaining physics in plain language for a 16 year old without hiding where the numbers come from"
-    ]
-  },
-  {
     "slug": "peersphere",
     "name": "PeerSphere",
     "tagline": "Peer tutoring for university students, with student, tutor and admin views.",
@@ -1570,6 +1482,7 @@
       "command line tool"
     ],
     "highlight": "Everything outside a redacted span comes out byte for byte identical, checked before anything reaches the clipboard.",
+    "repoUrl": "https://github.com/BinyamMamo/clipshield",
     "featured": false,
     "kind": "personal",
     "areas": [
@@ -1625,8 +1538,7 @@
       "Letting a language model help without letting it write output: its suggestions are only used if they match the source exactly, and a test suite runs against a deliberately hostile fake model",
       "Keeping false positives low so logs stay readable, by skipping git hashes, version strings, timestamps and public docs links",
       "Splitting long pastes into overlapping chunks so an entity on a chunk boundary is still found and mapped back to the right offset"
-    ],
-    "repoUrl": "https://github.com/BinyamMamo/clipshield"
+    ]
   },
   {
     "slug": "notebooklm-player",
@@ -2456,6 +2368,7 @@
       "React Three Fiber",
       "tailwindcss",
       "Home Assistant",
+      "Web Speech API",
       "Vitest"
     ],
     "topics": [
@@ -2463,14 +2376,15 @@
       "IoT",
       "Home Assistant",
       "3D visualization",
-      "energy monitoring"
+      "energy monitoring",
+      "voice interface"
     ],
-    "highlight": "The lab is rendered as a real 3D model you can orbit, with sensor readings and a camera feed placed inside the scene.",
+    "highlight": "The lab is rendered as a real 3D model you can orbit, with sensor readings and a camera feed placed inside the scene, and one ask bar that takes plain language by text or voice.",
     "featured": false,
     "kind": "client",
     "client": {
       "name": "University of Dubai",
-      "role": "Team member: set up the project and built the 3D lab viewer"
+      "role": "Team member: set up the project, built the 3D lab viewer, then redesigned the dashboard and built the ask bar"
     },
     "areas": [
       "platforms",
@@ -2480,59 +2394,89 @@
     "status": "prototype",
     "cover": {
       "kind": "image",
-      "src": "/media/projects/ud-smart-building/ud-smart-building-01-c31bd9.webp",
-      "alt": "A 3D model of the lab with live readings and device controls around it",
+      "src": "/media/projects/ud-smart-building/ud-smart-building-01-feed33.webp",
+      "alt": "The lab as a 3D model, with climate on one side and power and the gate camera on the other",
       "width": 2400,
       "height": 1500
     },
     "gallery": [
       {
         "kind": "video",
-        "src": "/media/projects/ud-smart-building/ud-smart-building-02-e176bb.mp4",
-        "poster": "/media/projects/ud-smart-building/ud-smart-building-02-e176bb.webp",
-        "alt": "Orbiting the digital twin of the lab",
+        "src": "/media/projects/ud-smart-building/ud-smart-building-02-2b31ef.mp4",
+        "poster": "/media/projects/ud-smart-building/ud-smart-building-02-2b31ef.webp",
+        "alt": "Orbiting the lab twin",
         "width": 1920,
         "height": 1200
       },
       {
         "kind": "image",
-        "src": "/media/projects/ud-smart-building/ud-smart-building-03-9d1b36.webp",
-        "alt": "Full 3D view with the sensor wall and camera screen inside the room",
+        "src": "/media/projects/ud-smart-building/ud-smart-building-03-0e5fd2.webp",
+        "alt": "Lights, plugs, the fan and the wall screen switch from one panel, with scenes",
         "width": 2400,
         "height": 1500
       },
       {
         "kind": "image",
-        "src": "/media/projects/ud-smart-building/ud-smart-building-04-5732b7.webp",
-        "alt": "Solar, battery, grid and load on one energy page",
+        "src": "/media/projects/ud-smart-building/ud-smart-building-04-740863.webp",
+        "alt": "Solar, battery, grid and demand on one page, over a day, a week or a month",
         "width": 2400,
         "height": 1500
       },
       {
         "kind": "image",
-        "src": "/media/projects/ud-smart-building/ud-smart-building-05-022652.webp",
-        "alt": "Outdoor weather station next to indoor climate",
+        "src": "/media/projects/ud-smart-building/ud-smart-building-05-495980.webp",
+        "alt": "The outdoor weather station next to the indoor climate",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/ud-smart-building/ud-smart-building-06-fd0fe1.webp",
+        "alt": "Settings for appearance, fonts, the assistant, voice and which tabs to show",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/ud-smart-building/ud-smart-building-07-717e87.webp",
+        "alt": "Presentation mode labels every device in the scene for figures",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/ud-smart-building/ud-smart-building-08-ca0890.webp",
+        "alt": "The same dashboard in light mode",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/ud-smart-building/ud-smart-building-09-ba61e7.webp",
+        "alt": "The energy page in light mode",
         "width": 2400,
         "height": 1500
       }
     ],
     "overview": [
       "The University of Dubai is running a research project on smart environments: one physical lab fitted with sensors, smart plugs, a weather station and cameras, all connected through Home Assistant. The team needed a dashboard that makes the room's state easy to read at a glance.",
-      "Instead of a grid of numbers, the dashboard puts a 3D model of the lab in the middle of the screen. Temperature, air quality, power demand and a camera feed sit around it, and a wall of readings is placed inside the model itself. Other pages cover energy, weather, parking and CCTV, and a chat panel sends plain-language commands to Home Assistant.",
-      "This was a team project. Binyam started the repository and built the 3D lab viewer, the model loading and the first Home Assistant connection. Yared Zenebe built most of the pages that followed, including the dashboard panels, energy, weather, parking, the chat widget, login and tests."
+      "Instead of a grid of numbers, the dashboard puts a 3D model of the lab in the middle of the screen. Climate readings sit on one side, power and the gate camera on the other, and a wall of readings is placed inside the model itself. Other pages cover energy, weather, parking and CCTV, and an ask bar at the bottom of every page takes plain language, by typing or by voice.",
+      "This was a team project. Binyam started the repository and built the 3D lab viewer, the model loading and the first Home Assistant connection. Yared Zenebe built the pages that followed, including the early dashboard panels, energy, weather, parking, the chat widget, login and tests. Binyam then redesigned the interface around the twin, added the ask bar with voice conversation, the settings modal and a presentation mode for research figures."
     ],
     "features": [
       "Orbit, zoom and auto-tour a 3D model of the lab",
       "Read indoor and outdoor temperature, humidity, air quality and CO2 at a glance",
-      "Toggle lights, plugs, the fan and the wall screen from a control dock",
-      "Follow solar generation, battery, grid feed-in and building load on the energy page",
+      "Switch lights, plugs, the fan and the wall screen, or run a scene, from one panel",
+      "Ask the lab for something by typing or by voice, and watch the assistant's steps as it works",
+      "Follow solar generation, battery, grid feed-in and building load over a day, a week or a month",
       "Compare the outdoor weather station with indoor climate",
-      "Ask the lab to do something in plain language through Home Assistant's conversation API"
+      "Set appearance, fonts, the assistant model, voice and which tabs to show, and label every device for presentations"
     ],
     "challenges": [
       "The lab model is a large OBJ file with materials. Loading it behind a custom loading screen, and centring it on an infinite grid, keeps the first view clean while the model streams in.",
       "The camera feed had to appear inside the 3D room, not just beside it. A video texture on a wall-mounted screen in the scene plays the feed where the real screen hangs.",
-      "Without a Home Assistant connection the pages would be empty. The dashboard falls back to a demo mode with realistic readings, so the interface can be shown and tested away from the lab."
+      "Without a Home Assistant connection the pages would be empty. The dashboard falls back to a demo mode with realistic readings, so the interface can be shown and tested away from the lab.",
+      "Voice had to feel like a conversation rather than a form. Speech starts synthesising on the server as soon as the first words exist, plays clip by clip on the chosen speaker, and falls back to the most natural browser voice when the cloud is not reachable."
     ]
   }
 ]
