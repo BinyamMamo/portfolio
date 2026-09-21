@@ -186,6 +186,8 @@ export type CvTemplateId = (typeof cvTemplateIds)[number];
 
 export const cvSettingsSchema = z.object({
   template: z.enum(cvTemplateIds),
+  /** Overrides the profile role on the CV, where there is room for a fuller description. */
+  headline: z.string().trim().optional(),
   /** Download name without the .pdf extension. */
   fileName: slug,
   /** Projects shown on the default CV, in order. */

@@ -47,10 +47,7 @@ const s = StyleSheet.create({
   projectLink: { color: ink.brand, textDecoration: 'none', marginRight: 8 },
   links: { flexDirection: 'row', marginTop: 2 },
   highlight: { marginTop: 2, fontStyle: 'italic', color: ink.muted },
-  skillsGrid: { flexDirection: 'row', flexWrap: 'wrap' },
-  skillGroup: { width: '50%', marginBottom: 6, paddingRight: 12 },
-  skillTitle: { fontWeight: 600, marginBottom: 1 },
-  skillItems: { color: ink.body },
+  skillItems: { flex: 1, color: ink.body },
 });
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
@@ -91,16 +88,17 @@ function Project({ project }: { project: CvProject }) {
     <View style={s.row} wrap={false}>
       <Text style={s.margin}>{project.stack.slice(0, 3).join('\n')}</Text>
       <View style={s.body}>
-        <Text style={s.entryTitle}>{project.name}</Text>
+        <Text>
+          <Text style={s.entryTitle}>{project.name}</Text>
+          {project.client && <Text style={s.entryOrg}>{`, ${project.client}${project.year ? ` (${project.year})` : ''}`}</Text>}
+        </Text>
         <Text style={s.description}>{project.description}</Text>
         {project.highlight && <Text style={s.highlight}>{project.highlight}</Text>}
-        {project.links.length > 0 && (
+        {project.link && (
           <View style={s.links}>
-            {project.links.map((link) => (
-              <Link key={link.url} src={link.url} style={s.projectLink}>
-                {link.text}
-              </Link>
-            ))}
+            <Link src={project.link.url} style={s.projectLink}>
+              {project.link.text}
+            </Link>
           </View>
         )}
       </View>
@@ -109,8 +107,6 @@ function Project({ project }: { project: CvProject }) {
 }
 
 export function ModernTemplate({ cv }: { cv: ResolvedCv }): ReactElement<DocumentProps> {
-  const skills = cv.skills.filter((group) => group.items.length > 0);
-
   return (
     <Document title={`${cv.name} CV`} author={cv.name}>
       <Page size="A4" style={s.page}>
@@ -139,6 +135,13 @@ export function ModernTemplate({ cv }: { cv: ResolvedCv }): ReactElement<Documen
             ))}
           </Section>
         )}
+        {cv.clientProjects.length > 0 && (
+          <Section title="Client and team work">
+            {cv.clientProjects.map((project) => (
+              <Project key={project.name} project={project} />
+            ))}
+          </Section>
+        )}
         {cv.projects.length > 0 && (
           <Section title="Selected projects">
             {cv.projects.map((project) => (
@@ -146,16 +149,14 @@ export function ModernTemplate({ cv }: { cv: ResolvedCv }): ReactElement<Documen
             ))}
           </Section>
         )}
-        {skills.length > 0 && (
+        {cv.skillLines.length > 0 && (
           <Section title="Skills">
-            <View style={s.skillsGrid}>
-              {skills.map((group) => (
-                <View key={group.title} style={s.skillGroup} wrap={false}>
-                  <Text style={s.skillTitle}>{group.title}</Text>
-                  <Text style={s.skillItems}>{group.items.join(', ')}</Text>
-                </View>
-              ))}
-            </View>
+            {cv.skillLines.map((line) => (
+              <View key={line.label} style={s.row} wrap={false}>
+                <Text style={s.margin}>{line.label}</Text>
+                <Text style={s.skillItems}>{line.items}</Text>
+              </View>
+            ))}
           </Section>
         )}
         {cv.education.length > 0 && (

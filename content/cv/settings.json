@@ -2,8 +2,12 @@
   "template": "classic",
   "fileName": "binyam-mamo-cv",
   "projectSlugs": [
-    "peersphere",
-    "visionaid",
-    "funkey"
-  ]
+    "hakim-click",
+    "yakal",
+    "ksk-homes",
+    "clixa-tools",
+    "soroban",
+    "solar-farm-drone"
+  ],
+  "headline": "Software engineer, backend and applied AI"
 }

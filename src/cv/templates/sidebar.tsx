@@ -74,16 +74,15 @@ function Project({ project }: { project: CvProject }) {
   return (
     <View style={s.entry} wrap={false}>
       <Text style={s.entryTitle}>{project.name}</Text>
+      {project.client && <Text style={s.entryMeta}>{`${project.client}${project.year ? `, ${project.year}` : ''}`}</Text>}
       <Text style={s.description}>{project.description}</Text>
       {project.highlight && <Text style={s.highlight}>{project.highlight}</Text>}
       {project.stack.length > 0 && <Text style={s.meta}>{project.stack.join(', ')}</Text>}
-      {project.links.length > 0 && (
+      {project.link && (
         <View style={s.links}>
-          {project.links.map((link) => (
-            <Link key={link.url} src={link.url} style={s.link}>
-              {link.text}
-            </Link>
-          ))}
+          <Link src={project.link.url} style={s.link}>
+            {project.link.text}
+          </Link>
         </View>
       )}
     </View>
@@ -91,8 +90,6 @@ function Project({ project }: { project: CvProject }) {
 }
 
 export function SidebarTemplate({ cv }: { cv: ResolvedCv }): ReactElement<DocumentProps> {
-  const skills = cv.skills.filter((group) => group.items.length > 0);
-
   return (
     <Document title={`${cv.name} CV`} author={cv.name}>
       <Page size="A4" style={s.page}>
@@ -116,13 +113,13 @@ export function SidebarTemplate({ cv }: { cv: ResolvedCv }): ReactElement<Docume
             ))}
           </View>
 
-          {skills.length > 0 && (
+          {cv.skillLines.length > 0 && (
             <View style={s.sideSection}>
               <Text style={s.sectionTitle}>Skills</Text>
-              {skills.map((group) => (
-                <View key={group.title} style={s.skillGroup} wrap={false}>
-                  <Text style={s.skillTitle}>{group.title}</Text>
-                  <Text style={s.skillItems}>{group.items.join(', ')}</Text>
+              {cv.skillLines.map((line) => (
+                <View key={line.label} style={s.skillGroup} wrap={false}>
+                  <Text style={s.skillTitle}>{line.label}</Text>
+                  <Text style={s.skillItems}>{line.items}</Text>
                 </View>
               ))}
             </View>
@@ -151,6 +148,13 @@ export function SidebarTemplate({ cv }: { cv: ResolvedCv }): ReactElement<Docume
             <Section title="Experience">
               {cv.experience.map((entry) => (
                 <Entry key={entry.id} entry={entry} />
+              ))}
+            </Section>
+          )}
+          {cv.clientProjects.length > 0 && (
+            <Section title="Client and team work">
+              {cv.clientProjects.map((project) => (
+                <Project key={project.name} project={project} />
               ))}
             </Section>
           )}

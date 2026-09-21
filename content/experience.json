@@ -1,5 +1,23 @@
 [
   {
+    "id": "horan-technologies-backend-intern",
+    "title": "Backend Developer Intern",
+    "org": "Horan Technologies",
+    "start": "Jun 2026",
+    "end": "Sep 2026",
+    "points": [
+      "Built the backend of a hotel management system used for rooms, reservations, check-in, housekeeping, billing and reporting: 97 endpoints over 16 data models, with about 580 automated tests.",
+      "Added a Telegram assistant that answers staff questions by text or voice in English and Amharic, with role-based limits on what each person can ask.",
+      "Wrote the guest booking bot and mini app, including payments and QR confirmations."
+    ],
+    "stack": [
+      "nodejs",
+      "express",
+      "postgresql",
+      "docker"
+    ]
+  },
+  {
     "id": "alx-africa-prodev-back-end-program",
     "title": "ProDev Back-End Program",
     "org": "ALX Africa",

@@ -41,12 +41,12 @@ const s = StyleSheet.create({
   bulletText: { flex: 1, color: ink.body },
   meta: { marginTop: 3, fontSize: 8.5, color: ink.muted },
   metaLabel: { fontWeight: 600 },
-  projectLinks: { flexDirection: 'row' },
-  projectLink: { marginLeft: 10, fontSize: 9, color: ink.muted, textDecoration: 'none' },
+  projectLink: { marginLeft: 10, fontSize: 8.5, color: ink.brand, textDecoration: 'none' },
+  client: { color: ink.muted },
   description: { marginTop: 1, color: ink.body },
   highlight: { marginTop: 2, fontStyle: 'italic', color: ink.muted },
-  skillRow: { flexDirection: 'row', marginBottom: 3 },
-  skillTitle: { width: 120, fontWeight: 600 },
+  skillRow: { flexDirection: 'row', marginBottom: 2 },
+  skillTitle: { width: 118, fontWeight: 600 },
   skillItems: { flex: 1, color: ink.body },
 });
 
@@ -95,14 +95,15 @@ function Project({ project }: { project: CvProject }) {
   return (
     <View style={s.entry} wrap={false}>
       <View style={s.entryHeader}>
-        <Text style={s.entryTitle}>{project.name}</Text>
-        <View style={s.projectLinks}>
-          {project.links.map((link) => (
-            <Link key={link.url} src={link.url} style={s.projectLink}>
-              {link.label}
-            </Link>
-          ))}
-        </View>
+        <Text>
+          <Text style={s.entryTitle}>{project.name}</Text>
+          {project.client && <Text style={s.client}>{`   ${project.client}${project.year ? `, ${project.year}` : ''}`}</Text>}
+        </Text>
+        {project.link && (
+          <Link src={project.link.url} style={s.projectLink}>
+            {project.link.text}
+          </Link>
+        )}
       </View>
       <Text style={s.description}>{project.description}</Text>
       {project.highlight && <Text style={s.highlight}>{project.highlight}</Text>}
@@ -117,8 +118,6 @@ function Project({ project }: { project: CvProject }) {
 }
 
 export function ClassicTemplate({ cv }: { cv: ResolvedCv }): ReactElement<DocumentProps> {
-  const skills = cv.skills.filter((group) => group.items.length > 0);
-
   return (
     <Document title={`${cv.name} CV`} author={cv.name}>
       <Page size="A4" style={s.page}>
@@ -145,6 +144,13 @@ export function ClassicTemplate({ cv }: { cv: ResolvedCv }): ReactElement<Docume
             ))}
           </Section>
         )}
+        {cv.clientProjects.length > 0 && (
+          <Section title="Client and team work">
+            {cv.clientProjects.map((project) => (
+              <Project key={project.name} project={project} />
+            ))}
+          </Section>
+        )}
         {cv.projects.length > 0 && (
           <Section title="Projects">
             {cv.projects.map((project) => (
@@ -152,12 +158,12 @@ export function ClassicTemplate({ cv }: { cv: ResolvedCv }): ReactElement<Docume
             ))}
           </Section>
         )}
-        {skills.length > 0 && (
+        {cv.skillLines.length > 0 && (
           <Section title="Skills">
-            {skills.map((group) => (
-              <View key={group.title} style={s.skillRow}>
-                <Text style={s.skillTitle}>{group.title}</Text>
-                <Text style={s.skillItems}>{group.items.join(', ')}</Text>
+            {cv.skillLines.map((line) => (
+              <View key={line.label} style={s.skillRow}>
+                <Text style={s.skillTitle}>{line.label}</Text>
+                <Text style={s.skillItems}>{line.items}</Text>
               </View>
             ))}
           </Section>

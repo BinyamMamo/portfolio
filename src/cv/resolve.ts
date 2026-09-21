@@ -43,8 +43,12 @@ export interface CvProject {
   name: string;
   description: string;
   highlight?: string;
+  /** Set on work done for a company or team. */
+  client?: string;
+  year?: string;
   stack: string[];
-  links: CvLink[];
+  /** One link only: the live site where there is one, otherwise the public repository. */
+  link?: CvLink;
 }
 
 export interface ResolvedCv {
@@ -59,8 +63,12 @@ export interface ResolvedCv {
   links: CvLink[];
   experience: CvEntry[];
   education: CvEntry[];
+  /** Work built for companies and teams. */
+  clientProjects: CvProject[];
+  /** Everything built on my own. */
   projects: CvProject[];
-  skills: { title: string; items: string[] }[];
+  /** At most three comma-separated lines, so skills never crowd out the work. */
+  skillLines: { label: string; items: string }[];
 }
 
 /** Keeps the order of `ids`, silently skipping ids that no longer exist. */
@@ -69,7 +77,43 @@ function pick<T>(items: T[], ids: string[] | undefined, key: (item: T) => string
   return ids.flatMap((id) => items.filter((item) => key(item) === id));
 }
 
-const stripProtocol = (url: string) => url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+const stripProtocol = (url: string) => url.replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/$/, '');
+
+/** A live site says more to a reader than a repository, so it wins when a project has both. */
+function projectLink(project: Project): CvLink | undefined {
+  if (project.demo?.url) return { label: 'Demo', text: stripProtocol(project.demo.url), url: project.demo.url };
+  if (project.liveUrl) return { label: 'Live', text: stripProtocol(project.liveUrl), url: project.liveUrl };
+  if (project.repoUrl) return { label: 'Code', text: stripProtocol(project.repoUrl), url: project.repoUrl };
+  return undefined;
+}
+
+function toProject(project: Project): CvProject {
+  return {
+    name: project.name,
+    description: project.tagline,
+    highlight: project.highlight,
+    // Several products carry their client's name, and printing it twice reads like a mistake.
+    client: project.kind === 'client' && project.client && project.client.name !== project.name ? project.client.name : undefined,
+    year: project.year,
+    stack: project.stack.map((id) => getTech(id).name),
+    link: projectLink(project),
+  };
+}
+
+/** Packs the skill groups into at most three lines, keeping their order. */
+function toSkillLines(groups: { title: string; items: string[] }[]): { label: string; items: string }[] {
+  const filled = groups.filter((group) => group.items.length > 0);
+  const perLine = Math.ceil(filled.length / 3) || 1;
+  const lines: { label: string; items: string }[] = [];
+  for (let i = 0; i < filled.length; i += perLine) {
+    const chunk = filled.slice(i, i + perLine);
+    lines.push({
+      label: chunk.map((group, index) => (index === 0 ? group.title : group.title.toLowerCase())).join(' and '),
+      items: chunk.flatMap((group) => group.items).join(', '),
+    });
+  }
+  return lines.slice(0, 3);
+}
 
 function toEntry(entry: TimelineEntry, extraPoints: string[] = []): CvEntry {
   return {
@@ -101,11 +145,13 @@ export function resolveCv(content: CvContent, variant?: CvVariant): ResolvedCv {
       .map((link) => ({ label: link.label, text: link.handle || stripProtocol(link.url), url: link.url })),
   ];
 
+  const chosen = pick(content.projects, variant?.projectSlugs ?? settings.projectSlugs, (project) => project.slug);
+
   return {
     template: variant?.template ?? settings.template,
     fileName: variant ? `${settings.fileName}-${variant.slug}` : settings.fileName,
     name: profile.name,
-    headline: variant?.headline ?? profile.role,
+    headline: variant?.headline ?? settings.headline ?? profile.role,
     summary: variant?.summary ?? profile.summary,
     location: profile.location,
     email: profile.email,
@@ -115,23 +161,13 @@ export function resolveCv(content: CvContent, variant?: CvVariant): ResolvedCv {
       toEntry(entry, extra[entry.id]),
     ),
     education: content.education.map((entry) => toEntry(entry, extra[entry.id])),
-    projects: pick(content.projects, variant?.projectSlugs ?? settings.projectSlugs, (project) => project.slug).map(
-      (project) => ({
-        name: project.name,
-        description: project.tagline,
-        highlight: project.highlight,
-        stack: project.stack.map((id) => getTech(id).name),
-        links: [
-          ...(project.liveUrl ? [{ label: 'Live', text: stripProtocol(project.liveUrl), url: project.liveUrl }] : []),
-          ...(project.repoUrl ? [{ label: 'Code', text: stripProtocol(project.repoUrl), url: project.repoUrl }] : []),
-        ],
-      }),
+    clientProjects: chosen.filter((project) => project.kind === 'client').map(toProject),
+    projects: chosen.filter((project) => project.kind !== 'client').map(toProject),
+    skillLines: toSkillLines(
+      content.skills.map((group) => ({
+        title: group.title,
+        items: group.items.map((id) => getTech(id).name).sort((a, b) => emphasisRank(a) - emphasisRank(b)),
+      })),
     ),
-    skills: content.skills.map((group) => ({
-      title: group.title,
-      items: group.items
-        .map((id) => getTech(id).name)
-        .sort((a, b) => emphasisRank(a) - emphasisRank(b)),
-    })),
   };
 }
