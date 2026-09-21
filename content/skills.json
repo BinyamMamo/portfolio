@@ -82,7 +82,8 @@
       "huggingface",
       "supabase",
       "render",
-      "firebase"
+      "firebase",
+      "vercel"
     ]
   },
   {
