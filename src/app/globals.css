@@ -386,3 +386,9 @@
 @utility animate-dropdown {
   animation: dropdown-in 140ms ease-out;
 }
+
+/* The hero portrait's slow breath. */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.012) translateY(-1px); }
+}

@@ -5,5 +5,5 @@ import nextTs from 'eslint-config-next/typescript';
 export default defineConfig([
   ...nextVitals,
   ...nextTs,
-  globalIgnores(['.next/**', 'out/**', 'next-env.d.ts', 'src/avatar/engine/**', 'src/avatar/persona/**', 'src/avatar/analyze/**']),
+  globalIgnores(['.next/**', 'out/**', 'next-env.d.ts']),
 ]);

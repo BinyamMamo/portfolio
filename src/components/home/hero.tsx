@@ -1,6 +1,6 @@
 import { ArrowRight, Download } from 'lucide-react';
 
-import { AvatarStage } from '@/components/home/avatar-stage';
+import { AvatarPortrait } from '@/components/home/avatar-portrait';
 import { ButtonLink } from '@/components/button-link';
 import { SocialLinks } from '@/components/social-links';
 import { cn } from '@/lib/cn';
@@ -53,19 +53,11 @@ export async function Hero() {
           <SocialLinks className="mt-10" />
         </div>
 
-        <div className="order-first w-32 sm:w-40 md:order-none md:w-full">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-panel bg-[#11111157]">
-            <AvatarStage label={`Avatar of ${profile.name}`} className="absolute inset-0 size-full" />
-            <noscript>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={profile.avatar}
-                alt={`Avatar of ${profile.name}`}
-                className="absolute inset-0 size-full object-cover"
-              />
-            </noscript>
+        {profile.avatar && (
+          <div className="order-first w-32 sm:w-40 md:order-none md:w-full">
+            <AvatarPortrait src={profile.avatar} alt={`Illustrated avatar of ${profile.name}`} />
           </div>
-        </div>
+        )}
       </div>
 
       {profile.facts.length > 0 && (
