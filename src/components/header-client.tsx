@@ -89,11 +89,23 @@ export function HeaderClient({ nav, resumeHref, github }: HeaderClientProps) {
     <>
       <header
         className={cn(
-          'sticky top-0 z-50 border-b backdrop-blur-md transition-colors duration-200',
-          scrolled || menuOpen ? 'border-border bg-bg/80' : 'border-transparent bg-bg/0',
-          'has-[[data-open=true]]:border-border/40 has-[[data-open=true]]:bg-bg/90 has-[[data-open=true]]:[backdrop-filter:none]',
+          'group/header sticky top-0 z-50 border-b transition-colors duration-200',
+          scrolled || menuOpen ? 'border-border' : 'border-transparent',
+          'has-[[data-open=true]]:border-border/40',
         )}
       >
+        {/*
+          The blur lives on this layer rather than on <header>: a backdrop-filter on the header would
+          trap the mega menu's own blur, so the open panel could not blur the page behind it.
+        */}
+        <div
+          aria-hidden
+          className={cn(
+            'pointer-events-none absolute inset-0 -z-10 backdrop-blur-md transition-colors duration-200',
+            scrolled || menuOpen ? 'bg-bg/80' : 'bg-bg/0',
+            'group-has-[[data-open=true]]/header:bg-bg/85 group-has-[[data-open=true]]/header:backdrop-blur-xl',
+          )}
+        />
         <div className="page-container flex h-header items-center justify-between gap-6">
           <div className="flex items-center">
             <button

@@ -1650,6 +1650,7 @@
     "featured": false,
     "kind": "personal",
     "areas": [
+      "extensions",
       "devtools"
     ],
     "year": "2026",
@@ -1741,6 +1742,7 @@
     "featured": false,
     "kind": "personal",
     "areas": [
+      "extensions",
       "devtools",
       "ai"
     ],
@@ -1835,6 +1837,7 @@
     "featured": false,
     "kind": "personal",
     "areas": [
+      "extensions",
       "devtools"
     ],
     "year": "2026",

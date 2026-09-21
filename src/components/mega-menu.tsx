@@ -33,7 +33,8 @@ function MenuItem({ item, active, onNavigate, onPreview }: MenuItemProps) {
   const preview = item.preview ? { onPointerEnter: () => onPreview(item), onFocus: () => onPreview(item) } : {};
   const content = (
     <>
-      {(item.logo || Icon) && (
+      {(item.logo || Icon || !item.description) && (
+        // Plain entries without a logo keep an empty slot, so every name in a column lines up.
         <span className={cn('flex size-4 shrink-0 items-center justify-center text-fg-muted', item.description && 'mt-0.5')}>
           {item.logo ? <Logo logo={item.logo} size={16} /> : Icon && <Icon aria-hidden className="size-4" />}
         </span>

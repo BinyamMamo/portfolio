@@ -100,6 +100,10 @@ function toProject(project: Project): CvProject {
   };
 }
 
+/** "A", "A and B", "A, B and C". */
+const joinTitles = (titles: string[]) =>
+  titles.length < 3 ? titles.join(' and ') : `${titles.slice(0, -1).join(', ')} and ${titles.at(-1)}`;
+
 /** Packs the skill groups into at most three lines, keeping their order. */
 function toSkillLines(groups: { title: string; items: string[] }[]): { label: string; items: string }[] {
   const filled = groups.filter((group) => group.items.length > 0);
@@ -108,7 +112,12 @@ function toSkillLines(groups: { title: string; items: string[] }[]): { label: st
   for (let i = 0; i < filled.length; i += perLine) {
     const chunk = filled.slice(i, i + perLine);
     lines.push({
-      label: chunk.map((group, index) => (index === 0 ? group.title : group.title.toLowerCase())).join(' and '),
+      // Plain words read naturally in lower case mid-sentence; names like "DevOps" or "AI" keep their casing.
+      label: joinTitles(
+        chunk.map((group, index) =>
+          index === 0 || group.title.slice(1) !== group.title.slice(1).toLowerCase() ? group.title : group.title.toLowerCase(),
+        ),
+      ),
       items: chunk.flatMap((group) => group.items).join(', '),
     });
   }

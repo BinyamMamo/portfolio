@@ -33,5 +33,10 @@
     "id": "devtools",
     "title": "Developer and productivity tools",
     "summary": "Browser and editor extensions and small utilities that remove friction from everyday work."
+  },
+  {
+    "id": "extensions",
+    "title": "Browser and editor extensions",
+    "summary": "Small extensions that add what is missing to tools people already use every day."
   }
 ]

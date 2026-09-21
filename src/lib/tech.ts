@@ -17,6 +17,7 @@ const logo = (icon: string, iconDark?: string): LogoSource => ({
 /** Every technology referenced anywhere on the site. Logos come from svgl.app and Wikimedia Commons. */
 export const tech = {
   javascript: { name: 'JavaScript', logo: logo('javascript') },
+  typescript: { name: 'TypeScript', logo: logo('typescript') },
   python: { name: 'Python', logo: logo('python') },
   cpp: { name: 'C++', logo: logo('cpp') },
   java: { name: 'Java', logo: logo('java') },
@@ -34,9 +35,12 @@ export const tech = {
   mysql: { name: 'MySQL', logo: logo('mysql', 'mysql-dark') },
   postgresql: { name: 'PostgreSQL', logo: logo('postgresql') },
   firebase: { name: 'Firebase', logo: logo('firebase') },
+  supabase: { name: 'Supabase', logo: logo('supabase') },
+  influxdb: { name: 'InfluxDB' },
 
   react: { name: 'React', logo: logo('react', 'react-dark') },
   reactRouter: { name: 'React Router', logo: logo('reactrouter') },
+  nextjs: { name: 'Next.js', logo: logo('nextjs') },
   tailwindcss: { name: 'Tailwind CSS', logo: logo('tailwindcss') },
   bootstrap: { name: 'Bootstrap', logo: logo('bootstrap') },
   jquery: { name: 'jQuery', logo: logo('jquery', 'jquery-dark') },
@@ -55,6 +59,12 @@ export const tech = {
   azure: { name: 'Azure', logo: logo('azure') },
 
   gemini: { name: 'Gemini', logo: logo('gemini') },
+  ollama: { name: 'Ollama', logo: logo('ollama', 'ollama-dark') },
+  openclaw: { name: 'OpenClaw', logo: logo('openclaw') },
+  hermes: { name: 'Hermes' },
+  rag: { name: 'RAG' },
+  chromeExtensions: { name: 'Chrome extensions', logo: logo('chrome') },
+  vscodeExtensions: { name: 'VS Code extensions', logo: logo('vscode') },
   manim: { name: 'Manim' },
   colab: { name: 'Google Colab', logo: logo('colab') },
   mcp: { name: 'MCP', logo: logo('mcp', 'mcp-dark') },

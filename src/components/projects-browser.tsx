@@ -70,13 +70,13 @@ export function ProjectsBrowser({ items, tabs: groupTabs }: { items: BrowserItem
 
         <label className="relative block sm:mb-2.5 sm:w-64 sm:shrink-0">
           <span className="sr-only">Search projects</span>
-          <Search aria-hidden className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-fg-subtle" />
+          <Search aria-hidden className="pointer-events-none absolute top-1/2 left-3 z-10 size-4 -translate-y-1/2 text-fg-subtle" />
           <input
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search name or technology"
-            className="h-10 w-full rounded-control border bg-surface pr-3 pl-9 text-sm text-fg outline-none placeholder:text-fg-subtle focus:border-border-strong"
+            className="h-10 w-full rounded-control border border-border/60 bg-surface/40 pr-3 pl-9 text-sm text-fg outline-none backdrop-blur-sm transition-colors placeholder:text-fg-subtle focus:border-border-strong focus:bg-surface/60"
           />
         </label>
       </div>

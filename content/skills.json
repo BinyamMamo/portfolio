@@ -4,6 +4,7 @@
     "title": "Languages",
     "items": [
       "javascript",
+      "typescript",
       "python",
       "cpp",
       "java",
@@ -27,10 +28,12 @@
     "id": "databases",
     "title": "Databases",
     "items": [
+      "postgresql",
       "mongodb",
       "mysql",
-      "postgresql",
-      "firebase"
+      "supabase",
+      "firebase",
+      "influxdb"
     ]
   },
   {
@@ -38,22 +41,40 @@
     "title": "Frontend",
     "items": [
       "react",
+      "nextjs",
       "tailwindcss",
       "bootstrap",
       "jquery"
     ]
   },
   {
-    "id": "tools-and-infrastructure",
-    "title": "Tools and infrastructure",
+    "id": "ai",
+    "title": "AI",
     "items": [
-      "git",
-      "github",
-      "linux",
+      "gemini",
+      "ollama",
+      "rag",
+      "hermes",
+      "openclaw"
+    ]
+  },
+  {
+    "id": "devops",
+    "title": "DevOps",
+    "items": [
       "docker",
       "kubernetes",
       "nginx",
-      "trello"
+      "linux",
+      "git"
+    ]
+  },
+  {
+    "id": "extensions",
+    "title": "Extensions",
+    "items": [
+      "chromeExtensions",
+      "vscodeExtensions"
     ]
   }
 ]
