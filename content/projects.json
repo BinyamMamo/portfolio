@@ -833,12 +833,19 @@
     "status": "prototype",
     "cover": {
       "kind": "image",
-      "src": "/media/projects/visionaid/visionaid-01-acb743.webp",
-      "alt": "Reads printed text aloud, translates it to Arabic and summarizes it",
+      "src": "/media/projects/visionaid/visionaid-05-4c2c98.webp",
+      "alt": "The landing page on a phone",
       "width": 2400,
       "height": 1500
     },
     "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/visionaid/visionaid-01-acb743.webp",
+        "alt": "Reads printed text aloud, translates it to Arabic and summarizes it",
+        "width": 2400,
+        "height": 1500
+      },
       {
         "kind": "image",
         "src": "/media/projects/visionaid/visionaid-02-c3b783.webp",
@@ -857,13 +864,6 @@
         "kind": "image",
         "src": "/media/projects/visionaid/visionaid-04-7182c1.webp",
         "alt": "Warns about cars, cyclists and pedestrians in the way",
-        "width": 2400,
-        "height": 1500
-      },
-      {
-        "kind": "image",
-        "src": "/media/projects/visionaid/visionaid-05-4c2c98.webp",
-        "alt": "The landing page on a phone",
         "width": 2400,
         "height": 1500
       },

@@ -25,9 +25,9 @@ interface MenuItemProps {
 
 function MenuItem({ item, active, onNavigate, onPreview }: MenuItemProps) {
   const Icon = item.icon ? icons[item.icon] : null;
+  // No hover backgrounds: the title takes the brand colour, which also marks the previewed project.
   const className = cn(
-    '-mx-3 flex gap-3 rounded-control px-3 transition-colors hover:bg-surface-muted',
-    active && 'bg-surface-muted',
+    'group/item -mx-3 flex gap-3 rounded-control px-3 transition-colors',
     item.description ? 'py-2' : 'items-center py-1.5',
   );
   const preview = item.preview ? { onPointerEnter: () => onPreview(item), onFocus: () => onPreview(item) } : {};
@@ -39,9 +39,17 @@ function MenuItem({ item, active, onNavigate, onPreview }: MenuItemProps) {
         </span>
       )}
       <span className="min-w-0">
-        <span className="block text-sm font-medium text-fg">{item.label}</span>
+        <span
+          className={cn(
+            'block text-sm font-medium text-fg transition-colors duration-200',
+            'group-hover/item:text-brand/80 group-focus-visible/item:text-brand/80',
+            active && 'text-brand/80',
+          )}
+        >
+          {item.label}
+        </span>
         {item.description && (
-          <span className="mt-0.5 line-clamp-2 text-[13px] leading-snug text-fg-muted">{item.description}</span>
+          <span className="mt-0.5 line-clamp-1 text-[13px] leading-snug text-fg-muted">{item.description}</span>
         )}
       </span>
     </>
@@ -117,19 +125,22 @@ export function MegaMenu({ label, groups, featured, footer }: NavMega) {
   };
 
   const hasPreviews = groups.some((group) => group.items.some((item) => item.preview));
-  const side: SidePanel | null =
-    previewed?.preview
-      ? {
-          href: previewed.href,
-          image: previewed.preview.image,
-          eyebrow: previewed.preview.eyebrow,
-          label: previewed.label,
-          description: previewed.preview.summary,
-          preview: true,
-        }
-      : featured
-        ? { ...featured, preview: false }
-        : null;
+  const panels: SidePanel[] = [];
+  if (featured) panels.push({ ...featured, preview: false });
+  for (const item of groups.flatMap((group) => group.items)) {
+    if (!item.preview || panels.some((panel) => panel.preview && panel.href === item.href)) continue;
+    panels.push({
+      href: item.href,
+      image: item.preview.image,
+      eyebrow: item.preview.eyebrow,
+      label: item.label,
+      description: item.preview.summary,
+      preview: true,
+    });
+  }
+  const activeHref = previewed?.preview ? previewed.href : featured?.href;
+  const activePreview = Boolean(previewed?.preview);
+  const isActive = (panel: SidePanel) => panel.href === activeHref && panel.preview === activePreview;
 
   return (
     <div
@@ -180,7 +191,7 @@ export function MegaMenu({ label, groups, featured, footer }: NavMega) {
         )}
       >
         <div
-          className={cn('page-container grid gap-10 py-8', side && 'lg:grid-cols-[minmax(0,1fr)_18rem]')}
+          className={cn('page-container grid gap-10 py-8', panels.length > 0 && 'lg:grid-cols-[minmax(0,1fr)_18rem]')}
           onPointerLeave={() => setPreviewed(null)}
         >
           <div className="grid grid-cols-[repeat(auto-fit,minmax(10.5rem,1fr))] gap-8">
@@ -203,32 +214,44 @@ export function MegaMenu({ label, groups, featured, footer }: NavMega) {
             ))}
           </div>
 
-          {side && (
-            <Link
-              key={side.href}
-              href={side.href}
-              onClick={close}
-              className="group hidden animate-in duration-200 fade-in-0 slide-in-from-bottom-1 lg:block"
-            >
-              <span className="relative block aspect-video overflow-hidden rounded-control border bg-surface-muted">
-                <Image
-                  src={side.image}
-                  alt=""
-                  fill
-                  sizes="288px"
-                  className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
-                />
-              </span>
-              <span className="eyebrow mt-4 block [--eyebrow-color:var(--brand)]">{side.eyebrow}</span>
-              <span className="mt-2 block text-sm font-medium text-fg">{side.label}</span>
-              <span className={cn('mt-1 block text-[13px] leading-snug text-fg-muted', side.preview && 'line-clamp-5')}>
-                {side.description}
-              </span>
-              <span className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-medium text-fg transition-colors group-hover:text-brand">
-                Details
-                <ArrowRight aria-hidden className="size-3.5 transition-transform group-hover:translate-x-0.5" />
-              </span>
-            </Link>
+          {panels.length > 0 && (
+            // All panels share one grid cell, so the column takes the tallest one's height and the
+            // active panel crossfades over the others instead of popping in.
+            <div className="hidden lg:grid">
+              {panels.map((panel) => {
+                const active = isActive(panel);
+                return (
+                  <Link
+                    key={`${panel.preview ? 'preview' : 'featured'}-${panel.href}`}
+                    href={panel.href}
+                    onClick={close}
+                    inert={!active}
+                    aria-hidden={!active}
+                    className={cn(
+                      'group [grid-area:1/1] transition-[opacity,translate] duration-300 ease-in-out motion-reduce:transition-none',
+                      active ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-1 opacity-0',
+                    )}
+                  >
+                    <span className="relative block aspect-video overflow-hidden rounded-control border bg-surface-muted">
+                      <Image
+                        src={panel.image}
+                        alt=""
+                        fill
+                        sizes="288px"
+                        className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                      />
+                    </span>
+                    <span className="eyebrow mt-4 block [--eyebrow-color:var(--brand)]">{panel.eyebrow}</span>
+                    <span className="mt-2 block text-sm font-medium text-fg">{panel.label}</span>
+                    <span className="mt-1 line-clamp-5 text-[13px] leading-snug text-fg-muted">{panel.description}</span>
+                    <span className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-medium text-fg transition-colors group-hover:text-brand">
+                      Details
+                      <ArrowRight aria-hidden className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
           )}
         </div>
 
