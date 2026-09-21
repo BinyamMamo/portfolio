@@ -20,7 +20,6 @@
       "nestjs",
       "fastapi",
       "flask",
-      "django",
       "laravel"
     ]
   },
@@ -53,8 +52,7 @@
       "opencv",
       "rag",
       "ollama",
-      "openclaw",
-      "hermes"
+      "openclaw"
     ]
   },
   {

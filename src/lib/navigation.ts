@@ -19,6 +19,27 @@ interface NavigationInput {
 /** Skills per menu column before the rest fold behind a "more" button; each group is ordered strongest first. */
 const SKILLS_VISIBLE = 4;
 
+/**
+ * Skills menu order, five per row. Groups that fit without a "more" button fill the first row, so
+ * expanding one only grows the bottom row, which ends on AI. Unlisted groups go last.
+ */
+const SKILLS_MENU_ORDER = [
+  'databases',
+  'apis',
+  'libraries',
+  'devops',
+  'extensions',
+  'cloud',
+  'languages',
+  'backend',
+  'frontend',
+  'ai',
+];
+const menuRank = (id: string) => {
+  const rank = SKILLS_MENU_ORDER.indexOf(id);
+  return rank === -1 ? SKILLS_MENU_ORDER.length : rank;
+};
+
 const projectLink = (project: Project): NavLink => ({
   label: project.name,
   href: `/projects/${project.slug}`,
@@ -113,13 +134,8 @@ export function buildNavigation({
       href: '/#skills',
       expandOnMobile: false,
       columns: 5,
-      // Groups that fit without a "more" button fill the first row, so expanding one only grows the bottom row.
       groups: skills
-        .toSorted(
-          (a, b) =>
-            Number(a.items.length > SKILLS_VISIBLE) -
-            Number(b.items.length > SKILLS_VISIBLE),
-        )
+        .toSorted((a, b) => menuRank(a.id) - menuRank(b.id))
         .map((group) => ({
           title: group.title,
           visible: SKILLS_VISIBLE,
