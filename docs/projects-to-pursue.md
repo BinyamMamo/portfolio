@@ -7,7 +7,7 @@ Projects that are not on the portfolio yet, or are only partly there, and what i
 - **Needs keys**: blocked only on API keys or credentials that belong to that project.
 - **Fix before linking**: live projects with a problem worth fixing first.
 
-Last updated: 2026-09-14.
+Last updated: 2026-09-21.
 
 ## Worth finishing
 
@@ -114,10 +114,15 @@ Last updated: 2026-09-14.
 
 ## Needs your decision
 
-### ClipShield push blocked by GitHub
-- **What happened**: `BinyamMamo/clipshield` exists (public, empty). GitHub push protection rejected the push because `tests/test_accuracy.py:25` contains a made-up Stripe key (`sk_live_51H8x...`) used as a test input. The test files also use the standard documentation examples for AWS, GitHub and Slack keys, which may be flagged next.
-- **Options**: approve that key once through GitHub's unblock link and push from `/tmp/showcase/d1/clipshield`, or change the fixtures to keys built at runtime (for example joined from parts), then push. The portfolio shows no source link until then.
-- **Also**: `--style mask` fails its own safety check and redacts nothing.
+### Rotate three Gemini keys
+The code no longer leaks them, but the old keys are still live and were public, so they need to be replaced in [Google AI Studio](https://aistudio.google.com/apikey).
+- **LabAId**: the key was committed and shipped in the browser bundle. The app now calls its own `/api/gemini` function, so set `GEMINI_API_KEY` in the Vercel project and redeploy. The old key stays in the repo's git history, which is harmless once it is revoked.
+- **RIMA**: the key shipped in the client bundle. Text now goes through `/api/gemini` and voice mode uses a short-lived token from `/api/gemini/live-token`, so set `GEMINI_API_KEY` in Vercel and delete `NEXT_PUBLIC_GEMINI_API_KEY`.
+- **VisionAid app**: the `.env` is no longer tracked, but a phone app cannot hide a key that is bundled with it. Anyone can read it out of the APK, so the real fix is a small proxy service that the app calls.
+
+### ClipShield details
+- Published at [clipshield](https://github.com/BinyamMamo/clipshield). The test fixtures now use test-mode and obviously fake tokens, so GitHub's push protection passes and all 28 tests still pass.
+- Still open: `--style mask` fails its own safety check and redacts nothing.
 
 ### Personal email in public history
 - `notebooklm-player` was pushed with its full history, and the commit author email is `binyam2537@gmail.com`. If you prefer it private, rewrite the author in the history or recreate the repo.
@@ -135,15 +140,13 @@ Keys from one project are never reused for another project's database, so these 
   - The `funkey` and `Funkey-Frontend` repos are private; only `funkey-backend` is public.
 
 ### LabAId (AI features)
-- **Needs**: a new Gemini key (the current one is public, see below) and a current model name. Photo uploads call `gemini-2.0-flash-exp`, which now returns 404.
-- **Also**: opening a tool page directly returns 404, because there is no SPA rewrite rule (clicking through from home works).
+- **Needs**: a fresh `GEMINI_API_KEY` in the Vercel project settings. The retired `gemini-2.0-flash-exp` model has been replaced with `gemini-flash-latest` in the new server function.
 
 ## Fix before linking
 
-- **RIMA**: a working Gemini key (`NEXT_PUBLIC_GEMINI_API_KEY`) ships in the client JavaScript, so anyone can use your quota. Move the calls behind a server route and rotate the key. Also, any message containing "hi" (for example "which") gets a canned greeting, because the check matches the substring.
-- **VisionAid app repo** (`VISUAL-AID/experiment`, private): `.env` with `GEMINI_API_KEY` is committed. Rotate the key and remove it from the history.
+- **RIMA**: any message containing "hi" (for example "which") gets a canned greeting, because the check matches the substring. The insights are keyword heuristics rather than AI.
 - **Clixa Tools**: the assistant says it has no breast cancer staging tool, although the staging tool exists. Category chips draw over the search dropdown on the home page.
-- **LabAId**: the public repo has a committed `.env` with a Gemini API key, and the same key ships twice in the deployed JavaScript bundle. Rotate the key in Google AI Studio, move the calls behind a server, then remove the file from the repo and its history.
+- **LabAId**: direct links to a tool page now work (the SPA rewrite was added with the proxy). Photo analysis stays broken until `GEMINI_API_KEY` is set in Vercel.
 - **PeerSphere**: the mock sessions are dated April 2025, so today the calendars and tutor dashboard look empty. The "suggested tutors" page shows "No Tutors Found". Moving the mock dates relative to today would fix both.
 - **Flight Plan**: no deployment could be found. The README mentions Cloudflare Pages but names no project, and flightplan.pages.dev is an unrelated site. The repo is private.
 - **UD smart building dashboard**: ha-dashboard-delta.vercel.app now serves a different app (a Thai "Pawin Home" dashboard), so the portfolio has no live link. CCTV is a "coming soon" placeholder and the parking feed is black. Live readings need `VITE_HA_URL` and `VITE_HA_TOKEN`.

@@ -1625,7 +1625,8 @@
       "Letting a language model help without letting it write output: its suggestions are only used if they match the source exactly, and a test suite runs against a deliberately hostile fake model",
       "Keeping false positives low so logs stay readable, by skipping git hashes, version strings, timestamps and public docs links",
       "Splitting long pastes into overlapping chunks so an entity on a chunk boundary is still found and mapped back to the right offset"
-    ]
+    ],
+    "repoUrl": "https://github.com/BinyamMamo/clipshield"
   },
   {
     "slug": "notebooklm-player",
