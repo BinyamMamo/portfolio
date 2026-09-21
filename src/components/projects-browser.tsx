@@ -95,7 +95,7 @@ export function ProjectsBrowser({ items, tabs: groupTabs }: { items: BrowserItem
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search name or technology"
-            className="h-11 w-full border-0 border-b border-transparent bg-transparent pr-3 pl-7 text-sm text-fg outline-none transition-colors placeholder:text-fg-subtle focus:border-fg"
+            className="h-11 w-full rounded-none border-0 border-b border-transparent bg-transparent pr-3 pl-7 text-sm text-fg outline-none transition-colors placeholder:text-fg-subtle focus:border-fg"
           />
         </label>
       </div>
