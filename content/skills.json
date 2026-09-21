@@ -79,7 +79,7 @@
     "id": "cloud",
     "title": "Cloud",
     "items": [
-      "vercel",
+      "huggingface",
       "supabase",
       "render",
       "firebase"

@@ -58,6 +58,7 @@ export const tech = {
   docker: { name: 'Docker', logo: logo('docker') },
   githubActions: { name: 'GitHub Actions', logo: logo('github-actions') },
   vercel: { name: 'Vercel', logo: logo('vercel', 'vercel-dark') },
+  huggingface: { name: 'Hugging Face', logo: logo('huggingface') },
   render: { name: 'Render', logo: logo('render', 'render-dark') },
   cloudflareWorkers: { name: 'Cloudflare Workers', logo: logo('cloudflare') },
   rest: { name: 'REST', logo: logo('rest') },
