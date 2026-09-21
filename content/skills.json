@@ -100,13 +100,13 @@
     "id": "extensions",
     "title": "Apps",
     "items": [
-      "electron",
       "wails",
       "reactNative",
       "flutter",
       "chromeExtensions",
       "vscodeExtensions",
-      "raycast"
+      "raycast",
+      "electron"
     ]
   }
 ]
