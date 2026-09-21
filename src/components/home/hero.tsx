@@ -58,10 +58,12 @@ export async function Hero() {
             <div className="card relative aspect-[4/5] overflow-hidden rounded-panel">
               <Image
                 src={profile.avatar}
-                alt={`Portrait of ${profile.name}`}
+                alt={`Illustrated avatar of ${profile.name}`}
                 fill
                 preload
                 sizes="(min-width: 1024px) 304px, (min-width: 768px) 256px, 160px"
+                // The avatar is a transparent cutout, and the optimizer flattens its alpha to black.
+                unoptimized
                 className="object-cover"
               />
             </div>
