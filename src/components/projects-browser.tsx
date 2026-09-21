@@ -1,7 +1,7 @@
 'use client';
 
 import { Search } from 'lucide-react';
-import { type ReactNode, useMemo, useState } from 'react';
+import { type ReactNode, useEffect, useMemo, useState } from 'react';
 
 import { cn } from '@/lib/cn';
 
@@ -25,6 +25,24 @@ const ALL = 'all';
 export function ProjectsBrowser({ items, tabs: groupTabs }: { items: BrowserItem[]; tabs: readonly BrowserTab[] }) {
   const [group, setGroup] = useState(ALL);
   const [query, setQuery] = useState('');
+
+  // Read after mount rather than during render: the server has no query string, so a
+  // link such as /projects?q=PyTorch would otherwise not match the first client render.
+  /* eslint-disable react-hooks/set-state-in-effect -- the query string is only known on the
+     client, and reading it during render would not match the server-rendered HTML. */
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get('q');
+    if (q) setQuery(q);
+  }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
+
+  // Keep the address bar in step, so a filtered view can be shared or reloaded.
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    if (query) url.searchParams.set('q', query);
+    else url.searchParams.delete('q');
+    window.history.replaceState(null, '', url);
+  }, [query]);
 
   const tabs = useMemo(
     () =>
@@ -68,15 +86,16 @@ export function ProjectsBrowser({ items, tabs: groupTabs }: { items: BrowserItem
           })}
         </div>
 
-        <label className="relative block sm:mb-2.5 sm:w-64 sm:shrink-0">
+        {/* -mb-px drops the field's underline onto the row's own line, level with the tabs. */}
+        <label className="relative block sm:-mb-px sm:w-64 sm:shrink-0">
           <span className="sr-only">Search projects</span>
-          <Search aria-hidden className="pointer-events-none absolute top-1/2 left-3 z-10 size-4 -translate-y-1/2 text-fg-subtle" />
+          <Search aria-hidden className="pointer-events-none absolute top-1/2 left-0 size-4 -translate-y-1/2 text-fg-subtle" />
           <input
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search name or technology"
-            className="h-10 w-full rounded-control border border-border/60 bg-surface/40 pr-3 pl-9 text-sm text-fg outline-none backdrop-blur-sm transition-colors placeholder:text-fg-subtle focus:border-border-strong focus:bg-surface/60"
+            className="h-11 w-full border-0 border-b border-transparent bg-transparent pr-3 pl-7 text-sm text-fg outline-none transition-colors placeholder:text-fg-subtle focus:border-fg"
           />
         </label>
       </div>

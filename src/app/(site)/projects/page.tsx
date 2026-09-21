@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { ProjectCard } from '@/components/project-card';
 import { type BrowserItem, type BrowserTab, ProjectsBrowser } from '@/components/projects-browser';
 import { Eyebrow } from '@/components/section';
-import { getTech } from '@/lib/tech';
+import { projectKeywords } from '@/lib/search';
 import { getAreas, getProjects } from '@/server/content';
 
 export const metadata: Metadata = {
@@ -22,15 +22,7 @@ export default async function ProjectsPage() {
   const items: BrowserItem[] = projects.map((project) => ({
     slug: project.slug,
     groups: [...(project.areas ?? []), ...(project.kind === 'client' ? [CLIENT_TAB] : [])],
-    keywords: [
-      project.name,
-      project.tagline,
-      project.client?.name ?? '',
-      ...project.stack.map((id) => getTech(id).name),
-      ...(project.topics ?? []),
-    ]
-      .join(' ')
-      .toLowerCase(),
+    keywords: projectKeywords(project),
     card: <ProjectCard project={project} />,
   }));
 

@@ -2,6 +2,7 @@ import { RESUME_HREF } from '@/lib/constants';
 import { linkLogos } from '@/lib/links';
 import type { NavEntry, NavLink, NavLinkGroup } from '@/lib/nav';
 import type { NavigationContent, Profile, Project, SkillGroup } from '@/lib/schemas';
+import { hasProjectsFor, techHref } from '@/lib/search';
 import { getTech } from '@/lib/tech';
 
 interface NavigationInput {
@@ -119,7 +120,8 @@ export function buildNavigation({ profile, projects, skills, navigation }: Navig
           visible: SKILLS_VISIBLE,
           items: group.items.map((id) => {
             const { name, logo } = getTech(id);
-            return { label: name, href: '/#skills', logo };
+            // A skill opens the projects built with it, unless nothing on the site uses it.
+            return { label: name, href: hasProjectsFor(id, projects) ? techHref(id) : '/#skills', logo };
           }),
         })),
       footer: {
