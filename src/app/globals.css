@@ -170,6 +170,17 @@
     border-color: var(--border);
   }
 
+  /* Scrollbars are hidden everywhere; scrolling itself is untouched. */
+  * {
+    scrollbar-width: none;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+
   /*
    * The page color lives on html only, so overscroll shows the same shade. body stays transparent
    * so the fixed background canvas (z-index below 0) is visible through it.
