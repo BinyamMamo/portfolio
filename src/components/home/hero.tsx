@@ -1,6 +1,6 @@
 import { ArrowRight, Download } from 'lucide-react';
-import Image from 'next/image';
 
+import { AvatarStage } from '@/components/home/avatar-stage';
 import { ButtonLink } from '@/components/button-link';
 import { SocialLinks } from '@/components/social-links';
 import { cn } from '@/lib/cn';
@@ -53,22 +53,19 @@ export async function Hero() {
           <SocialLinks className="mt-10" />
         </div>
 
-        {profile.avatar && (
-          <div className="order-first w-32 sm:w-40 md:order-none md:w-full">
-            <div className="card relative aspect-[4/5] overflow-hidden rounded-panel">
-              <Image
+        <div className="order-first w-32 sm:w-40 md:order-none md:w-full">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-panel bg-[#11111157]">
+            <AvatarStage label={`Avatar of ${profile.name}`} className="absolute inset-0 size-full" />
+            <noscript>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={profile.avatar}
-                alt={`Illustrated avatar of ${profile.name}`}
-                fill
-                preload
-                sizes="(min-width: 1024px) 304px, (min-width: 768px) 256px, 160px"
-                // The avatar is a transparent cutout, and the optimizer flattens its alpha to black.
-                unoptimized
-                className="object-cover"
+                alt={`Avatar of ${profile.name}`}
+                className="absolute inset-0 size-full object-cover"
               />
-            </div>
+            </noscript>
           </div>
-        )}
+        </div>
       </div>
 
       {profile.facts.length > 0 && (
