@@ -91,7 +91,7 @@ export function HeaderClient({ nav, resumeHref, github }: HeaderClientProps) {
         className={cn(
           'sticky top-0 z-50 border-b backdrop-blur-md transition-colors duration-200',
           scrolled || menuOpen ? 'border-border bg-bg/80' : 'border-transparent bg-bg/0',
-          'has-[[data-open=true]]:border-border has-[[data-open=true]]:bg-bg',
+          'has-[[data-open=true]]:border-border/40 has-[[data-open=true]]:bg-bg/90 has-[[data-open=true]]:[backdrop-filter:none]',
         )}
       >
         <div className="page-container flex h-header items-center justify-between gap-6">

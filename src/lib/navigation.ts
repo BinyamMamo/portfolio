@@ -15,6 +15,13 @@ const projectLink = (project: Project): NavLink => ({
   label: project.name,
   href: `/projects/${project.slug}`,
   description: project.tagline,
+  preview: project.cover
+    ? {
+        image: project.cover.kind === 'video' ? project.cover.poster : project.cover.src,
+        eyebrow: project.client?.name ?? project.category,
+        summary: project.summary,
+      }
+    : undefined,
 });
 
 /** Builds the top bar, including the Projects, Skills and Contact mega menus, from stored content. */

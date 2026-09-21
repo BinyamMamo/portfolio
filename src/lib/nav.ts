@@ -3,10 +3,18 @@ import type { LogoSource } from '@/lib/tech';
 /** Lucide icons available to menu items, referenced by name so nav data stays serializable. */
 export type NavIcon = 'mail' | 'file' | 'globe';
 
+/** What the mega menu's side panel shows while an item is hovered. */
+export interface NavPreview {
+  image: string;
+  eyebrow: string;
+  summary: string;
+}
+
 export interface NavLink {
   label: string;
   href: string;
   description?: string;
+  preview?: NavPreview;
   logo?: LogoSource;
   icon?: NavIcon;
   /** Opens in a new tab. */
