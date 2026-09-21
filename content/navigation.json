@@ -6,7 +6,8 @@
         "clixa-tools",
         "soroban",
         "avatar-kit",
-        "clipshield"
+        "clipshield",
+        "mdkan"
       ]
     },
     {
@@ -15,7 +16,8 @@
         "solar-farm-drone",
         "drone-hunter",
         "ud-smart-building",
-        "visionaid"
+        "visionaid",
+        "manim-generator"
       ]
     }
   ],
