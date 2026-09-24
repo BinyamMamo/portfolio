@@ -36,6 +36,15 @@ Now one repo, [arcade](https://github.com/BinyamMamo/arcade), and one deploy at
 [arcade-jet.vercel.app](https://arcade-jet.vercel.app). Cutzrope and Snake Xenzia are live;
 Tejie is in the repo but not linked from the arcade, see below.
 
+### SignSpeak
+From the internal disk at `jobs/pf/signspeak`, not the drive. An ASL trainer with lessons,
+five drill types, camera games, a dictionary of expressions and Supabase-backed progress,
+with MediaPipe and the TensorFlow.js classifier both running in the browser. Live at
+[trysignspeak.vercel.app](https://trysignspeak.vercel.app). The repository stays private, so
+the portfolio entry links the site and not the code. Two things to know: `signspeak.vercel.app`
+is a stale alias still serving an old marketing page with invented usage numbers, and the
+copy of SignSpeak on the external drive is older than this one and should be ignored.
+
 ## Ready to rescue
 
 ### Tejie's production build
@@ -104,17 +113,6 @@ Tejie is in the repo but not linked from the arcade, see below.
 - **Why**: it is the interesting half of a hard problem, and the write-up can say exactly
   what does not work yet.
 - **Next steps**: push it, then capture the pose viewer playing one sentence.
-
-### SignSpeak
-- **What exists**: on the internal disk at `jobs/pf/signspeak`, 48 commits, a remote already.
-  A Duolingo-style ASL alphabet trainer: webcam, MediaPipe hand landmarks, a TensorFlow.js
-  classifier with confusion handling for lookalike letters, lessons, streaks, a leaderboard,
-  and Supabase-backed progress. It ships a `drops-app` mini-game alongside.
-- **What is missing**: a deploy that works end to end. Its Supabase project needs to be
-  awake, since free projects pause after a week idle.
-- **Why**: the most complete product of the lot, and the client-side ML is real.
-- **Next steps**: confirm Supabase, deploy to Vercel, capture the webcam flow.
-- The copy of SignSpeak on the external drive is older and should be ignored.
 
 ## Needs hardware or a GPU
 
