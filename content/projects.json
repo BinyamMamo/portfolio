@@ -2480,5 +2480,251 @@
       "Without a Home Assistant connection the pages would be empty. The dashboard falls back to a demo mode with realistic readings, so the interface can be shown and tested away from the lab.",
       "Voice had to feel like a conversation rather than a form. Speech starts synthesising on the server as soon as the first words exist, plays clip by clip on the chosen speaker, and falls back to the most natural browser voice when the cloud is not reachable."
     ]
+  },
+  {
+    "slug": "uae-companies",
+    "name": "UAE Companies",
+    "tagline": "A company directory for students job hunting in the UAE, ranked by whether you can actually get there.",
+    "summary": "225 companies in the UAE, each shown with the roles it hires for, its distance from where you live, and a real bus or driving route to its door. It was built for students at Dubai International Academic City, for whom a job two hours away by bus is not really a job.",
+    "category": "Platforms",
+    "stack": [
+      "react",
+      "vite",
+      "typescript",
+      "tailwindcss",
+      "Leaflet",
+      "firebase",
+      "python"
+    ],
+    "topics": [
+      "job search",
+      "maps",
+      "transit routing",
+      "open data",
+      "provenance"
+    ],
+    "highlight": "Every fact carries a source URL, a retrieval date and a confidence level, and a field with no source stays empty rather than being filled with a guess.",
+    "liveUrl": "https://uae-companies.vercel.app",
+    "repoUrl": "https://github.com/BinyamMamo/uae-companies",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "platforms"
+    ],
+    "year": "2026",
+    "status": "live",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/uae-companies/uae-companies-01-0c4fa2.webp",
+      "alt": "225 companies, filtered by field, emirate, district, distance and free zone status",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/uae-companies/uae-companies-02-c72b6d.webp",
+        "alt": "Every company on the map, with the free zones and business districts drawn in",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/uae-companies/uae-companies-03-d6d019.webp",
+        "alt": "A real bus route from your own address, with the journey time it actually takes",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/uae-companies/uae-companies-04-3c66e4.webp",
+        "alt": "What a company does, the roles it hires for, and where each claim came from",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/uae-companies/uae-companies-05-bd07b6.webp",
+        "alt": "A shortlist ranked against the technical interests you declare",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/uae-companies/uae-companies-06-71837b.webp",
+        "alt": "The same directory in light mode",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Students at Dubai International Academic City look for internships across an area that takes hours to cross by bus. The usual job boards tell you what a company does and nothing about whether you could get to it on a Tuesday morning, so this directory puts the commute next to the role.",
+      "The list filters by field, emirate, district, free zone status and a maximum distance from your own address. Each company opens to what it does, the roles it commonly hires for, its technical areas and a note on how relevant it is to a computing student. The map draws the free zones and business districts, so the clusters around Internet City, Silicon Oasis and the DIFC are visible at a glance.",
+      "The dataset is the part that took the work. It is researched by a pipeline that searches for each company and then re-fetches every URL it is given before accepting it, and a verification script gates the data on duplicate URLs, shared coordinates, templated text and missing provenance."
+    ],
+    "features": [
+      "Filter 225 companies by field, emirate, district, free zone status and distance from home",
+      "See a leg-by-leg public bus route and a driving route from your own address to each company",
+      "Read what a company does, its technical areas and the roles it commonly hires for",
+      "Browse the map with free zones and business districts drawn in",
+      "Save companies into named lists and compare up to four side by side",
+      "Switch between light and dark, with a choice of accent colours"
+    ],
+    "challenges": [
+      "Company data goes stale and is easy to invent. Every field carries a source URL, a retrieval date and a confidence level; anything without a source is left null and shown as unverified rather than guessed, and a verification script fails the build on duplicate URLs, shared coordinates or templated text.",
+      "Commute time is the whole point, so it had to be real rather than a straight-line distance. Routes come from a transit service and are shown leg by leg, with the walking segments included.",
+      "The app should be useful before you sign in. Saved lists live in the browser, and Firebase only comes into it if you want them synced across devices, so the directory works with no account and no keys configured."
+    ]
+  },
+  {
+    "slug": "redact",
+    "name": "Prompt Privacy Shield",
+    "tagline": "A Chrome extension that stops you pasting secrets into a chatbot.",
+    "summary": "It watches what you paste into ChatGPT, Gemini and Claude, finds API keys, tokens, database URLs and personal details, and locks the send button until you redact them or decide to send anyway. Everything runs in the browser; the extension has no backend and makes no network calls.",
+    "category": "Developer tools",
+    "stack": [
+      "javascript",
+      "chromeExtensions"
+    ],
+    "topics": [
+      "privacy",
+      "secret detection",
+      "browser extension",
+      "developer safety"
+    ],
+    "highlight": "The send button and the Enter key are both blocked while a secret is on screen, so a careless paste cannot become a leaked key.",
+    "repoUrl": "https://github.com/BinyamMamo/redact",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "devtools",
+      "extensions"
+    ],
+    "year": "2026",
+    "status": "prototype",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/redact/redact-01-1206cf.webp",
+      "alt": "A paste with keys in it locks the send button until you deal with them",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/redact/redact-02-2130ea.webp",
+        "alt": "The deep scan walks through each class of secret in turn",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/redact/redact-03-a15a90.webp",
+        "alt": "Every finding highlighted in place, grouped by what it is",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/redact/redact-04-92e9b1.webp",
+        "alt": "One click swaps each secret for a typed placeholder",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Pasting a stack trace or a config file into a chatbot is routine, and so is pasting a live API key along with it. Once it is sent, it is in someone else's logs. This extension puts a check between the paste and the send.",
+      "The detector holds patterns for provider keys from OpenAI, Anthropic, Google, AWS, GitHub, Slack and Hugging Face, plus private key blocks, JWTs, database connection strings, emails and card numbers. Patterns are ordered most specific first and each can reject obvious placeholders, so a key written as sk-test-... is not treated as real, and overlapping matches are collapsed so one secret is reported once.",
+      "When something is found, the composer is marked, sending is blocked, and a review panel shows each finding highlighted where it sits in the text. Redacting replaces each one with a typed placeholder such as [REDACTED_OPENAI_KEY], which keeps the text readable for the model while the secret never leaves the machine."
+    ],
+    "features": [
+      "Blocks the send button and the Enter key while unreviewed secrets are in the composer",
+      "Detects provider API keys, private keys, JWTs, database URLs, emails and card numbers",
+      "Shows every finding highlighted in place, grouped by what it is",
+      "Replaces findings with typed placeholders in one click",
+      "Takes your own watch patterns, as plain words or as regular expressions",
+      "Runs entirely locally, with only the activeTab and storage permissions"
+    ],
+    "challenges": [
+      "Detection is regex only. It is reliable on structured secrets, which is where the real risk sits, but it will miss a credential with no recognisable shape and it does not recognise names or unusual phone formats in prose.",
+      "A false positive is worse than annoying: it trains you to click past the warning. Each pattern can reject its own obvious placeholders, and overlapping hits are de-duplicated so the same secret is never counted twice.",
+      "The extension has to find the composer on three sites that redesign them regularly. Attaching is retried as the page changes, and the selector list is the one place that needs updating when a site moves on."
+    ]
+  },
+  {
+    "slug": "arcade",
+    "name": "Arcade",
+    "tagline": "Three browser games written from scratch, without a game engine.",
+    "summary": "A rope-cutting physics puzzle, a Nokia Snake clone and a colour sort puzzle. Each one is hand-written: the rope physics, the sprite drawing and the level generation are all mine rather than a framework's.",
+    "category": "Games",
+    "stack": [
+      "javascript",
+      "Canvas 2D",
+      "PixiJS",
+      "vite",
+      "Web Audio API"
+    ],
+    "topics": [
+      "game physics",
+      "canvas rendering",
+      "procedural levels"
+    ],
+    "highlight": "Tejie generates every level by starting from a solved board and replaying random pours backwards, so a level is solvable by construction rather than by luck.",
+    "liveUrl": "https://arcade-jet.vercel.app",
+    "repoUrl": "https://github.com/BinyamMamo/arcade",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "learning"
+    ],
+    "year": "2026",
+    "status": "live",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/arcade/arcade-01-8b2967.webp",
+      "alt": "Cutzrope: cut the ropes and drop the coffee bean into the jebena",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/arcade/arcade-02-0f29bb.webp",
+        "alt": "Snake Xenzia: every sprite, bevel and scanline drawn on the canvas",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/arcade/arcade-03-da8375.webp",
+        "alt": "Tejie: pour between bottles until each one holds a single colour",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/arcade/arcade-04-667ad2.webp",
+        "alt": "The three games behind one page",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Three small games that exist because the interesting part of a game is the part a framework usually hides: how a rope behaves when you cut it, how a snake body follows its head between grid cells, how to build a puzzle that is guaranteed to have a solution.",
+      "Cutzrope runs its own Verlet integration. Each rope is a chain of points relaxed over several passes a frame, so cutting one mid-span leaves both halves swinging the way they should. Levels are data rather than code: ropes, the cup, stars, bubbles and bounce pads are written in normalised coordinates, so one file lays out correctly at any canvas size.",
+      "Snake Xenzia loads no images at all. The bevelled arcade chrome, the LCD scanlines, the shading on each body segment, the eyes and the tongue are all drawn on the canvas, and movement is interpolated between grid steps so the snake glides instead of hopping. Tejie is the algorithmic one: it builds each board solved, then unsolves it with random reverse pours."
+    ],
+    "features": [
+      "Verlet rope physics with cutting, particles and data-defined levels",
+      "A Snake clone with hand-drawn sprites, interpolated movement and synthesised sound",
+      "A colour sort puzzle whose levels are generated by unsolving a solved board",
+      "Keyboard, mouse and touch input across all three",
+      "No dependencies in two of the three games, and no backend in any of them"
+    ],
+    "challenges": [
+      "Cutting a rope mid-span is not just deleting it. The chain has to split into two independent chains that each keep their own momentum, which is why the ropes are simulated as points and constraints rather than as lines.",
+      "Generating a colour sort puzzle at random usually produces a board that cannot be finished. Building it solved and then replaying random pours in reverse guarantees a solution exists without having to search for one.",
+      "Tejie's production build currently renders nothing: the bundle loads without errors but the PixiJS application never mounts its canvas, so it runs under the dev server only and is left out of the deployed arcade until that is fixed."
+    ]
   }
 ]
