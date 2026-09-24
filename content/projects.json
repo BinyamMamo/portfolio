@@ -2726,5 +2726,100 @@
       "Generating a colour sort puzzle at random usually produces a board that cannot be finished. Building it solved and then replaying random pours in reverse guarantees a solution exists without having to search for one.",
       "Tejie's production build currently renders nothing: the bundle loads without errors but the PixiJS application never mounts its canvas, so it runs under the dev server only and is left out of the deployed arcade until that is fixed."
     ]
+  },
+  {
+    "slug": "signspeak",
+    "name": "SignSpeak",
+    "tagline": "Learn American Sign Language the way a language app teaches words, with your webcam as the marker.",
+    "summary": "Short lessons build up the ASL alphabet and everyday expressions, with streaks, a leaderboard and spaced repetition. The camera games read your hand through MediaPipe and score the sign in the browser, so nothing you record is uploaded.",
+    "category": "Education",
+    "stack": [
+      "nextjs",
+      "react",
+      "typescript",
+      "tailwindcss",
+      "MediaPipe",
+      "TensorFlow.js",
+      "supabase",
+      "framerMotion"
+    ],
+    "topics": [
+      "sign language",
+      "computer vision",
+      "spaced repetition",
+      "accessibility"
+    ],
+    "highlight": "Hand tracking and classification both run in the browser, so a lesson works on a laptop with no server doing the recognition.",
+    "liveUrl": "https://trysignspeak.vercel.app",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "learning",
+      "vision"
+    ],
+    "year": "2026",
+    "status": "live",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/signspeak/signspeak-01-bcb782.webp",
+      "alt": "Lessons grouped by what you would actually want to say first",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/signspeak/signspeak-02-92a9e9.webp",
+        "alt": "Five ways to drill a sign, plus the ones that use the camera",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/signspeak/signspeak-03-82a46d.webp",
+        "alt": "A lesson card: read the sign, pick the letter",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/signspeak/signspeak-04-793bc6.webp",
+        "alt": "A wrong answer is corrected and handed straight back",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/signspeak/signspeak-05-846fa7.webp",
+        "alt": "A dictionary of expressions rather than a list of letters",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/signspeak/signspeak-06-349579.webp",
+        "alt": "The landing page",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "Most people who try to learn sign language never get past the alphabet, because there is nothing to tell you whether the shape you are making is right. SignSpeak turns that into the core loop: the app shows a sign, you copy it in front of the camera, and it tells you what it saw.",
+      "Lessons are grouped by what you would want to say first rather than alphabetically: greetings, people, feelings, food, animals. Between them sit five kinds of drill, from a quick yes or no to spelling a word out sign by sign, plus a set of games that use the camera. The dictionary is built from expressions such as thank you, see you later and I do not know, so it is usable as a phrasebook and not only as a reference.",
+      "Hand tracking uses MediaPipe's landmark model, and a TensorFlow.js classifier scores the landmarks against the letter being taught. Both run client-side. The recognition library sits on its own with documented handling for the pairs that are easy to confuse, such as A and T, D and I, and F and W, so a near miss can be corrected specifically rather than just marked wrong."
+    ],
+    "features": [
+      "Lessons grouped by topic, with progress, streaks and spaced repetition",
+      "Five drill types, plus games that read the sign from your webcam",
+      "Corrective feedback that names the letter you actually signed",
+      "A dictionary of everyday expressions, not just the alphabet",
+      "A leaderboard and shareable progress for people learning together",
+      "Works as a guest, with progress kept on the device until you sign in"
+    ],
+    "challenges": [
+      "Several ASL letters differ by a fingertip. The classifier handles the known confusion pairs explicitly, so that A read as T produces a correction pointing at the thumb rather than a blank rejection.",
+      "Recognition on a server would mean uploading video of someone's hands and face. Running MediaPipe and the classifier in the browser keeps the camera stream on the device, at the cost of having to keep the model small enough to load quickly.",
+      "The app has to be useful before anyone signs up. Guest progress is kept locally and only moves to Supabase when an account is created, which keeps the first lesson one click away."
+    ]
   }
 ]
