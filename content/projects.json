@@ -2821,5 +2821,76 @@
       "Recognition on a server would mean uploading video of someone's hands and face. Running MediaPipe and the classifier in the browser keeps the camera stream on the device, at the cost of having to keep the model small enough to load quickly.",
       "The app has to be useful before anyone signs up. Guest progress is kept locally and only moves to Supabase when an account is created, which keeps the first lesson one click away."
     ]
+  },
+  {
+    "slug": "signverse",
+    "name": "SignVerse",
+    "tagline": "English text in, a signing figure out, and an honest account of how far that gets you.",
+    "summary": "A prototype of the pipeline behind text-to-sign products: English is reduced to gloss, each word is looked up in a pose lexicon built from WLASL video, the clips are stitched together and played in the browser. It exists to find out what is hard before spending money recording a language that has no dataset.",
+    "category": "AI and Machine Learning",
+    "stack": [
+      "python",
+      "fastapi",
+      "MediaPipe",
+      "pose-format",
+      "javascript"
+    ],
+    "topics": [
+      "sign language",
+      "pose estimation",
+      "low-resource languages",
+      "evaluation"
+    ],
+    "highlight": "89% of the words in 20 everyday sentences have a real sign, up from 42% at the start, and the remaining 7 are proper nouns that get fingerspelled.",
+    "featured": false,
+    "kind": "personal",
+    "areas": [
+      "ai",
+      "vision"
+    ],
+    "year": "2026",
+    "status": "prototype",
+    "cover": {
+      "kind": "image",
+      "src": "/media/projects/signverse/signverse-01-da5df8.webp",
+      "alt": "A sentence signed, with each word marked as a real sign or fingerspelled",
+      "width": 2400,
+      "height": 1500
+    },
+    "gallery": [
+      {
+        "kind": "image",
+        "src": "/media/projects/signverse/signverse-02-3223aa.webp",
+        "alt": "A name has no sign, so it is fingerspelled, as an interpreter would",
+        "width": 2400,
+        "height": 1500
+      },
+      {
+        "kind": "image",
+        "src": "/media/projects/signverse/signverse-03-192f94.webp",
+        "alt": "The same pose retargeted onto a 3D figure",
+        "width": 2400,
+        "height": 1500
+      }
+    ],
+    "overview": [
+      "The eventual target is Ethiopian Sign Language, which has no usable public dataset. Recording one is expensive, so this prototype was built on ASL first, where WLASL exists, to find out which parts of the problem are actually hard before anyone pays for video.",
+      "The pipeline is deliberately plain: lemmatise the English and drop the words ASL does not sign, look up one pose clip per word, trim each clip to where the signing actually happens, blend the joins and play the result with a pose viewer. A word with no entry is fingerspelled rather than skipped, and the page marks which words came from the lexicon, so the demo never pretends to more coverage than it has.",
+      "The measurements are the point. Coverage over 20 everyday sentences went from 42% to 89% through two independent changes, and the write-up in the repository records what each one was worth."
+    ],
+    "features": [
+      "English to ASL gloss: articles and the copula dropped, time words fronted",
+      "A lexicon of 800 signs built from WLASL video through MediaPipe pose extraction",
+      "Clips trimmed to the active signing span, then blended at the joins",
+      "Words with no sign are fingerspelled and shown as such",
+      "The same pose retargeted onto a 3D figure",
+      "A coverage script that scores the lexicon against test sentences"
+    ],
+    "challenges": [
+      "Picking words alphabetically wastes the lexicon. WLASL's own ordering is arbitrary, so choosing the 800 most frequent English words it covers, rather than the first 800, took coverage from 71% to 89% on its own.",
+      "About a third of WLASL's video URLs are dead, so the fetcher tries several sources per word and still recovers 693 of 700.",
+      "Signing is not word-for-word English. A gloss layer that drops articles and the copula and fronts time words lifted coverage from 42% to 53% before any extra vocabulary was added.",
+      "This is stitched dictionary lookup, not fluent ASL. Word order is not ASL grammar, no deaf signer has reviewed the output, and the page says so."
+    ]
   }
 ]

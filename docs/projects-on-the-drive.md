@@ -45,6 +45,15 @@ the portfolio entry links the site and not the code. Two things to know: `signsp
 is a stale alias still serving an old marketing page with invented usage numbers, and the
 copy of SignSpeak on the external drive is older than this one and should be ignored.
 
+### SignVerse
+From the internal disk at `projects/signverse`. English to ASL: gloss, a pose lookup per word
+from an 800-sign WLASL lexicon, stitching, and a browser pose viewer, with a 3D retarget
+beside it. Listed as a prototype, because it is dictionary lookup rather than fluent ASL and
+no deaf signer has reviewed it. Coverage over 20 everyday sentences is 89%, up from 42%.
+The screenshots came from the project's own `scripts/shoot_demo.py` rather than a fresh run:
+the demo needs a pinned MediaPipe and numpy environment that was not worth building for
+three images. The repository still has no remote.
+
 ## Ready to rescue
 
 ### Tejie's production build
@@ -61,10 +70,12 @@ copy of SignSpeak on the external drive is older than this one and should be ign
 ### Colab Copier
 - **What exists**: `tmpbin/colab-copier`, a finished Manifest V3 extension that adds per-cell
   copy buttons to Google Colab (code only, output only, whole cell) plus a copy-all action.
-- **What is missing**: a repo, a README, and screenshots taken against a real notebook.
+- **What is missing**: a repo, a README, and screenshots. Capturing it needs a signed-in
+  Google account: a public notebook opened logged out renders as a static preview with no
+  CodeMirror editors, so the extension has nothing to attach to and injects no buttons.
 - **Why**: small, genuinely complete, and it demonstrates the same extension skills as
   Prompt Privacy Shield in a much smaller surface.
-- **Next steps**: load it unpacked against a public notebook, capture, publish.
+- **Next steps**: open a notebook while signed in, load the extension unpacked, capture.
 
 ### my-raycast
 - **What exists**: a Raycast-style launcher for Linux in bash: an fzf menu over clipboard
@@ -103,16 +114,6 @@ copy of SignSpeak on the external drive is older than this one and should be ign
 - **Why**: the only genuinely new product idea in the `ud/` tree.
 - **Next steps**: publish with the mock path as the default, and put the real key in a
   serverless route rather than the bundle.
-
-### SignVerse
-- **What exists**: on the internal disk, not the drive. An English to ASL prototype: gloss,
-  a pose lookup per word from WLASL, concatenation with blending, and a browser pose viewer.
-  12 commits, actively worked on.
-- **What is missing**: a remote, and an honest framing. It looks up one sign per word and
-  fingerspells the rest, so it is not fluent ASL and no deaf signer has reviewed it.
-- **Why**: it is the interesting half of a hard problem, and the write-up can say exactly
-  what does not work yet.
-- **Next steps**: push it, then capture the pose viewer playing one sentence.
 
 ## Needs hardware or a GPU
 
