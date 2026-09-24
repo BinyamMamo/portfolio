@@ -87,7 +87,7 @@ interface SidePanel {
  * Opens on hover for mouse users and on click or keyboard for everyone else. Hovering a project
  * swaps the side panel for its screenshot and full summary.
  */
-export function MegaMenu({ label, groups, featured, footer, columns }: NavMega) {
+export function MegaMenu({ label, href, groups, featured, footer, columns }: NavMega) {
   const [open, setOpen] = useState(false);
   const [previewed, setPreviewed] = useState<NavLink | null>(null);
   const [expandedGroups, setExpandedGroups] = useState<string[]>([]);
@@ -95,9 +95,8 @@ export function MegaMenu({ label, groups, featured, footer, columns }: NavMega) 
     setExpandedGroups((current) => (current.includes(title) ? current : [...current, title]));
   const collapse = (title: string) => setExpandedGroups((current) => current.filter((item) => item !== title));
   const rootRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<HTMLAnchorElement>(null);
   const closeTimer = useRef<number | undefined>(undefined);
-  const openedByHover = useRef(false);
   const panelId = useId();
 
   useEffect(() => {
@@ -109,7 +108,7 @@ export function MegaMenu({ label, groups, featured, footer, columns }: NavMega) 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setOpen(false);
-        buttonRef.current?.focus();
+        triggerRef.current?.focus();
       }
     };
 
@@ -124,7 +123,6 @@ export function MegaMenu({ label, groups, featured, footer, columns }: NavMega) 
   useEffect(() => () => window.clearTimeout(closeTimer.current), []);
 
   const close = () => {
-    openedByHover.current = false;
     setOpen(false);
     setPreviewed(null);
     setExpandedGroups([]);
@@ -156,7 +154,6 @@ export function MegaMenu({ label, groups, featured, footer, columns }: NavMega) 
       onPointerEnter={(event) => {
         if (event.pointerType !== 'mouse') return;
         window.clearTimeout(closeTimer.current);
-        if (!open) openedByHover.current = true;
         setOpen(true);
       }}
       onPointerLeave={(event) => {
@@ -167,24 +164,19 @@ export function MegaMenu({ label, groups, featured, footer, columns }: NavMega) 
         if (!event.currentTarget.contains(event.relatedTarget)) close();
       }}
     >
-      <button
-        ref={buttonRef}
-        type="button"
+      {/* The label is a link to the section: hovering opens the panel, clicking goes straight there. */}
+      <Link
+        ref={triggerRef}
+        href={href}
         aria-expanded={open}
         aria-controls={panelId}
-        onClick={() => {
-          // A click right after hovering open should keep the panel open instead of toggling it shut.
-          if (openedByHover.current) {
-            openedByHover.current = false;
-            return;
-          }
-          setOpen((value) => !value);
-        }}
+        onClick={close}
+        onFocus={() => setOpen(true)}
         className="nav-link gap-1"
       >
         {label}
         <ChevronDown aria-hidden className={cn('size-3.5 transition-transform duration-200', open && 'rotate-180')} />
-      </button>
+      </Link>
 
       {/* Kept mounted so it can fade and slide on both open and close; inert keeps it out of reach when shut. */}
       <div
