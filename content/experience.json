@@ -10,29 +10,22 @@
       "Built a Telegram assistant answering staff questions by text or voice in English and Amharic, with role-based limits.",
       "Built the guest booking bot and its mini app, including payments and QR confirmations."
     ],
-    "stack": [
-      "nodejs",
-      "express",
-      "postgresql",
-      "docker"
-    ]
+    "stack": ["nodejs", "express", "postgresql", "docker"]
   },
   {
-    "id": "alx-africa-prodev-back-end-program",
-    "title": "ProDev Back-End Program",
-    "org": "ALX Africa",
-    "orgUrl": "https://www.alxafrica.com",
-    "start": "Jan 2025",
+    "id": "university-of-dubai-research-assistant",
+    "title": "Undergraduate Research Assistant",
+    "org": "University of Dubai",
+    "orgUrl": "https://ud.ac.ae",
+    "start": "Mar 2026",
     "end": "Present",
     "points": [
-      "Advanced back-end track covering Django, GraphQL APIs, containerization and CI/CD pipelines."
+      "Benchmarked small local language models controlling a real Home Assistant smart home, building the test harness first: tasks graded on actual device state, with a held-out set written before any fix.",
+      "Raised task success from the 47.3% scored by Home Assistant's built-in matcher to 77.3% on held-out tasks, with no false actions.",
+      "Built the smart lab dashboard: a 3D digital twin of the room wired to its sensors, with one ask bar that takes plain language by text or voice.",
+      "Built a prototype student mobile app whose digital ID card is verified over NFC by holding the phone to a reader."
     ],
-    "stack": [
-      "django",
-      "graphql",
-      "docker",
-      "kubernetes"
-    ]
+    "stack": ["python", "ollama", "react", "reactNative"]
   },
   {
     "id": "kuraztech-backend-intern",
@@ -44,13 +37,6 @@
     "points": [
       "Built features for an internship management system and a price comparison platform, working in an existing Laravel codebase."
     ],
-    "stack": [
-      "laravel",
-      "javascript",
-      "bootstrap",
-      "tailwindcss",
-      "github",
-      "trello"
-    ]
+    "stack": ["laravel", "javascript", "bootstrap", "tailwindcss", "github", "trello"]
   }
 ]

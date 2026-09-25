@@ -51,6 +51,8 @@ export interface CvProject {
   highlight?: string;
   /** Set on work done for a company or team. */
   client?: string;
+  /** A short stack tag printed after the name, for example "RAG". */
+  tag?: string;
   year?: string;
   stack: string[];
   /** One link only: the live site where there is one, otherwise the public repository. */
@@ -121,23 +123,25 @@ function projectLink(project: Project, siteUrl: string): CvLink | undefined {
   const own = [project.demo?.url, project.liveUrl].find((url) => url && !isGeneratedHost(url));
   if (own) return { label: 'Live', text: stripProtocol(own), url: own };
 
-  const page = `${siteUrl.replace(/\/$/, '')}/projects/${project.slug}`;
+  // /p/<slug> is a rewrite of /projects/<slug>; the short form keeps the line readable on paper.
+  const page = `${siteUrl.replace(/\/$/, '')}/p/${project.slug}`;
   if (project.demo?.url || project.liveUrl || project.repoUrl) {
     return { label: 'Details', text: stripProtocol(page), url: page };
   }
   return undefined;
 }
 
-function toProject(project: Project, siteUrl: string): CvProject {
+function toProject(project: Project, siteUrl: string, highlight?: string, tag?: string): CvProject {
   return {
     name: project.name,
     description: project.tagline,
-    highlight: project.highlight,
+    highlight: highlight ?? project.highlight,
     // Several products carry their client's name, and printing it twice reads like a mistake.
     client:
       project.kind === 'client' && project.client && project.client.name !== project.name
         ? project.client.name
         : undefined,
+    tag,
     year: project.year,
     stack: project.stack.slice(0, MAX_STACK).map((id) => getTech(id).name),
     link: projectLink(project, siteUrl),
@@ -222,6 +226,9 @@ export function resolveCv(content: CvContent, variant?: CvVariant): ResolvedCv {
   ];
 
   const chosen = pick(content.projects, variant?.projectSlugs ?? settings.projectSlugs, (project) => project.slug);
+  const highlights = { ...settings.projectHighlights, ...variant?.projectHighlights };
+  const tags = { ...settings.projectTags, ...variant?.projectTags };
+  const build = (project: Project) => toProject(project, profile.siteUrl, highlights[project.slug], tags[project.slug]);
 
   return {
     template: variant?.template ?? settings.template,
@@ -249,12 +256,8 @@ export function resolveCv(content: CvContent, variant?: CvVariant): ResolvedCv {
     activities: pick(content.activities, variant?.activityIds, (entry) => entry.id).map((entry) =>
       toEntry(entry, extra[entry.id]),
     ),
-    clientProjects: chosen
-      .filter((project) => project.kind === 'client')
-      .map((project) => toProject(project, profile.siteUrl)),
-    projects: chosen
-      .filter((project) => project.kind !== 'client')
-      .map((project) => toProject(project, profile.siteUrl)),
+    clientProjects: chosen.filter((project) => project.kind === 'client').map(build),
+    projects: chosen.filter((project) => project.kind !== 'client').map(build),
     skillLines: toSkillLines(
       content.skills.map((group) => ({
         id: group.id,

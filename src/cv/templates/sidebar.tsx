@@ -192,7 +192,7 @@ export function SidebarTemplate({ cv }: { cv: ResolvedCv }): ReactElement<Docume
             </Section>
           )}
           {has('selectedWork') && cv.clientProjects.length > 0 && (
-            <Section title="Selected work">
+            <Section title="Client work">
               {cv.clientProjects.map((project) => (
                 <Project key={project.name} project={project} />
               ))}

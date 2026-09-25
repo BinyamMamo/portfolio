@@ -18,7 +18,7 @@ const s = StyleSheet.create({
   // Large text needs its own line height; the page's 1.45 is sized for body text and makes lines collide.
   name: { fontSize: 20, fontWeight: 700, letterSpacing: -0.4, lineHeight: 1.2 },
   headline: { fontSize: 10.5, fontWeight: 500, color: ink.muted, marginTop: 2, lineHeight: 1.3 },
-  contact: { flexDirection: 'row', flexWrap: 'wrap', marginTop: 7, fontSize: 8.5, color: ink.muted },
+  contact: { flexDirection: 'row', flexWrap: 'wrap', marginTop: 7, fontSize: 8.2, color: ink.muted },
   contactItem: { marginRight: 9, color: ink.muted, textDecoration: 'none' },
   summary: { marginTop: 7, color: ink.body },
   section: { marginTop: 7 },
@@ -74,7 +74,7 @@ function Entry({ entry }: { entry: CvEntry }) {
       <View style={s.entryHeader}>
         <Text>
           <Text style={s.entryTitle}>{entry.title}</Text>
-          <Text style={s.entryOrg}>{`   ${entry.org}`}</Text>
+          <Text style={s.entryOrg}>{` | ${entry.org}`}</Text>
         </Text>
         <Text style={s.period}>{entry.period}</Text>
       </View>
@@ -101,9 +101,8 @@ function Project({ project }: { project: CvProject }) {
       <View style={s.entryHeader}>
         <Text>
           <Text style={s.entryTitle}>{project.name}</Text>
-          {project.client && (
-            <Text style={s.client}>{`   ${project.client}${project.year ? `, ${project.year}` : ''}`}</Text>
-          )}
+          {project.tag && <Text style={s.client}>{` | ${project.tag}`}</Text>}
+          {project.client && <Text style={s.client}>{` | ${project.client}`}</Text>}
         </Text>
         {project.link && (
           <Link src={project.link.url} style={s.projectLink}>
@@ -130,7 +129,7 @@ function CredentialRow({ credential }: { credential: CvCredential }) {
       <View style={s.entryHeader}>
         <Text>
           <Text style={s.entryTitle}>{credential.title}</Text>
-          <Text style={s.entryOrg}>{`   ${credential.issuer}`}</Text>
+          <Text style={s.entryOrg}>{` | ${credential.issuer}`}</Text>
         </Text>
         <Text style={s.period}>{credential.date}</Text>
       </View>
@@ -150,7 +149,7 @@ export function ClassicTemplate({ cv }: { cv: ResolvedCv }): ReactElement<Docume
       </Section>
     ),
     selectedWork: cv.clientProjects.length > 0 && (
-      <Section key="selectedWork" title="Selected work">
+      <Section key="selectedWork" title="Client work">
         {cv.clientProjects.map((project) => (
           <Project key={project.name} project={project} />
         ))}
