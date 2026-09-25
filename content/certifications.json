@@ -6,5 +6,20 @@
     "issuerUrl": "https://www.alxafrica.com",
     "date": "Nov 2022 - Aug 2024",
     "note": "12-month program at 70+ hours a week in C, Python and DevOps. Capstone picked as one of the top 5 in the program."
+  },
+  {
+    "id": "microsoft-zaka-uae-ai-academy-students-track",
+    "title": "UAE Artificial Intelligence Academy, Students Track",
+    "issuer": "Microsoft, ZAKA",
+    "issuerUrl": "https://legaltech-evolution.com/workshop",
+    "date": "Jun 2025",
+    "note": "30+ hours of instruction, all program requirements completed."
+  },
+  {
+    "id": "university-of-dubai-deans-highest-honors",
+    "title": "Dean's Highest Honors",
+    "issuer": "University of Dubai",
+    "issuerUrl": "https://ud.ac.ae",
+    "date": "2023-2024"
   }
 ]

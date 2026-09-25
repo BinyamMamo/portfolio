@@ -2,111 +2,51 @@
   {
     "id": "languages",
     "title": "Languages",
-    "items": [
-      "typescript",
-      "javascript",
-      "python",
-      "bash",
-      "cpp",
-      "java"
-    ]
+    "items": ["typescript", "javascript", "python", "bash", "cpp", "java"]
   },
   {
     "id": "backend",
     "title": "Backend",
-    "items": [
-      "nodejs",
-      "express",
-      "nestjs",
-      "fastapi",
-      "flask",
-      "laravel"
-    ]
+    "items": ["nodejs", "express", "nestjs", "fastapi", "flask", "laravel"]
   },
   {
     "id": "databases",
     "title": "Databases",
-    "items": [
-      "postgresql",
-      "mongodb",
-      "mysql",
-      "influxdb"
-    ]
+    "items": ["postgresql", "mongodb", "mysql", "influxdb", "sqlite"]
   },
   {
     "id": "frontend",
     "title": "Frontend",
-    "items": [
-      "react",
-      "nextjs",
-      "tailwindcss",
-      "bootstrap",
-      "jquery"
-    ]
+    "items": ["react", "nextjs", "tailwindcss", "bootstrap", "jquery"]
   },
   {
     "id": "ai",
     "title": "AI",
-    "items": [
-      "pytorch",
-      "opencv",
-      "rag",
-      "ollama",
-      "openclaw"
-    ]
+    "items": ["pytorch", "opencv", "rag", "ollama", "openclaw"]
   },
   {
     "id": "apis",
     "title": "APIs",
-    "items": [
-      "rest",
-      "graphql",
-      "socketio",
-      "openapi"
-    ]
+    "items": ["rest", "graphql", "socketio", "openapi"]
   },
   {
     "id": "libraries",
     "title": "Libraries",
-    "items": [
-      "prisma",
-      "zod",
-      "tanstackQuery",
-      "stripe"
-    ]
+    "items": ["prisma", "zod", "tanstackQuery", "stripe"]
   },
   {
     "id": "cloud",
     "title": "Cloud",
-    "items": [
-      "huggingface",
-      "supabase",
-      "render",
-      "firebase",
-      "vercel"
-    ]
+    "items": ["huggingface", "supabase", "render", "firebase", "vercel"]
   },
   {
     "id": "devops",
     "title": "DevOps",
-    "items": [
-      "docker",
-      "linux",
-      "git",
-      "githubActions"
-    ]
+    "items": ["docker", "linux", "git", "githubActions"]
   },
   {
     "id": "extensions",
     "title": "Apps",
-    "items": [
-      "wails",
-      "reactNative",
-      "flutter",
-      "chromeExtensions",
-      "vscodeExtensions",
-      "raycast",
-      "electron"
-    ]
+    "items": ["wails", "reactNative", "flutter", "chromeExtensions", "vscodeExtensions", "raycast", "electron"]
   }
 ]
