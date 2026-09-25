@@ -13,8 +13,7 @@
     "avatar-kit",
     "signspeak",
     "yamnet-cough",
-    "manim-generator",
-    "uae-companies"
+    "manim-generator"
   ],
   "projectOverrides": {
     "hakim-click": {
@@ -68,11 +67,6 @@
       "tag": "MCP server",
       "description": "Describe a math animation in plain language and get a rendered video.",
       "highlight": "Exposed as an MCP server, so an assistant can render animations as a tool."
-    },
-    "uae-companies": {
-      "tag": "Scraping",
-      "description": "A scraped directory of UAE employers for students, mapped on OpenStreetMap.",
-      "highlight": ""
     }
   },
   "experienceIds": [
