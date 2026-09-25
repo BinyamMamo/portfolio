@@ -42,7 +42,11 @@ try {
   for (const project of projects.filter((item) => item.kind === 'client' && !item.client)) {
     problems.push(`projects.${project.slug}: client projects need a client name`);
   }
-  missing('navigation.projectGroups', navigation.projectGroups.flatMap((group) => group.slugs), slugs);
+  missing(
+    'navigation.projectGroups',
+    navigation.projectGroups.flatMap((group) => group.slugs),
+    slugs,
+  );
   if (navigation.featured) missing('navigation.featured', [navigation.featured.slug], slugs);
   missing('cv/settings.projectSlugs', settings.projectSlugs, slugs);
   for (const line of settings.skillLines ?? []) {
@@ -60,15 +64,19 @@ try {
   console.log(`ok    cv variants (${variants.length})`);
 
   // Placeholder content is staged in the repo before the real thing arrives, but it must never print.
-  const placeholders = activities.filter((entry) =>
-    [entry.title, entry.org, ...entry.points].some((text) => text.includes('PLACEHOLDER')),
+  // Guards the default CV's own selection, not just whether the section is turned on: an id list
+  // that names only real entries is fine even while placeholders remain in the file.
+  const placeholderIds = new Set(
+    activities
+      .filter((entry) => [entry.title, entry.org, ...entry.points].some((text) => text.includes('PLACEHOLDER')))
+      .map((entry) => entry.id),
   );
-  if (placeholders.length > 0 && (settings.sections ?? []).includes('activities')) {
-    problems.push(
-      `cv/settings.sections includes "activities" while content/activities.json still holds placeholders: ${placeholders
-        .map((entry) => entry.id)
-        .join(', ')}`,
-    );
+  if (placeholderIds.size > 0 && (settings.sections ?? []).includes('activities')) {
+    const shown = settings.activityIds ?? activities.map((entry) => entry.id);
+    const leaking = shown.filter((id) => placeholderIds.has(id));
+    if (leaking.length > 0) {
+      problems.push(`cv/settings would print placeholder activities: ${leaking.join(', ')}`);
+    }
   }
 } catch (error) {
   problems.push((error as Error).message);
