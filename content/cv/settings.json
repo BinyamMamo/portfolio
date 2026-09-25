@@ -27,7 +27,8 @@
     "yakal": {
       "tag": "Full-stack",
       "description": "Tutoring and college counselling, with Stripe checkout and Zoom lessons.",
-      "highlight": ""
+      "highlight": "",
+      "link": "portfolio"
     },
     "ud-students": {
       "tag": "React Native, NFC",
@@ -91,7 +92,7 @@
     "university-of-dubai-research-assistant",
     "kuraztech-backend-intern"
   ],
-  "sections": ["experience", "selectedWork", "projects", "skills", "certifications", "education"],
+  "sections": ["experience", "selectedWork", "projects", "skills", "certifications", "activities", "education"],
   "skillOmit": ["rest", "graphql", "openapi"],
   "skillLines": [
     {
@@ -123,5 +124,6 @@
       "groups": ["extensions"]
     }
   ],
-  "stackOmit": ["gemini", "react", "recharts", "tailwindcss", "vite"]
+  "stackOmit": ["gemini", "react", "recharts", "tailwindcss", "vite"],
+  "activityIds": ["uae-ai-hackathon-second-place", "ud-pitch-competition-finalist"]
 }

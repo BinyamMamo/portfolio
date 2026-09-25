@@ -1,5 +1,12 @@
 [
   {
+    "id": "uae-ai-hackathon-second-place",
+    "title": "Second Place",
+    "org": "UAE AI Hackathon, UAE Artificial Intelligence Academy",
+    "start": "Jun 2025",
+    "points": ["Placed second at the UAE AI Hackathon, run by ZAKA with Microsoft."]
+  },
+  {
     "id": "placeholder-club",
     "title": "PLACEHOLDER, club or society role",
     "org": "PLACEHOLDER, organisation name",
@@ -16,10 +23,10 @@
     "points": ["PLACEHOLDER. Replace with the real volunteering or community work."]
   },
   {
-    "id": "placeholder-hackathon",
-    "title": "PLACEHOLDER, competition name",
-    "org": "PLACEHOLDER, organiser",
-    "start": "PLACEHOLDER, date",
-    "points": ["PLACEHOLDER. Replace with the real hackathon or competition, and how it placed."]
+    "id": "ud-pitch-competition-finalist",
+    "title": "Finalist",
+    "org": "University of Dubai Pitch Competition, 3rd edition",
+    "start": "Apr 2025",
+    "points": ["Reached the final round, presenting to a panel that included Dubai SME and IEEE."]
   }
 ]

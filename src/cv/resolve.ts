@@ -119,20 +119,21 @@ const isGeneratedHost = (url: string) =>
   );
 
 /**
- * One link per project. A project's own domain wins, because it is the shortest thing a reader can
- * type. Otherwise the portfolio page wins over the raw deployment: it carries the write-up and the
- * screenshots, and it keeps the CV on one domain instead of a list of generated subdomains.
+ * One link per project. A project's own domain wins by default, because it is the shortest thing a
+ * reader can type. Otherwise, or when a project override asks for it, the portfolio page wins: it
+ * carries the write-up and the screenshots, and every project has one, so it never comes up empty.
  */
-function projectLink(project: Project, siteUrl: string): CvLink | undefined {
-  const own = [project.demo?.url, project.liveUrl].find((url) => url && !isGeneratedHost(url));
-  if (own) return { label: 'Live', text: stripProtocol(own), url: own };
-
+function projectLink(project: Project, siteUrl: string, prefer: 'own' | 'portfolio' = 'own'): CvLink {
   // /p/<slug> is a rewrite of /projects/<slug>; the short form keeps the line readable on paper.
-  const page = `${siteUrl.replace(/\/$/, '')}/p/${project.slug}`;
-  if (project.demo?.url || project.liveUrl || project.repoUrl) {
-    return { label: 'Details', text: stripProtocol(page), url: page };
-  }
-  return undefined;
+  const page = {
+    label: 'Details',
+    text: stripProtocol(`${siteUrl.replace(/\/$/, '')}/p/${project.slug}`),
+    url: `${siteUrl.replace(/\/$/, '')}/p/${project.slug}`,
+  };
+  if (prefer === 'portfolio') return page;
+
+  const own = [project.demo?.url, project.liveUrl].find((url) => url && !isGeneratedHost(url));
+  return own ? { label: 'Live', text: stripProtocol(own), url: own } : page;
 }
 
 function toProject(
@@ -158,7 +159,7 @@ function toProject(
       .filter((id) => !stackOmit.has(normalize(id)) && !stackOmit.has(normalize(getTech(id).name)))
       .slice(0, MAX_STACK)
       .map((id) => getTech(id).name),
-    link: projectLink(project, siteUrl),
+    link: projectLink(project, siteUrl, override.link),
   };
 }
 
@@ -262,7 +263,11 @@ export function resolveCv(content: CvContent, variant?: CvVariant): ResolvedCv {
       (entry) => toEntry(entry, extra[entry.id], stackOmit),
     ),
     education: content.education.map((entry) => toEntry(entry, extra[entry.id], stackOmit)),
-    certifications: pick(content.certifications, variant?.credentialIds, (item) => item.id).map((item) => ({
+    certifications: pick(
+      content.certifications,
+      variant?.credentialIds ?? settings.credentialIds,
+      (item) => item.id,
+    ).map((item) => ({
       id: item.id,
       title: item.title,
       issuer: item.issuer,
@@ -270,8 +275,8 @@ export function resolveCv(content: CvContent, variant?: CvVariant): ResolvedCv {
       note: item.note,
       url: item.url ?? item.issuerUrl,
     })),
-    activities: pick(content.activities, variant?.activityIds, (entry) => entry.id).map((entry) =>
-      toEntry(entry, extra[entry.id]),
+    activities: pick(content.activities, variant?.activityIds ?? settings.activityIds, (entry) => entry.id).map(
+      (entry) => toEntry(entry, extra[entry.id]),
     ),
     clientProjects: chosen.filter((project) => project.kind === 'client').map(build),
     projects: chosen.filter((project) => project.kind !== 'client').map(build),

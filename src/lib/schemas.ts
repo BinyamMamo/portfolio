@@ -232,6 +232,12 @@ export const cvProjectOverrideSchema = z.object({
   tag: z.string().trim().optional(),
   /** Renames the client shown after the name. An empty string hides it. */
   client: z.string().optional(),
+  /**
+   * Which link prints after the name. "own" (the default) prefers the project's own domain over
+   * the portfolio page; "portfolio" always uses the portfolio page, for a project whose own domain
+   * is a throwaway Vercel subdomain or reads better under the one bindev.me name on the page.
+   */
+  link: z.enum(['own', 'portfolio']).optional(),
 });
 export type CvProjectOverride = z.infer<typeof cvProjectOverrideSchema>;
 
@@ -256,6 +262,10 @@ export const cvSettingsSchema = z.object({
   stackOmit: z.array(z.string().trim().min(1)).optional(),
   /** Experience entries on the default CV, in order. Leaving it out uses every entry. */
   experienceIds: z.array(z.string()).optional(),
+  /** Certifications shown on the default CV, in order. Leaving it out uses every one. */
+  credentialIds: z.array(z.string()).optional(),
+  /** Extracurricular entries shown on the default CV, in order. Leaving it out uses every one. */
+  activityIds: z.array(z.string()).optional(),
   /** Sections to print, in this order. Leaving it out prints them all in their default order. */
   sections: z.array(z.enum(cvSectionIds)).optional(),
   /**
