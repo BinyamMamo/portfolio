@@ -53,9 +53,20 @@ const s = StyleSheet.create({
   },
   contactText: { color: '#262626', textDecoration: 'none', flex: 1 },
 
-  skillGroup: { marginBottom: 7 },
-  skillTitle: { fontWeight: 700, marginBottom: 1, color: '#171717' },
-  skillItems: { color: '#404040' },
+  skillGroup: { marginBottom: 8 },
+  skillTitle: { fontWeight: 700, marginBottom: 3, color: '#171717' },
+  skillChips: { flexDirection: 'row', flexWrap: 'wrap' },
+  skillChip: {
+    borderWidth: 0.75,
+    borderColor: '#a7f3d0',
+    backgroundColor: '#ecfdf5',
+    borderRadius: 3,
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+    marginRight: 4,
+    marginBottom: 4,
+  },
+  skillChipText: { fontSize: 7.3, color: '#065f46' },
 
   sideEntry: { marginBottom: 6 },
   sideEntryTitle: { fontWeight: 700, fontSize: 9, color: '#171717' },
@@ -253,7 +264,15 @@ export function VibrantTemplate({ cv }: { cv: ResolvedCv }): ReactElement<Docume
               {cv.skillLines.map((line) => (
                 <View key={line.label} style={s.skillGroup} wrap={false}>
                   <Text style={s.skillTitle}>{line.label}</Text>
-                  <Text style={s.skillItems}>{line.items}</Text>
+                  <View style={s.skillChips}>
+                    {/* skillLines.items is already ", "-joined for the other templates' single text line; no
+                        skill name contains a literal comma, so splitting it back apart here is safe. */}
+                    {line.items.split(', ').map((item) => (
+                      <View key={item} style={s.skillChip}>
+                        <Text style={s.skillChipText}>{item}</Text>
+                      </View>
+                    ))}
+                  </View>
                 </View>
               ))}
             </View>
