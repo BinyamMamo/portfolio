@@ -103,6 +103,10 @@
       "groups": ["languages"]
     },
     {
+      "label": "Databases",
+      "groups": ["databases"]
+    },
+    {
       "label": "Backend",
       "groups": ["backend", "apis"]
     },
@@ -111,16 +115,12 @@
       "groups": ["frontend", "libraries"]
     },
     {
-      "label": "Apps",
-      "groups": ["extensions"]
-    },
-    {
       "label": "Tooling",
       "groups": ["devops", "cloud"]
     },
     {
-      "label": "Databases",
-      "groups": ["databases"]
+      "label": "Apps",
+      "groups": ["extensions"]
     }
   ],
   "stackOmit": ["gemini", "react", "recharts", "tailwindcss", "vite"]
