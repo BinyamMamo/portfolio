@@ -41,6 +41,7 @@ export const tech = {
   supabase: { name: 'Supabase', logo: logo('supabase') },
   prisma: { name: 'Prisma', logo: logo('prisma', 'prisma-dark') },
   influxdb: { name: 'InfluxDB', logo: logo('influxdb') },
+  sqlite: { name: 'SQLite', logo: logo('sqlite') },
 
   react: { name: 'React', logo: logo('react', 'react-dark') },
   reactRouter: { name: 'React Router', logo: logo('reactrouter') },
