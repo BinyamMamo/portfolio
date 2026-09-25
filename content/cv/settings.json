@@ -125,5 +125,9 @@
     }
   ],
   "stackOmit": ["gemini", "react", "recharts", "tailwindcss", "vite"],
-  "activityIds": ["uae-ai-hackathon-second-place", "ud-pitch-competition-finalist"]
+  "activityIds": [
+    "uae-ai-hackathon-second-place",
+    "ud-pitch-competition-finalist",
+    "university-of-dubai-iftar-volunteer"
+  ]
 }
