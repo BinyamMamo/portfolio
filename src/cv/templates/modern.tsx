@@ -137,7 +137,7 @@ export function ModernTemplate({ cv }: { cv: ResolvedCv }): ReactElement<Documen
       </Section>
     ),
     selectedWork: cv.clientProjects.length > 0 && (
-      <Section key="selectedWork" title="Client work">
+      <Section key="selectedWork" title="Selected work">
         {cv.clientProjects.map((project) => (
           <Project key={project.name} project={project} />
         ))}

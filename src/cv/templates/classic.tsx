@@ -149,7 +149,7 @@ export function ClassicTemplate({ cv }: { cv: ResolvedCv }): ReactElement<Docume
       </Section>
     ),
     selectedWork: cv.clientProjects.length > 0 && (
-      <Section key="selectedWork" title="Client work">
+      <Section key="selectedWork" title="Selected work">
         {cv.clientProjects.map((project) => (
           <Project key={project.name} project={project} />
         ))}

@@ -249,6 +249,11 @@ export const cvSettingsSchema = z.object({
   projectOverrides: z.record(z.string(), cvProjectOverrideSchema).optional(),
   /** Tech ids to leave off the skills rows, for example an API style not worth the line. */
   skillOmit: z.array(z.string().trim().min(1)).optional(),
+  /**
+   * Tech to leave off every project's Tech line. Matched on the id or the display name, ignoring
+   * case and spaces, so "tailwindcss" also drops "Tailwind CSS" but never "React Native".
+   */
+  stackOmit: z.array(z.string().trim().min(1)).optional(),
   /** Experience entries on the default CV, in order. Leaving it out uses every entry. */
   experienceIds: z.array(z.string()).optional(),
   /** Sections to print, in this order. Leaving it out prints them all in their default order. */
@@ -278,6 +283,11 @@ export const cvVariantSchema = z.object({
   skillLines: z.array(cvSkillLineSchema).optional(),
   projectOverrides: z.record(z.string(), cvProjectOverrideSchema).optional(),
   skillOmit: z.array(z.string().trim().min(1)).optional(),
+  /**
+   * Tech to leave off every project's Tech line. Matched on the id or the display name, ignoring
+   * case and spaces, so "tailwindcss" also drops "Tailwind CSS" but never "React Native".
+   */
+  stackOmit: z.array(z.string().trim().min(1)).optional(),
   /** Skills to list first, in this order. */
   skills: z.array(z.string()).optional(),
   /** Extra bullet points keyed by experience or education id. */

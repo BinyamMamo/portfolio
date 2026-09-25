@@ -21,7 +21,7 @@
   "projectOverrides": {
     "hakim-click": {
       "tag": "RAG",
-      "description": "Clinical answers from Ethiopia's national guidelines, every claim cited.",
+      "description": "Clinical answers drawn from Ethiopia's national treatment guidelines.",
       "highlight": "38 guidelines and 13,536 passages, embedded and searched with pgvector."
     },
     "yakal": {
@@ -32,7 +32,7 @@
     "ud-students": {
       "tag": "React Native, NFC",
       "client": "",
-      "description": "NFC-enabled student ID on the phone, verified by tapping a reader.",
+      "description": "NFC and BLE enabled student ID carried on the phone.",
       "highlight": ""
     },
     "clixa-tools": {
@@ -63,7 +63,7 @@
     "signverse": {
       "tag": "Pose synthesis",
       "description": "Translates English text into American Sign Language, rendered as a signing figure.",
-      "highlight": "89% of words in everyday sentences map to a real sign, up from 42%."
+      "highlight": "More than doubled sign coverage, from 42% to 89% of everyday words."
     },
     "yamnet-cough": {
       "tag": "Audio classification",
@@ -94,12 +94,34 @@
   "sections": ["experience", "selectedWork", "projects", "skills", "certifications", "education"],
   "skillOmit": ["rest", "graphql", "openapi"],
   "skillLines": [
-    { "label": "Languages", "groups": ["languages"] },
-    { "label": "Backend", "groups": ["backend", "apis"] },
-    { "label": "AI and ML", "groups": ["ai"] },
-    { "label": "Databases", "groups": ["databases"] },
-    { "label": "Frontend", "groups": ["frontend", "libraries"] },
-    { "label": "Apps", "groups": ["extensions"] },
-    { "label": "Tooling", "groups": ["devops", "cloud"] }
-  ]
+    {
+      "label": "Languages",
+      "groups": ["languages"]
+    },
+    {
+      "label": "Backend",
+      "groups": ["backend", "apis"]
+    },
+    {
+      "label": "AI and ML",
+      "groups": ["ai"]
+    },
+    {
+      "label": "Databases",
+      "groups": ["databases"]
+    },
+    {
+      "label": "Frontend",
+      "groups": ["frontend", "libraries"]
+    },
+    {
+      "label": "Apps",
+      "groups": ["extensions"]
+    },
+    {
+      "label": "Tooling",
+      "groups": ["devops", "cloud"]
+    }
+  ],
+  "stackOmit": ["gemini", "react", "tailwindcss", "vite"]
 }
