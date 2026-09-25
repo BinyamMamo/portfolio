@@ -26,7 +26,7 @@ const { values } = parseArgs({
   },
 });
 
-const expectedPages = values.pages ? Number(values.pages) : 1;
+const expectedPages = values.pages ? Number(values.pages) : 2;
 
 const cv = await getResolvedCv({ variant: values.variant });
 if (!cv) {
