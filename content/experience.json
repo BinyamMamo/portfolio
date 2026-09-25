@@ -10,12 +10,7 @@
       "Built a Telegram assistant answering staff questions by text or voice in English and Amharic, with RBAC.",
       "Built the guest booking bot and its mini app, including payment integration and QR confirmations."
     ],
-    "stack": [
-      "nodejs",
-      "express",
-      "postgresql",
-      "docker"
-    ]
+    "stack": ["nodejs", "express", "postgresql", "docker"]
   },
   {
     "id": "university-of-dubai-research-assistant",
@@ -26,16 +21,11 @@
     "end": "Present",
     "points": [
       "Built a harness to benchmark small local language models driving real smart home devices.",
-      "Raised task success from Home Assistant's own 47.3% to 77.3%, with no false actions.",
+      "Raised task success from Home Assistant's own 47.3% to 77.3% with our own resolver.",
       "Integrated a digital twin of the lab that controls its devices with small local language models, by voice or text.",
       "Built a student mobile app with an NFC and BLE enabled digital ID, presented by holding the phone to a reader."
     ],
-    "stack": [
-      "python",
-      "ollama",
-      "react",
-      "reactNative"
-    ]
+    "stack": ["python", "ollama", "react", "reactNative"]
   },
   {
     "id": "kuraztech-backend-intern",
@@ -44,16 +34,7 @@
     "orgUrl": "https://kuraztech.com",
     "start": "Jul 2024",
     "end": "Sep 2024",
-    "points": [
-      "Built features for an internship management system and a price comparison platform."
-    ],
-    "stack": [
-      "laravel",
-      "javascript",
-      "bootstrap",
-      "tailwindcss",
-      "github",
-      "trello"
-    ]
+    "points": ["Built features for an internship management system and a price comparison platform."],
+    "stack": ["laravel", "javascript", "bootstrap", "tailwindcss", "github", "trello"]
   }
 ]

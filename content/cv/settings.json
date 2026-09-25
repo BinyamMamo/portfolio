@@ -37,7 +37,7 @@
     },
     "clixa-tools": {
       "tag": "Tool calling",
-      "description": "63 clinical calculators an assistant runs by tool call rather than arithmetic.",
+      "description": "Exposes 63 clinical calculators as tools the assistant calls instead of calculating.",
       "highlight": "Ported without changing a result, checked against 6,653 recorded cases."
     },
     "visionaid": {
@@ -63,7 +63,7 @@
     "signverse": {
       "tag": "Pose synthesis",
       "description": "Translates English text into American Sign Language, rendered as a signing figure.",
-      "highlight": "More than doubled sign coverage, from 42% to 89% of everyday words."
+      "highlight": "Doubled sign coverage, from 42% to 89% of everyday words."
     },
     "yamnet-cough": {
       "tag": "Audio classification",
