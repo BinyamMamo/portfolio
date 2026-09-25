@@ -123,5 +123,5 @@
       "groups": ["devops", "cloud"]
     }
   ],
-  "stackOmit": ["gemini", "react", "tailwindcss", "vite"]
+  "stackOmit": ["gemini", "react", "recharts", "tailwindcss", "vite"]
 }
