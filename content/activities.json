@@ -4,9 +4,7 @@
     "title": "Second Place",
     "org": "UAE AI Hackathon, UAE Artificial Intelligence Academy",
     "start": "Jun 2025",
-    "points": [
-      "Built CertiScan with the team: certificate attestation with QR verification and an Azure AI Language assistant."
-    ]
+    "points": ["Built CertiScan, a certificate verification app with an Azure AI assistant."]
   },
   {
     "id": "placeholder-club",
