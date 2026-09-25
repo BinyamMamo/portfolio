@@ -99,12 +99,12 @@
       "groups": ["ai"]
     },
     {
-      "label": "Backend",
-      "groups": ["backend", "apis"]
-    },
-    {
       "label": "Languages",
       "groups": ["languages"]
+    },
+    {
+      "label": "Backend",
+      "groups": ["backend", "apis"]
     },
     {
       "label": "Frontend",
