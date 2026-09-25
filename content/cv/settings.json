@@ -64,7 +64,7 @@
     "signverse": {
       "tag": "Pose synthesis",
       "description": "Translates English text into American Sign Language, rendered as a signing figure.",
-      "highlight": "Doubled sign coverage, from 42% to 89% of everyday words."
+      "highlight": ""
     },
     "yamnet-cough": {
       "tag": "Audio classification",
@@ -116,11 +116,11 @@
       "groups": ["frontend", "libraries"]
     },
     {
-      "label": "Tooling",
+      "label": "DevOps and Cloud",
       "groups": ["devops", "cloud"]
     },
     {
-      "label": "Apps",
+      "label": "Apps and Extensions",
       "groups": ["extensions"]
     }
   ],
