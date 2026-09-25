@@ -21,7 +21,7 @@
     "end": "Present",
     "points": [
       "Built a harness to benchmark small local LLMs controlling a Home Assistant smart home.",
-      "Raised task success on 55 smart-home tasks from 47.3% (Home Assistant's built-in matcher) to 74.5% with our own resolver, with no false actions.",
+      "Raised task success from 47.3% (Home Assistant's built-in matcher) to 74.5% with our own resolver, with no false actions.",
       "Fine-tuned laya, a Jev-style encoder, lifting device accuracy from 76% to 100% and action accuracy from 73% to 99.5% on 410 unseen commands.",
       "Integrated a digital twin of the lab that controls its devices with local LLMs, by voice or text.",
       "Built a student mobile app with an NFC and BLE enabled digital ID, presented by holding the phone to a reader."
