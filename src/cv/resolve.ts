@@ -103,6 +103,9 @@ function pick<T>(items: T[], ids: string[] | undefined, key: (item: T) => string
 /** A wrapped tech line costs a whole line for the sake of a few names, so the tail is dropped. */
 const MAX_STACK = 10;
 
+/** Ignores case and spacing, so "Tailwind CSS" matches "tailwindcss" but "React Native" never matches "react". */
+const normalize = (value: string) => value.toLowerCase().replace(/[\s.-]/g, '');
+
 const stripProtocol = (url: string) =>
   url
     .replace(/^https?:\/\//, '')
@@ -132,7 +135,12 @@ function projectLink(project: Project, siteUrl: string): CvLink | undefined {
   return undefined;
 }
 
-function toProject(project: Project, siteUrl: string, override: CvProjectOverride = {}): CvProject {
+function toProject(
+  project: Project,
+  siteUrl: string,
+  override: CvProjectOverride = {},
+  stackOmit: Set<string> = new Set(),
+): CvProject {
   return {
     name: project.name,
     description: override.description ?? project.tagline,
@@ -146,7 +154,10 @@ function toProject(project: Project, siteUrl: string, override: CvProjectOverrid
           : undefined,
     tag: override.tag,
     year: project.year,
-    stack: project.stack.slice(0, MAX_STACK).map((id) => getTech(id).name),
+    stack: project.stack
+      .filter((id) => !stackOmit.has(normalize(id)) && !stackOmit.has(normalize(getTech(id).name)))
+      .slice(0, MAX_STACK)
+      .map((id) => getTech(id).name),
     link: projectLink(project, siteUrl),
   };
 }
@@ -197,7 +208,7 @@ function toSkillLines(
   return lines.slice(0, 3);
 }
 
-function toEntry(entry: TimelineEntry, extraPoints: string[] = []): CvEntry {
+function toEntry(entry: TimelineEntry, extraPoints: string[] = [], stackOmit: Set<string> = new Set()): CvEntry {
   return {
     id: entry.id,
     title: entry.title,
@@ -207,7 +218,9 @@ function toEntry(entry: TimelineEntry, extraPoints: string[] = []): CvEntry {
     period: entry.end ? `${entry.start} - ${entry.end}` : entry.start,
     points: [...entry.points, ...extraPoints],
     details: entry.details,
-    stack: (entry.stack ?? []).map((id) => getTech(id).name),
+    stack: (entry.stack ?? [])
+      .filter((id) => !stackOmit.has(normalize(id)) && !stackOmit.has(normalize(getTech(id).name)))
+      .map((id) => getTech(id).name),
   };
 }
 
@@ -230,7 +243,8 @@ export function resolveCv(content: CvContent, variant?: CvVariant): ResolvedCv {
 
   const chosen = pick(content.projects, variant?.projectSlugs ?? settings.projectSlugs, (project) => project.slug);
   const overrides = { ...settings.projectOverrides, ...variant?.projectOverrides };
-  const build = (project: Project) => toProject(project, profile.siteUrl, overrides[project.slug]);
+  const stackOmit = new Set((variant?.stackOmit ?? settings.stackOmit ?? []).map(normalize));
+  const build = (project: Project) => toProject(project, profile.siteUrl, overrides[project.slug], stackOmit);
   const omitted = new Set((variant?.skillOmit ?? settings.skillOmit ?? []).map((id) => id.toLowerCase()));
 
   return {
@@ -245,9 +259,9 @@ export function resolveCv(content: CvContent, variant?: CvVariant): ResolvedCv {
     phone: profile.phone,
     links,
     experience: pick(content.experience, variant?.experienceIds ?? settings.experienceIds, (entry) => entry.id).map(
-      (entry) => toEntry(entry, extra[entry.id]),
+      (entry) => toEntry(entry, extra[entry.id], stackOmit),
     ),
-    education: content.education.map((entry) => toEntry(entry, extra[entry.id])),
+    education: content.education.map((entry) => toEntry(entry, extra[entry.id], stackOmit)),
     certifications: pick(content.certifications, variant?.credentialIds, (item) => item.id).map((item) => ({
       id: item.id,
       title: item.title,

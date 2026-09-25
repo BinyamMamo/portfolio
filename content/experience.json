@@ -7,8 +7,8 @@
     "end": "Sep 2026",
     "points": [
       "Built the backend of a hotel management system covering reservations, check-in, housekeeping and billing: 97 endpoints across 16 data models, with about 580 automated tests.",
-      "Built a Telegram assistant answering staff questions by text or voice in English and Amharic, with role-based limits.",
-      "Built the guest booking bot and its mini app, including payments and QR confirmations."
+      "Built a Telegram assistant answering staff questions by text or voice in English and Amharic, with RBAC.",
+      "Built the guest booking bot and its mini app, including payment integration and QR confirmations."
     ],
     "stack": ["nodejs", "express", "postgresql", "docker"]
   },
@@ -20,10 +20,10 @@
     "start": "Mar 2026",
     "end": "Present",
     "points": [
-      "Built a test harness to benchmark local language models on real smart home devices, graded on device state.",
-      "Raised task success from Home Assistant's own 47.3% to 77.3% on held-out tasks, with no false actions.",
-      "Integrated an AI ask bar into a smart lab digital twin, so live room sensors answer plain language by voice or text.",
-      "Built a prototype student mobile app with a digital ID card verified over NFC by holding the phone to a reader."
+      "Built a harness to benchmark small local language models driving real smart home devices.",
+      "Raised task success from Home Assistant's own 47.3% to 77.3%, with no false actions.",
+      "Created a digital twin of the lab that controls its devices with small local language models, by voice or text.",
+      "Built a student mobile app with an NFC and BLE enabled digital ID, presented by holding the phone to a reader."
     ],
     "stack": ["python", "ollama", "react", "reactNative"]
   },
