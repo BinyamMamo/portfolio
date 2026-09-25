@@ -13,6 +13,7 @@
     "format": "prettier --write .",
     "content:check": "tsx scripts/content-check.mts",
     "cv:pdf": "tsx scripts/cv-pdf.mts",
+    "cv:ats": "tsx scripts/cv-ats.mts",
     "media:add": "tsx scripts/media-add.mts",
     "auth:hash": "tsx scripts/auth-hash.mts",
     "media:cinematic": "tsx scripts/cinematic.mts"

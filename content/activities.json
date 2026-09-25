@@ -1,0 +1,25 @@
+[
+  {
+    "id": "placeholder-club",
+    "title": "PLACEHOLDER, club or society role",
+    "org": "PLACEHOLDER, organisation name",
+    "start": "PLACEHOLDER, start",
+    "end": "PLACEHOLDER, end",
+    "points": ["PLACEHOLDER. Replace with the real club or society, the role held and what came of it."]
+  },
+  {
+    "id": "placeholder-volunteering",
+    "title": "PLACEHOLDER, volunteering role",
+    "org": "PLACEHOLDER, organisation name",
+    "start": "PLACEHOLDER, start",
+    "end": "PLACEHOLDER, end",
+    "points": ["PLACEHOLDER. Replace with the real volunteering or community work."]
+  },
+  {
+    "id": "placeholder-hackathon",
+    "title": "PLACEHOLDER, competition name",
+    "org": "PLACEHOLDER, organiser",
+    "start": "PLACEHOLDER, date",
+    "points": ["PLACEHOLDER. Replace with the real hackathon or competition, and how it placed."]
+  }
+]

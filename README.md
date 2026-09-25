@@ -1,6 +1,6 @@
 # Binyam Mamo, Portfolio
 
-Personal portfolio at [binyammamo.vercel.app](https://binyammamo.vercel.app), built with Next.js (App Router), TypeScript and Tailwind CSS. A private local dashboard edits all content, and the CV PDF is generated from the same data.
+Personal portfolio at [bindev.me](https://bindev.me), built with Next.js (App Router), TypeScript and Tailwind CSS. A private local dashboard edits all content, and the CV PDF is generated from the same data.
 
 ## Getting started
 

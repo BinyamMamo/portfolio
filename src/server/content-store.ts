@@ -14,6 +14,8 @@ import {
   cvSettingsSchema,
   type CvVariant,
   cvVariantSchema,
+  type Credential,
+  credentialsSchema,
   type NavigationContent,
   navigationSchema,
   type Profile,
@@ -34,6 +36,8 @@ interface ContentMap {
   projects: Project[];
   experience: TimelineEntry[];
   education: TimelineEntry[];
+  certifications: Credential[];
+  activities: TimelineEntry[];
   skills: SkillGroup[];
   areas: Area[];
   navigation: NavigationContent;
@@ -47,6 +51,8 @@ const sources: { [Name in ContentName]: { file: string; schema: z.ZodType<Conten
   projects: { file: 'projects.json', schema: projectsSchema },
   experience: { file: 'experience.json', schema: timelineSchema },
   education: { file: 'education.json', schema: timelineSchema },
+  certifications: { file: 'certifications.json', schema: credentialsSchema },
+  activities: { file: 'activities.json', schema: timelineSchema },
   skills: { file: 'skills.json', schema: skillGroupsSchema },
   areas: { file: 'areas.json', schema: areasSchema },
   navigation: { file: 'navigation.json', schema: navigationSchema },

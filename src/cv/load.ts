@@ -4,15 +4,17 @@ import type { CvTemplateId } from '@/lib/schemas';
 import { readContent, readCvVariant } from '@/server/content-store';
 
 export async function loadCvContent(): Promise<CvContent> {
-  const [profile, projects, experience, education, skills, settings] = await Promise.all([
+  const [profile, projects, experience, education, certifications, activities, skills, settings] = await Promise.all([
     readContent('profile'),
     readContent('projects'),
     readContent('experience'),
     readContent('education'),
+    readContent('certifications'),
+    readContent('activities'),
     readContent('skills'),
     readContent('cvSettings'),
   ]);
-  return { profile, projects, experience, education, skills, settings };
+  return { profile, projects, experience, education, certifications, activities, skills, settings };
 }
 
 interface CvOptions {

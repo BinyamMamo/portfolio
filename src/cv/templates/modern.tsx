@@ -1,10 +1,11 @@
 import { Document, type DocumentProps, Link, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 import { Children, type ReactElement, type ReactNode } from 'react';
 
-import type { CvEntry, CvProject, ResolvedCv } from '@/cv/resolve';
+import type { CvCredential, CvEntry, CvProject, ResolvedCv } from '@/cv/resolve';
 import { Bullets, ink, mailto } from '@/cv/templates/shared';
+import type { CvSectionId } from '@/lib/schemas';
 
-/** Wide enough for "Jul 2024 to Sep 2024" on one line. */
+/** Wide enough for "Jul 2024 - Sep 2024" on one line. */
 const MARGIN_COLUMN = 112;
 
 const s = StyleSheet.create({
@@ -28,7 +29,8 @@ const s = StyleSheet.create({
   sectionTitle: {
     fontSize: 8.5,
     fontWeight: 600,
-    letterSpacing: 1.4,
+    // Wide tracking makes pdftotext emit "E D U C AT I O N", which no keyword match survives.
+    letterSpacing: 0.4,
     textTransform: 'uppercase',
     color: ink.brand,
     marginBottom: 6,
@@ -90,7 +92,9 @@ function Project({ project }: { project: CvProject }) {
       <View style={s.body}>
         <Text>
           <Text style={s.entryTitle}>{project.name}</Text>
-          {project.client && <Text style={s.entryOrg}>{`, ${project.client}${project.year ? ` (${project.year})` : ''}`}</Text>}
+          {project.client && (
+            <Text style={s.entryOrg}>{`, ${project.client}${project.year ? ` (${project.year})` : ''}`}</Text>
+          )}
         </Text>
         <Text style={s.description}>{project.description}</Text>
         {project.highlight && <Text style={s.highlight}>{project.highlight}</Text>}
@@ -106,7 +110,79 @@ function Project({ project }: { project: CvProject }) {
   );
 }
 
+/** A certification is a line, not a job, so it prints compactly rather than as a bulleted entry. */
+function CredentialRow({ credential }: { credential: CvCredential }) {
+  return (
+    <View style={s.row} wrap={false}>
+      <Text style={s.margin}>{credential.date}</Text>
+      <View style={s.body}>
+        <Text>
+          <Text style={s.entryTitle}>{credential.title}</Text>
+          <Text style={s.entryOrg}>{`   ${credential.issuer}`}</Text>
+        </Text>
+        {credential.note && <Text style={s.description}>{credential.note}</Text>}
+      </View>
+    </View>
+  );
+}
+
 export function ModernTemplate({ cv }: { cv: ResolvedCv }): ReactElement<DocumentProps> {
+  // Built once and looked up by id, so the order on the page is exactly the order in settings.
+  const sections: Record<CvSectionId, ReactNode> = {
+    experience: cv.experience.length > 0 && (
+      <Section key="experience" title="Experience">
+        {cv.experience.map((entry) => (
+          <Entry key={entry.id} entry={entry} />
+        ))}
+      </Section>
+    ),
+    selectedWork: cv.clientProjects.length > 0 && (
+      <Section key="selectedWork" title="Selected work">
+        {cv.clientProjects.map((project) => (
+          <Project key={project.name} project={project} />
+        ))}
+      </Section>
+    ),
+    projects: cv.projects.length > 0 && (
+      <Section key="projects" title="Projects">
+        {cv.projects.map((project) => (
+          <Project key={project.name} project={project} />
+        ))}
+      </Section>
+    ),
+    skills: cv.skillLines.length > 0 && (
+      <Section key="skills" title="Skills">
+        {cv.skillLines.map((line) => (
+          <View key={line.label} style={s.row} wrap={false}>
+            <Text style={s.margin}>{line.label}</Text>
+            <Text style={s.skillItems}>{line.items}</Text>
+          </View>
+        ))}
+      </Section>
+    ),
+    certifications: cv.certifications.length > 0 && (
+      <Section key="certifications" title="Certifications">
+        {cv.certifications.map((credential) => (
+          <CredentialRow key={credential.id} credential={credential} />
+        ))}
+      </Section>
+    ),
+    activities: cv.activities.length > 0 && (
+      <Section key="activities" title="Extracurricular and leadership">
+        {cv.activities.map((entry) => (
+          <Entry key={entry.id} entry={entry} />
+        ))}
+      </Section>
+    ),
+    education: cv.education.length > 0 && (
+      <Section key="education" title="Education">
+        {cv.education.map((entry) => (
+          <Entry key={entry.id} entry={entry} />
+        ))}
+      </Section>
+    ),
+  };
+
   return (
     <Document title={`${cv.name} CV`} author={cv.name}>
       <Page size="A4" style={s.page}>
@@ -128,44 +204,7 @@ export function ModernTemplate({ cv }: { cv: ResolvedCv }): ReactElement<Documen
         </View>
         {cv.summary && <Text style={s.summary}>{cv.summary}</Text>}
 
-        {cv.experience.length > 0 && (
-          <Section title="Experience">
-            {cv.experience.map((entry) => (
-              <Entry key={entry.id} entry={entry} />
-            ))}
-          </Section>
-        )}
-        {cv.clientProjects.length > 0 && (
-          <Section title="Client and team work">
-            {cv.clientProjects.map((project) => (
-              <Project key={project.name} project={project} />
-            ))}
-          </Section>
-        )}
-        {cv.projects.length > 0 && (
-          <Section title="Selected projects">
-            {cv.projects.map((project) => (
-              <Project key={project.name} project={project} />
-            ))}
-          </Section>
-        )}
-        {cv.skillLines.length > 0 && (
-          <Section title="Skills">
-            {cv.skillLines.map((line) => (
-              <View key={line.label} style={s.row} wrap={false}>
-                <Text style={s.margin}>{line.label}</Text>
-                <Text style={s.skillItems}>{line.items}</Text>
-              </View>
-            ))}
-          </Section>
-        )}
-        {cv.education.length > 0 && (
-          <Section title="Education">
-            {cv.education.map((entry) => (
-              <Entry key={entry.id} entry={entry} />
-            ))}
-          </Section>
-        )}
+        {cv.sections.map((id) => sections[id])}
       </Page>
     </Document>
   );
