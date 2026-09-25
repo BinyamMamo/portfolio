@@ -2,7 +2,7 @@
   "template": "classic",
   "fileName": "binyam-mamo-cv",
   "headline": "AI/ML and Backend Engineer",
-  "summary": "Computer Engineering student at the University of Dubai on a full scholarship. Builds applied AI and computer vision tools, backend systems and full-stack web apps, with shipped work in health, education and hospitality.",
+  "summary": "Computer Engineering student at the University of Dubai on a full scholarship, building applied AI and computer vision tools, backend systems and full-stack web apps for clinics, classrooms and small businesses.",
   "projectSlugs": [
     "hakim-click",
     "yakal",
@@ -12,31 +12,79 @@
     "drone-hunter",
     "avatar-kit",
     "signspeak",
-    "yamnet-cough",
     "signverse",
+    "yamnet-cough",
     "manim-generator",
     "healthvault",
     "uae-companies"
   ],
-  "projectTags": {
-    "hakim-click": "RAG",
-    "yakal": "Full-stack",
-    "ud-students": "React Native, NFC",
-    "clixa-tools": "Tool calling",
-    "visionaid": "Computer vision",
-    "drone-hunter": "Reinforcement learning",
-    "avatar-kit": "Face tracking",
-    "signspeak": "Gesture recognition",
-    "yamnet-cough": "Audio classification",
-    "signverse": "Pose synthesis",
-    "manim-generator": "LLM code generation",
-    "healthvault": "Encryption, blockchain",
-    "uae-companies": "Data pipeline"
-  },
-  "projectHighlights": {
-    "clixa-tools": "The model never does the arithmetic: it can only call the 63 real calculators as tools.",
-    "avatar-kit": "MediaPipe face tracking drives head pose, blinks, gaze and mouth through a Verlet physics rig, smoothed with One Euro filters.",
-    "visionaid": "Reads text, finds objects and warns about traffic on-device. Built for the 19th IEEE Student Day competition."
+  "projectOverrides": {
+    "hakim-click": {
+      "tag": "RAG",
+      "description": "Clinical answers from Ethiopia's national guidelines, every claim cited.",
+      "highlight": "38 guidelines and 13,536 passages, embedded and searched with pgvector."
+    },
+    "yakal": {
+      "tag": "Full-stack",
+      "description": "Tutoring and college counselling, with Stripe checkout and Zoom lessons.",
+      "highlight": ""
+    },
+    "ud-students": {
+      "tag": "React Native, NFC",
+      "client": "",
+      "description": "NFC-enabled student ID on the phone, verified by tapping a reader.",
+      "highlight": ""
+    },
+    "clixa-tools": {
+      "tag": "Tool calling",
+      "description": "63 clinical calculators an assistant runs by tool call rather than arithmetic.",
+      "highlight": "Ported without changing a result, checked against 6,653 recorded cases."
+    },
+    "visionaid": {
+      "tag": "Computer vision",
+      "description": "A phone assistant that reads, recognizes and warns for visually impaired users.",
+      "highlight": "Built for the 19th IEEE Student Day competition."
+    },
+    "drone-hunter": {
+      "tag": "Reinforcement learning",
+      "description": "A simulated drone that finds and chases a moving rover using only its camera.",
+      "highlight": "87% time on target after training the policy in Webots."
+    },
+    "avatar-kit": {
+      "tag": "Face tracking",
+      "description": "Cartoon avatars in the browser that copy your face and lip sync to your voice.",
+      "highlight": "MediaPipe drives head pose, blinks, gaze and mouth through a Verlet physics rig."
+    },
+    "signspeak": {
+      "tag": "Gesture recognition",
+      "description": "Learn American Sign Language with your webcam as the marker.",
+      "highlight": "Hand tracking and classification both run in the browser, with no server."
+    },
+    "signverse": {
+      "tag": "Pose synthesis",
+      "description": "Translates English text into American Sign Language, rendered as a signing figure.",
+      "highlight": "89% of words in everyday sentences map to a real sign, up from 42%."
+    },
+    "yamnet-cough": {
+      "tag": "Audio classification",
+      "description": "Tells asthma, COPD, pneumonia and healthy lungs apart from a cough.",
+      "highlight": "87% on held-out clips across five classes, from a 68 thousand parameter network."
+    },
+    "manim-generator": {
+      "tag": "MCP server",
+      "description": "Describe a math animation in plain language and get a rendered video.",
+      "highlight": "Exposed as an MCP server, so an assistant can render animations as a tool."
+    },
+    "healthvault": {
+      "tag": "Encryption, blockchain",
+      "description": "Patient-controlled health records, encrypted in the browser.",
+      "highlight": "A doctor receives a record's key only after their visit is on the blockchain."
+    },
+    "uae-companies": {
+      "tag": "Scraping",
+      "description": "A scraped directory of UAE employers for students, mapped on OpenStreetMap.",
+      "highlight": ""
+    }
   },
   "experienceIds": [
     "horan-technologies-backend-intern",
@@ -44,30 +92,14 @@
     "kuraztech-backend-intern"
   ],
   "sections": ["experience", "selectedWork", "projects", "skills", "certifications", "education"],
+  "skillOmit": ["rest", "graphql", "openapi"],
   "skillLines": [
-    {
-      "label": "Languages",
-      "groups": ["languages"]
-    },
-    {
-      "label": "Backend and APIs",
-      "groups": ["backend", "apis"]
-    },
-    {
-      "label": "AI and ML",
-      "groups": ["ai"]
-    },
-    {
-      "label": "Databases",
-      "groups": ["databases"]
-    },
-    {
-      "label": "Frontend",
-      "groups": ["frontend", "libraries"]
-    },
-    {
-      "label": "Apps and tooling",
-      "groups": ["extensions", "devops", "cloud"]
-    }
+    { "label": "Languages", "groups": ["languages"] },
+    { "label": "Backend", "groups": ["backend", "apis"] },
+    { "label": "AI and ML", "groups": ["ai"] },
+    { "label": "Databases", "groups": ["databases"] },
+    { "label": "Frontend", "groups": ["frontend", "libraries"] },
+    { "label": "Apps", "groups": ["extensions"] },
+    { "label": "Tooling", "groups": ["devops", "cloud"] }
   ]
 }

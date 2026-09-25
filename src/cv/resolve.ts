@@ -4,6 +4,7 @@
  */
 import type {
   Credential,
+  CvProjectOverride,
   CvSectionId,
   CvSettings,
   CvSkillLine,
@@ -131,17 +132,19 @@ function projectLink(project: Project, siteUrl: string): CvLink | undefined {
   return undefined;
 }
 
-function toProject(project: Project, siteUrl: string, highlight?: string, tag?: string): CvProject {
+function toProject(project: Project, siteUrl: string, override: CvProjectOverride = {}): CvProject {
   return {
     name: project.name,
-    description: project.tagline,
-    highlight: highlight ?? project.highlight,
+    description: override.description ?? project.tagline,
+    highlight: override.highlight ?? project.highlight,
     // Several products carry their client's name, and printing it twice reads like a mistake.
     client:
-      project.kind === 'client' && project.client && project.client.name !== project.name
-        ? project.client.name
-        : undefined,
-    tag,
+      override.client !== undefined
+        ? override.client || undefined
+        : project.kind === 'client' && project.client && project.client.name !== project.name
+          ? project.client.name
+          : undefined,
+    tag: override.tag,
     year: project.year,
     stack: project.stack.slice(0, MAX_STACK).map((id) => getTech(id).name),
     link: projectLink(project, siteUrl),
@@ -226,9 +229,9 @@ export function resolveCv(content: CvContent, variant?: CvVariant): ResolvedCv {
   ];
 
   const chosen = pick(content.projects, variant?.projectSlugs ?? settings.projectSlugs, (project) => project.slug);
-  const highlights = { ...settings.projectHighlights, ...variant?.projectHighlights };
-  const tags = { ...settings.projectTags, ...variant?.projectTags };
-  const build = (project: Project) => toProject(project, profile.siteUrl, highlights[project.slug], tags[project.slug]);
+  const overrides = { ...settings.projectOverrides, ...variant?.projectOverrides };
+  const build = (project: Project) => toProject(project, profile.siteUrl, overrides[project.slug]);
+  const omitted = new Set((variant?.skillOmit ?? settings.skillOmit ?? []).map((id) => id.toLowerCase()));
 
   return {
     template: variant?.template ?? settings.template,
@@ -262,7 +265,10 @@ export function resolveCv(content: CvContent, variant?: CvVariant): ResolvedCv {
       content.skills.map((group) => ({
         id: group.id,
         title: group.title,
-        items: group.items.map((id) => getTech(id).name).sort((a, b) => emphasisRank(a) - emphasisRank(b)),
+        items: group.items
+          .filter((id) => !omitted.has(id.toLowerCase()))
+          .map((id) => getTech(id).name)
+          .sort((a, b) => emphasisRank(a) - emphasisRank(b)),
       })),
       variant?.skillLines ?? settings.skillLines,
     ),

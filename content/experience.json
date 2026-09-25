@@ -20,10 +20,10 @@
     "start": "Mar 2026",
     "end": "Present",
     "points": [
-      "Benchmarked small local language models controlling a real Home Assistant smart home, building the test harness first: tasks graded on actual device state, with a held-out set written before any fix.",
-      "Raised task success from the 47.3% scored by Home Assistant's built-in matcher to 77.3% on held-out tasks, with no false actions.",
-      "Built the smart lab dashboard: a 3D digital twin of the room wired to its sensors, with one ask bar that takes plain language by text or voice.",
-      "Built a prototype student mobile app whose digital ID card is verified over NFC by holding the phone to a reader."
+      "Built a test harness to benchmark local language models on real smart home devices, graded on device state.",
+      "Raised task success from Home Assistant's own 47.3% to 77.3% on held-out tasks, with no false actions.",
+      "Integrated an AI ask bar into a smart lab digital twin, so live room sensors answer plain language by voice or text.",
+      "Built a prototype student mobile app with a digital ID card verified over NFC by holding the phone to a reader."
     ],
     "stack": ["python", "ollama", "react", "reactNative"]
   },
@@ -34,9 +34,7 @@
     "orgUrl": "https://kuraztech.com",
     "start": "Jul 2024",
     "end": "Sep 2024",
-    "points": [
-      "Built features for an internship management system and a price comparison platform, working in an existing Laravel codebase."
-    ],
+    "points": ["Built features for an internship management system and a price comparison platform."],
     "stack": ["laravel", "javascript", "bootstrap", "tailwindcss", "github", "trello"]
   }
 ]
