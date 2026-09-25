@@ -38,7 +38,7 @@
     "clixa-tools": {
       "tag": "Tool calling",
       "description": "Exposes 63 clinical calculators as tools the assistant calls instead of hallucinating.",
-      "highlight": "Ported without changing a result, checked against 6,653 recorded cases."
+      "highlight": ""
     },
     "visionaid": {
       "tag": "Computer vision",
