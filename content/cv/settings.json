@@ -1,13 +1,23 @@
 {
   "template": "classic",
   "fileName": "binyam-mamo-cv",
-  "projectSlugs": [
-    "hakim-click",
-    "yakal",
-    "ksk-homes",
-    "clixa-tools",
-    "soroban",
-    "solar-farm-drone"
-  ],
-  "headline": "Software engineer, backend and applied AI"
+  "headline": "Software engineer, applied AI and backend",
+  "summary": "Computer Engineering student at the University of Dubai on a full scholarship. Builds applied AI tools, backend systems and full-stack web apps, with shipped work in health, education and hospitality.",
+  "projectSlugs": ["hakim-click", "yakal", "clixa-tools", "drone-hunter"],
+  "experienceIds": ["horan-technologies-backend-intern", "kuraztech-backend-intern"],
+  "sections": ["experience", "selectedWork", "projects", "skills", "certifications", "education"],
+  "skillLines": [
+    {
+      "label": "Languages and backend",
+      "groups": ["languages", "backend", "apis"]
+    },
+    {
+      "label": "Data and AI",
+      "groups": ["ai", "databases"]
+    },
+    {
+      "label": "Frontend and tooling",
+      "groups": ["frontend", "libraries", "devops"]
+    }
+  ]
 }

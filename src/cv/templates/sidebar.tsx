@@ -9,7 +9,14 @@ const SIDEBAR_WIDTH = '32%';
 const s = StyleSheet.create({
   page: { flexDirection: 'row', fontFamily: 'Geist', fontSize: 9, lineHeight: 1.45, color: ink.text },
   // Painted on every page so the side column stays tinted when content flows onto a second page.
-  sidebarBackground: { position: 'absolute', top: 0, bottom: 0, left: 0, width: SIDEBAR_WIDTH, backgroundColor: ink.wash },
+  sidebarBackground: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    width: SIDEBAR_WIDTH,
+    backgroundColor: ink.wash,
+  },
   sidebar: { width: SIDEBAR_WIDTH, paddingTop: 40, paddingBottom: 36, paddingHorizontal: 22 },
   main: { flex: 1, paddingTop: 40, paddingBottom: 36, paddingHorizontal: 30 },
   name: { fontSize: 22, fontWeight: 700, letterSpacing: -0.4, lineHeight: 1.15 },
@@ -20,7 +27,8 @@ const s = StyleSheet.create({
   sectionTitle: {
     fontSize: 8.5,
     fontWeight: 600,
-    letterSpacing: 1.3,
+    // Wide tracking makes pdftotext emit "E D U C AT I O N", which no keyword match survives.
+    letterSpacing: 0.4,
     textTransform: 'uppercase',
     marginBottom: 7,
     color: ink.text,
@@ -74,7 +82,9 @@ function Project({ project }: { project: CvProject }) {
   return (
     <View style={s.entry} wrap={false}>
       <Text style={s.entryTitle}>{project.name}</Text>
-      {project.client && <Text style={s.entryMeta}>{`${project.client}${project.year ? `, ${project.year}` : ''}`}</Text>}
+      {project.client && (
+        <Text style={s.entryMeta}>{`${project.client}${project.year ? `, ${project.year}` : ''}`}</Text>
+      )}
       <Text style={s.description}>{project.description}</Text>
       {project.highlight && <Text style={s.highlight}>{project.highlight}</Text>}
       {project.stack.length > 0 && <Text style={s.meta}>{project.stack.join(', ')}</Text>}
@@ -90,6 +100,10 @@ function Project({ project }: { project: CvProject }) {
 }
 
 export function SidebarTemplate({ cv }: { cv: ResolvedCv }): ReactElement<DocumentProps> {
+  // This template fixes which column each section lives in, so the settings order cannot apply here.
+  // It is honoured as an inclusion list instead: a section left out of settings is left off the page.
+  const has = (id: (typeof cv.sections)[number]) => cv.sections.includes(id);
+
   return (
     <Document title={`${cv.name} CV`} author={cv.name}>
       <Page size="A4" style={s.page}>
@@ -113,7 +127,7 @@ export function SidebarTemplate({ cv }: { cv: ResolvedCv }): ReactElement<Docume
             ))}
           </View>
 
-          {cv.skillLines.length > 0 && (
+          {has('skills') && cv.skillLines.length > 0 && (
             <View style={s.sideSection}>
               <Text style={s.sectionTitle}>Skills</Text>
               {cv.skillLines.map((line) => (
@@ -125,10 +139,36 @@ export function SidebarTemplate({ cv }: { cv: ResolvedCv }): ReactElement<Docume
             </View>
           )}
 
-          {cv.education.length > 0 && (
+          {has('education') && cv.education.length > 0 && (
             <View style={s.sideSection}>
               <Text style={s.sectionTitle}>Education</Text>
               {cv.education.map((entry) => (
+                <View key={entry.id} style={s.eduEntry} wrap={false}>
+                  <Text style={s.skillTitle}>{entry.title}</Text>
+                  <Text style={s.entryMeta}>{entry.org}</Text>
+                  <Text style={s.entryMeta}>{entry.period}</Text>
+                </View>
+              ))}
+            </View>
+          )}
+
+          {has('certifications') && cv.certifications.length > 0 && (
+            <View style={s.sideSection}>
+              <Text style={s.sectionTitle}>Certifications</Text>
+              {cv.certifications.map((credential) => (
+                <View key={credential.id} style={s.eduEntry} wrap={false}>
+                  <Text style={s.skillTitle}>{credential.title}</Text>
+                  <Text style={s.entryMeta}>{credential.issuer}</Text>
+                  <Text style={s.entryMeta}>{credential.date}</Text>
+                </View>
+              ))}
+            </View>
+          )}
+
+          {has('activities') && cv.activities.length > 0 && (
+            <View style={s.sideSection}>
+              <Text style={s.sectionTitle}>Extracurricular</Text>
+              {cv.activities.map((entry) => (
                 <View key={entry.id} style={s.eduEntry} wrap={false}>
                   <Text style={s.skillTitle}>{entry.title}</Text>
                   <Text style={s.entryMeta}>{entry.org}</Text>
@@ -144,21 +184,21 @@ export function SidebarTemplate({ cv }: { cv: ResolvedCv }): ReactElement<Docume
           <Text style={s.headline}>{cv.headline}</Text>
           {cv.summary && <Text style={s.summary}>{cv.summary}</Text>}
 
-          {cv.experience.length > 0 && (
+          {has('experience') && cv.experience.length > 0 && (
             <Section title="Experience">
               {cv.experience.map((entry) => (
                 <Entry key={entry.id} entry={entry} />
               ))}
             </Section>
           )}
-          {cv.clientProjects.length > 0 && (
-            <Section title="Client and team work">
+          {has('selectedWork') && cv.clientProjects.length > 0 && (
+            <Section title="Selected work">
               {cv.clientProjects.map((project) => (
                 <Project key={project.name} project={project} />
               ))}
             </Section>
           )}
-          {cv.projects.length > 0 && (
+          {has('projects') && cv.projects.length > 0 && (
             <Section title="Projects">
               {cv.projects.map((project) => (
                 <Project key={project.name} project={project} />

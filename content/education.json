@@ -7,44 +7,8 @@
     "start": "Aug 2023",
     "end": "May 2027",
     "points": [
-      "GPA 3.99, on a full scholarship awarded for academic excellence.",
-      "Taking part in AI research projects alongside coursework."
-    ],
-    "details": {
-      "label": "Coursework",
-      "items": [
-        "Data Structures and Algorithms",
-        "Computer Architecture",
-        "Artificial Intelligence",
-        "Software Engineering",
-        "Object-Oriented Programming with Java"
-      ]
-    }
-  },
-  {
-    "id": "alx-africa-holberton-school-software-engineering-certification-back-end",
-    "title": "Software Engineering Certification, Back-End",
-    "org": "ALX Africa (Holberton School)",
-    "orgUrl": "https://www.alxafrica.com",
-    "start": "Nov 2022",
-    "end": "Aug 2024",
-    "points": [
-      "Intensive 12-month program, 70+ hours a week, covering C, Python, DevOps and full-stack development.",
-      "Capstone project Funkey was selected as one of the top 5 projects in the program."
-    ],
-    "details": {
-      "label": "Covered",
-      "items": [
-        "Flask",
-        "MongoDB",
-        "MySQL",
-        "Bash",
-        "Nginx",
-        "Docker",
-        "System design",
-        "API development"
-      ]
-    }
+      "GPA 3.99 on a full scholarship awarded for academic excellence, with AI research projects alongside coursework."
+    ]
   },
   {
     "id": "addis-ababa-university-bsc-computer-science",
@@ -53,8 +17,7 @@
     "start": "Jan 2022",
     "end": "Aug 2023",
     "points": [
-      "Completed two semesters, finishing the first in the top 5% of the class.",
-      "Transferred after receiving a full scholarship to the University of Dubai."
+      "Completed two semesters, finishing the first in the top 5% of the class, then transferred on a full scholarship."
     ]
   }
 ]

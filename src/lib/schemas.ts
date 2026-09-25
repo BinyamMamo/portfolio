@@ -153,6 +153,22 @@ export const timelineEntrySchema = z.object({
 export type TimelineEntry = z.infer<typeof timelineEntrySchema>;
 export const timelineSchema = z.array(timelineEntrySchema);
 
+/* Credentials */
+
+/** A certification or course certificate. Kept flatter than a timeline entry: these are one line each. */
+export const credentialSchema = z.object({
+  id: slug,
+  title: required('Title'),
+  issuer: required('Issuer'),
+  issuerUrl: z.string().trim().optional(),
+  /** Free text, the same shape as timeline dates, for example "Nov 2022 - Aug 2024". */
+  date: required('Date'),
+  url: z.string().trim().optional(),
+  note: z.string().trim().optional(),
+});
+export type Credential = z.infer<typeof credentialSchema>;
+export const credentialsSchema = z.array(credentialSchema);
+
 /* Skills */
 
 export const skillGroupSchema = z.object({
@@ -186,14 +202,44 @@ export type NavigationContent = z.infer<typeof navigationSchema>;
 export const cvTemplateIds = ['classic', 'modern', 'sidebar'] as const;
 export type CvTemplateId = (typeof cvTemplateIds)[number];
 
+/** Every section a template can print. Listing them in settings controls both order and inclusion. */
+export const cvSectionIds = [
+  'experience',
+  'selectedWork',
+  'projects',
+  'skills',
+  'certifications',
+  'activities',
+  'education',
+] as const;
+export type CvSectionId = (typeof cvSectionIds)[number];
+
+/** One printed skills row: a label and the skill groups whose items it gathers. */
+export const cvSkillLineSchema = z.object({
+  label: required('Label'),
+  groups: z.array(z.string().trim().min(1)),
+});
+export type CvSkillLine = z.infer<typeof cvSkillLineSchema>;
+
 export const cvSettingsSchema = z.object({
   template: z.enum(cvTemplateIds),
   /** Overrides the profile role on the CV, where there is room for a fuller description. */
   headline: z.string().trim().optional(),
+  /** Overrides the profile summary, which also serves as the site's meta description. */
+  summary: z.string().trim().optional(),
   /** Download name without the .pdf extension. */
   fileName: slug,
   /** Projects shown on the default CV, in order. */
   projectSlugs: z.array(z.string()),
+  /** Experience entries on the default CV, in order. Leaving it out uses every entry. */
+  experienceIds: z.array(z.string()).optional(),
+  /** Sections to print, in this order. Leaving it out prints them all in their default order. */
+  sections: z.array(z.enum(cvSectionIds)).optional(),
+  /**
+   * How skill groups collapse into printed rows. Without it the groups are packed automatically,
+   * which produces unwieldy labels once there are more than a handful of them.
+   */
+  skillLines: z.array(cvSkillLineSchema).optional(),
 });
 export type CvSettings = z.infer<typeof cvSettingsSchema>;
 
@@ -208,6 +254,10 @@ export const cvVariantSchema = z.object({
   summary: z.string().trim().optional(),
   projectSlugs: z.array(z.string()).optional(),
   experienceIds: z.array(z.string()).optional(),
+  credentialIds: z.array(z.string()).optional(),
+  activityIds: z.array(z.string()).optional(),
+  sections: z.array(z.enum(cvSectionIds)).optional(),
+  skillLines: z.array(cvSkillLineSchema).optional(),
   /** Skills to list first, in this order. */
   skills: z.array(z.string()).optional(),
   /** Extra bullet points keyed by experience or education id. */

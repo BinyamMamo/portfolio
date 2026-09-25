@@ -3,7 +3,10 @@
  * Templates never read content files themselves, so every template shows the same information.
  */
 import type {
+  Credential,
+  CvSectionId,
   CvSettings,
+  CvSkillLine,
   CvTemplateId,
   CvVariant,
   Profile,
@@ -11,6 +14,7 @@ import type {
   SkillGroup,
   TimelineEntry,
 } from '@/lib/schemas';
+import { cvSectionIds } from '@/lib/schemas';
 import { getTech } from '@/lib/tech';
 
 export interface CvContent {
@@ -18,6 +22,8 @@ export interface CvContent {
   projects: Project[];
   experience: TimelineEntry[];
   education: TimelineEntry[];
+  certifications: Credential[];
+  activities: TimelineEntry[];
   skills: SkillGroup[];
   settings: CvSettings;
 }
@@ -51,8 +57,19 @@ export interface CvProject {
   link?: CvLink;
 }
 
+export interface CvCredential {
+  id: string;
+  title: string;
+  issuer: string;
+  date: string;
+  note?: string;
+  url?: string;
+}
+
 export interface ResolvedCv {
   template: CvTemplateId;
+  /** Which sections to print, in order. Templates walk this rather than hard-coding their own order. */
+  sections: CvSectionId[];
   fileName: string;
   name: string;
   headline: string;
@@ -63,6 +80,9 @@ export interface ResolvedCv {
   links: CvLink[];
   experience: CvEntry[];
   education: CvEntry[];
+  certifications: CvCredential[];
+  /** Clubs, volunteering and competitions. */
+  activities: CvEntry[];
   /** Work built for companies and teams. */
   clientProjects: CvProject[];
   /** Everything built on my own. */
@@ -77,26 +97,50 @@ function pick<T>(items: T[], ids: string[] | undefined, key: (item: T) => string
   return ids.flatMap((id) => items.filter((item) => key(item) === id));
 }
 
-const stripProtocol = (url: string) => url.replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/$/, '');
+/** A wrapped tech line costs a whole line for the sake of a few names, so the tail is dropped. */
+const MAX_STACK = 10;
 
-/** A live site says more to a reader than a repository, so it wins when a project has both. */
-function projectLink(project: Project): CvLink | undefined {
-  if (project.demo?.url) return { label: 'Demo', text: stripProtocol(project.demo.url), url: project.demo.url };
-  if (project.liveUrl) return { label: 'Live', text: stripProtocol(project.liveUrl), url: project.liveUrl };
-  if (project.repoUrl) return { label: 'Code', text: stripProtocol(project.repoUrl), url: project.repoUrl };
+const stripProtocol = (url: string) =>
+  url
+    .replace(/^https?:\/\//, '')
+    .replace(/^www\./, '')
+    .replace(/\/$/, '');
+
+/** Generated hosting subdomains such as "hakim-web-zeta.vercel.app" read as throwaway on paper. */
+const isGeneratedHost = (url: string) =>
+  /\.(vercel|netlify|onrender|fly|pages|herokuapp|railway|github)\.(app|dev|io|com)$/i.test(
+    stripProtocol(url).split('/')[0] ?? '',
+  );
+
+/**
+ * One link per project. A project's own domain wins, because it is the shortest thing a reader can
+ * type. Otherwise the portfolio page wins over the raw deployment: it carries the write-up and the
+ * screenshots, and it keeps the CV on one domain instead of a list of generated subdomains.
+ */
+function projectLink(project: Project, siteUrl: string): CvLink | undefined {
+  const own = [project.demo?.url, project.liveUrl].find((url) => url && !isGeneratedHost(url));
+  if (own) return { label: 'Live', text: stripProtocol(own), url: own };
+
+  const page = `${siteUrl.replace(/\/$/, '')}/projects/${project.slug}`;
+  if (project.demo?.url || project.liveUrl || project.repoUrl) {
+    return { label: 'Details', text: stripProtocol(page), url: page };
+  }
   return undefined;
 }
 
-function toProject(project: Project): CvProject {
+function toProject(project: Project, siteUrl: string): CvProject {
   return {
     name: project.name,
     description: project.tagline,
     highlight: project.highlight,
     // Several products carry their client's name, and printing it twice reads like a mistake.
-    client: project.kind === 'client' && project.client && project.client.name !== project.name ? project.client.name : undefined,
+    client:
+      project.kind === 'client' && project.client && project.client.name !== project.name
+        ? project.client.name
+        : undefined,
     year: project.year,
-    stack: project.stack.map((id) => getTech(id).name),
-    link: projectLink(project),
+    stack: project.stack.slice(0, MAX_STACK).map((id) => getTech(id).name),
+    link: projectLink(project, siteUrl),
   };
 }
 
@@ -104,9 +148,29 @@ function toProject(project: Project): CvProject {
 const joinTitles = (titles: string[]) =>
   titles.length < 3 ? titles.join(' and ') : `${titles.slice(0, -1).join(', ')} and ${titles.at(-1)}`;
 
-/** Packs the skill groups into at most three lines, keeping their order. */
-function toSkillLines(groups: { title: string; items: string[] }[]): { label: string; items: string }[] {
+/**
+ * Collapses the skill groups into printed rows.
+ *
+ * With an explicit `skillLines` mapping, each row gathers the groups it names, so a row keeps a short
+ * written label however many groups feed it. Without one the groups are packed into three rows and the
+ * label is built from their titles, which only stays readable while there are few groups.
+ */
+function toSkillLines(
+  groups: { id: string; title: string; items: string[] }[],
+  mapping: CvSkillLine[] | undefined,
+): { label: string; items: string }[] {
   const filled = groups.filter((group) => group.items.length > 0);
+
+  if (mapping && mapping.length > 0) {
+    const byId = new Map(filled.map((group) => [group.id, group]));
+    return mapping
+      .map((line) => ({
+        label: line.label,
+        items: line.groups.flatMap((id) => byId.get(id)?.items ?? []).join(', '),
+      }))
+      .filter((line) => line.items.length > 0);
+  }
+
   const perLine = Math.ceil(filled.length / 3) || 1;
   const lines: { label: string; items: string }[] = [];
   for (let i = 0; i < filled.length; i += perLine) {
@@ -115,7 +179,9 @@ function toSkillLines(groups: { title: string; items: string[] }[]): { label: st
       // Plain words read naturally in lower case mid-sentence; names like "DevOps" or "AI" keep their casing.
       label: joinTitles(
         chunk.map((group, index) =>
-          index === 0 || group.title.slice(1) !== group.title.slice(1).toLowerCase() ? group.title : group.title.toLowerCase(),
+          index === 0 || group.title.slice(1) !== group.title.slice(1).toLowerCase()
+            ? group.title
+            : group.title.toLowerCase(),
         ),
       ),
       items: chunk.flatMap((group) => group.items).join(', '),
@@ -130,7 +196,8 @@ function toEntry(entry: TimelineEntry, extraPoints: string[] = []): CvEntry {
     title: entry.title,
     org: entry.org,
     orgUrl: entry.orgUrl,
-    period: entry.end ? `${entry.start} to ${entry.end}` : entry.start,
+    // "Mon YYYY - Mon YYYY" is the shape ATS date parsers expect; the word "to" is read less reliably.
+    period: entry.end ? `${entry.start} - ${entry.end}` : entry.start,
     points: [...entry.points, ...extraPoints],
     details: entry.details,
     stack: (entry.stack ?? []).map((id) => getTech(id).name),
@@ -158,25 +225,43 @@ export function resolveCv(content: CvContent, variant?: CvVariant): ResolvedCv {
 
   return {
     template: variant?.template ?? settings.template,
+    sections: variant?.sections ?? settings.sections ?? [...cvSectionIds],
     fileName: variant ? `${settings.fileName}-${variant.slug}` : settings.fileName,
     name: profile.name,
     headline: variant?.headline ?? settings.headline ?? profile.role,
-    summary: variant?.summary ?? profile.summary,
+    summary: variant?.summary ?? settings.summary ?? profile.summary,
     location: profile.location,
     email: profile.email,
     phone: profile.phone,
     links,
-    experience: pick(content.experience, variant?.experienceIds, (entry) => entry.id).map((entry) =>
-      toEntry(entry, extra[entry.id]),
+    experience: pick(content.experience, variant?.experienceIds ?? settings.experienceIds, (entry) => entry.id).map(
+      (entry) => toEntry(entry, extra[entry.id]),
     ),
     education: content.education.map((entry) => toEntry(entry, extra[entry.id])),
-    clientProjects: chosen.filter((project) => project.kind === 'client').map(toProject),
-    projects: chosen.filter((project) => project.kind !== 'client').map(toProject),
+    certifications: pick(content.certifications, variant?.credentialIds, (item) => item.id).map((item) => ({
+      id: item.id,
+      title: item.title,
+      issuer: item.issuer,
+      date: item.date,
+      note: item.note,
+      url: item.url ?? item.issuerUrl,
+    })),
+    activities: pick(content.activities, variant?.activityIds, (entry) => entry.id).map((entry) =>
+      toEntry(entry, extra[entry.id]),
+    ),
+    clientProjects: chosen
+      .filter((project) => project.kind === 'client')
+      .map((project) => toProject(project, profile.siteUrl)),
+    projects: chosen
+      .filter((project) => project.kind !== 'client')
+      .map((project) => toProject(project, profile.siteUrl)),
     skillLines: toSkillLines(
       content.skills.map((group) => ({
+        id: group.id,
         title: group.title,
         items: group.items.map((id) => getTech(id).name).sort((a, b) => emphasisRank(a) - emphasisRank(b)),
       })),
+      variant?.skillLines ?? settings.skillLines,
     ),
   };
 }

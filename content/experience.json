@@ -6,9 +6,9 @@
     "start": "Jun 2026",
     "end": "Sep 2026",
     "points": [
-      "Built the backend of a hotel management system used for rooms, reservations, check-in, housekeeping, billing and reporting: 97 endpoints over 16 data models, with about 580 automated tests.",
-      "Added a Telegram assistant that answers staff questions by text or voice in English and Amharic, with role-based limits on what each person can ask.",
-      "Wrote the guest booking bot and mini app, including payments and QR confirmations."
+      "Built the backend of a hotel management system covering reservations, check-in, housekeeping and billing: 97 endpoints across 16 data models, with about 580 automated tests.",
+      "Built a Telegram assistant answering staff questions by text or voice in English and Amharic, with role-based limits.",
+      "Built the guest booking bot and its mini app, including payments and QR confirmations."
     ],
     "stack": [
       "nodejs",
@@ -42,8 +42,7 @@
     "start": "Jul 2024",
     "end": "Sep 2024",
     "points": [
-      "Built features for an internship management system and a price comparison platform.",
-      "Worked in a Laravel codebase with Bootstrap and Tailwind CSS on the front end, planning work in Trello."
+      "Built features for an internship management system and a price comparison platform, working in an existing Laravel codebase."
     ],
     "stack": [
       "laravel",
