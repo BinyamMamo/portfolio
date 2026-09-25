@@ -12,7 +12,7 @@ const s = StyleSheet.create({
     paddingHorizontal: 36,
     fontFamily: 'Geist',
     fontSize: 9,
-    lineHeight: 1.42,
+    lineHeight: 1.46,
     color: ink.text,
   },
   // Large text needs its own line height; the page's 1.45 is sized for body text and makes lines collide.
@@ -21,7 +21,7 @@ const s = StyleSheet.create({
   contact: { flexDirection: 'row', flexWrap: 'wrap', marginTop: 8, fontSize: 8.2, color: ink.muted },
   contactItem: { marginRight: 9, color: ink.muted, textDecoration: 'none' },
   summary: { marginTop: 10, color: ink.body },
-  section: { marginTop: 10 },
+  section: { marginTop: 12 },
   sectionTitle: {
     fontSize: 9,
     fontWeight: 600,
@@ -33,7 +33,7 @@ const s = StyleSheet.create({
     borderBottomWidth: 0.75,
     borderBottomColor: ink.rule,
   },
-  entry: { marginBottom: 5 },
+  entry: { marginBottom: 6 },
   entryHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' },
   entryTitle: { fontWeight: 600 },
   entryOrg: { color: ink.muted },

@@ -46,7 +46,7 @@
     "drone-hunter": {
       "tag": "Reinforcement learning",
       "description": "A simulated drone that finds and chases a moving rover using only its camera.",
-      "highlight": "Keeps the rover in view about 87% of the time."
+      "highlight": ""
     },
     "avatar-kit": {
       "tag": "Face tracking",
