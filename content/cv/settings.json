@@ -62,7 +62,7 @@
     "yamnet-cough": {
       "tag": "Audio classification",
       "description": "Tells bronchial, asthma, COPD, pneumonia and healthy lungs apart from a cough.",
-      "highlight": "87% on held-out clips across five classes, by transfer learning: a 68 thousand parameter network on YAMNet embeddings."
+      "highlight": "Reaches 87% accuracy with transfer learning on YAMNet embeddings."
     },
     "manim-generator": {
       "tag": "MCP server",
