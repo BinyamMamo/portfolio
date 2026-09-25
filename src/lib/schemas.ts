@@ -199,7 +199,7 @@ export type NavigationContent = z.infer<typeof navigationSchema>;
 
 /* CV */
 
-export const cvTemplateIds = ['classic', 'modern', 'sidebar', 'vibrant', 'spacious'] as const;
+export const cvTemplateIds = ['classic', 'modern', 'sidebar'] as const;
 export type CvTemplateId = (typeof cvTemplateIds)[number];
 
 /** Every section a template can print. Listing them in settings controls both order and inclusion. */
