@@ -95,20 +95,16 @@
   "skillOmit": ["rest", "graphql", "openapi"],
   "skillLines": [
     {
-      "label": "Languages",
-      "groups": ["languages"]
+      "label": "AI and ML",
+      "groups": ["ai"]
     },
     {
       "label": "Backend",
       "groups": ["backend", "apis"]
     },
     {
-      "label": "AI and ML",
-      "groups": ["ai"]
-    },
-    {
-      "label": "Databases",
-      "groups": ["databases"]
+      "label": "Languages",
+      "groups": ["languages"]
     },
     {
       "label": "Frontend",
@@ -121,6 +117,10 @@
     {
       "label": "Tooling",
       "groups": ["devops", "cloud"]
+    },
+    {
+      "label": "Databases",
+      "groups": ["databases"]
     }
   ],
   "stackOmit": ["gemini", "react", "recharts", "tailwindcss", "vite"]
