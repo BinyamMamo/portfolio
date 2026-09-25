@@ -221,6 +221,20 @@ export const cvSkillLineSchema = z.object({
 });
 export type CvSkillLine = z.infer<typeof cvSkillLineSchema>;
 
+/**
+ * CV wording for one project. The site wants the fullest true sentence about a project; a CV wants
+ * the one short line that matters to the role. Anything left out falls back to the project itself.
+ */
+export const cvProjectOverrideSchema = z.object({
+  description: z.string().trim().optional(),
+  highlight: z.string().trim().optional(),
+  /** A short stack tag printed after the name, for example "RAG". */
+  tag: z.string().trim().optional(),
+  /** Renames the client shown after the name. An empty string hides it. */
+  client: z.string().optional(),
+});
+export type CvProjectOverride = z.infer<typeof cvProjectOverrideSchema>;
+
 export const cvSettingsSchema = z.object({
   template: z.enum(cvTemplateIds),
   /** Overrides the profile role on the CV, where there is room for a fuller description. */
@@ -231,13 +245,10 @@ export const cvSettingsSchema = z.object({
   fileName: slug,
   /** Projects shown on the default CV, in order. */
   projectSlugs: z.array(z.string()),
-  /**
-   * Replaces a project's highlight line on the CV, keyed by slug. The site wants the fullest true
-   * sentence about a project; a CV wants the one line that matters to the role being applied for.
-   */
-  projectHighlights: z.record(z.string(), z.string().trim()).optional(),
-  /** A short stack tag printed after the project name, keyed by slug, for example "RAG". */
-  projectTags: z.record(z.string(), z.string().trim()).optional(),
+  /** Per-project CV wording, keyed by slug. See cvProjectOverrideSchema. */
+  projectOverrides: z.record(z.string(), cvProjectOverrideSchema).optional(),
+  /** Tech ids to leave off the skills rows, for example an API style not worth the line. */
+  skillOmit: z.array(z.string().trim().min(1)).optional(),
   /** Experience entries on the default CV, in order. Leaving it out uses every entry. */
   experienceIds: z.array(z.string()).optional(),
   /** Sections to print, in this order. Leaving it out prints them all in their default order. */
@@ -265,8 +276,8 @@ export const cvVariantSchema = z.object({
   activityIds: z.array(z.string()).optional(),
   sections: z.array(z.enum(cvSectionIds)).optional(),
   skillLines: z.array(cvSkillLineSchema).optional(),
-  projectHighlights: z.record(z.string(), z.string().trim()).optional(),
-  projectTags: z.record(z.string(), z.string().trim()).optional(),
+  projectOverrides: z.record(z.string(), cvProjectOverrideSchema).optional(),
+  skillOmit: z.array(z.string().trim().min(1)).optional(),
   /** Skills to list first, in this order. */
   skills: z.array(z.string()).optional(),
   /** Extra bullet points keyed by experience or education id. */
