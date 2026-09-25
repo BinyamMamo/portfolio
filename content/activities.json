@@ -15,12 +15,11 @@
     "points": ["PLACEHOLDER. Replace with the real club or society, the role held and what came of it."]
   },
   {
-    "id": "placeholder-volunteering",
-    "title": "PLACEHOLDER, volunteering role",
-    "org": "PLACEHOLDER, organisation name",
-    "start": "PLACEHOLDER, start",
-    "end": "PLACEHOLDER, end",
-    "points": ["PLACEHOLDER. Replace with the real volunteering or community work."]
+    "id": "university-of-dubai-iftar-volunteer",
+    "title": "Volunteer",
+    "org": "University of Dubai, Ramadan Iftar Gathering",
+    "start": "2025",
+    "points": ["Volunteered to distribute food at the university's Ramadan iftar gathering."]
   },
   {
     "id": "ud-pitch-competition-finalist",
