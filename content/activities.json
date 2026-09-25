@@ -4,7 +4,9 @@
     "title": "Second Place",
     "org": "UAE AI Hackathon, UAE Artificial Intelligence Academy",
     "start": "Jun 2025",
-    "points": ["Placed second at the UAE AI Hackathon, run by ZAKA with Microsoft."]
+    "points": [
+      "Built CertiScan with the team: certificate attestation with QR verification and an Azure AI Language assistant."
+    ]
   },
   {
     "id": "placeholder-club",
@@ -26,6 +28,6 @@
     "title": "Finalist",
     "org": "University of Dubai Pitch Competition, 3rd edition",
     "start": "Apr 2025",
-    "points": ["Reached the final round, presenting to a panel that included Dubai SME and IEEE."]
+    "points": []
   }
 ]

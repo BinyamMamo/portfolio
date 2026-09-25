@@ -6,7 +6,7 @@
     "start": "Jun 2026",
     "end": "Sep 2026",
     "points": [
-      "Built the backend of a hotel management system covering reservations, check-in, housekeeping and billing: 97 endpoints across 16 data models, with about 580 automated tests.",
+      "Built the backend of a hotel management system covering reservations, check-in, housekeeping and billing: a REST API of 97 endpoints across 16 data models, with about 580 automated tests.",
       "Built a Telegram assistant answering staff questions by text or voice in English and Amharic, with RBAC.",
       "Built the guest booking bot and its mini app, including payment integration and QR confirmations."
     ],
@@ -20,12 +20,13 @@
     "start": "Mar 2026",
     "end": "Present",
     "points": [
-      "Built a harness to benchmark small local language models driving real smart home devices.",
-      "Raised task success from Home Assistant's own 47.3% to 77.3% with our own resolver.",
-      "Integrated a digital twin of the lab that controls its devices with small local language models, by voice or text.",
+      "Built a harness to benchmark small local LLMs controlling a Home Assistant smart home.",
+      "Raised task success on 55 smart-home tasks from 47.3% (Home Assistant's built-in matcher) to 74.5% with our own resolver, with no false actions.",
+      "Fine-tuned laya, a Jev-style encoder, lifting device accuracy from 76% to 100% and action accuracy from 73% to 99.5% on 410 unseen commands.",
+      "Integrated a digital twin of the lab that controls its devices with local LLMs, by voice or text.",
       "Built a student mobile app with an NFC and BLE enabled digital ID, presented by holding the phone to a reader."
     ],
-    "stack": ["python", "ollama", "Whisper", "Piper", "Jev", "Jetson Nano", "Three.js", "HAOS", "reactNative"]
+    "stack": ["python", "ollama", "laya", "Whisper", "Piper", "Jetson Nano", "Three.js", "HAOS", "reactNative"]
   },
   {
     "id": "kuraztech-backend-intern",

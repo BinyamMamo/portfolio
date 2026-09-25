@@ -12,10 +12,8 @@
     "drone-hunter",
     "avatar-kit",
     "signspeak",
-    "signverse",
     "yamnet-cough",
     "manim-generator",
-    "healthvault",
     "uae-companies"
   ],
   "projectOverrides": {
@@ -31,7 +29,7 @@
       "link": "portfolio"
     },
     "ud-students": {
-      "tag": "React Native, NFC",
+      "tag": "React Native, NFC, BLE",
       "client": "",
       "description": "NFC and BLE enabled student ID carried on the phone.",
       "highlight": ""
@@ -49,37 +47,27 @@
     "drone-hunter": {
       "tag": "Reinforcement learning",
       "description": "A simulated drone that finds and chases a moving rover using only its camera.",
-      "highlight": "87% time on target after training the policy in Webots."
+      "highlight": "Keeps the rover in view about 87% of the time."
     },
     "avatar-kit": {
       "tag": "Face tracking",
       "description": "Cartoon avatars in the browser that copy your face and lip sync to your voice.",
-      "highlight": "MediaPipe drives head pose, blinks, gaze and mouth through a Verlet physics rig."
+      "highlight": "MediaPipe tracks head, eyes and mouth; a Verlet solver moves the hair and body."
     },
     "signspeak": {
       "tag": "Gesture recognition",
       "description": "Learn American Sign Language with your webcam as the marker.",
       "highlight": "Hand tracking and classification both run in the browser, with no server."
     },
-    "signverse": {
-      "tag": "Pose synthesis",
-      "description": "Translates English text into American Sign Language, rendered as a signing figure.",
-      "highlight": ""
-    },
     "yamnet-cough": {
       "tag": "Audio classification",
-      "description": "Tells asthma, COPD, pneumonia and healthy lungs apart from a cough.",
-      "highlight": "87% on held-out clips across five classes, from a 68 thousand parameter network."
+      "description": "Tells bronchial, asthma, COPD, pneumonia and healthy lungs apart from a cough.",
+      "highlight": "87% on held-out clips across five classes, by transfer learning: a 68 thousand parameter network on YAMNet embeddings."
     },
     "manim-generator": {
       "tag": "MCP server",
       "description": "Describe a math animation in plain language and get a rendered video.",
       "highlight": "Exposed as an MCP server, so an assistant can render animations as a tool."
-    },
-    "healthvault": {
-      "tag": "Encryption, blockchain",
-      "description": "Patient-controlled health records, encrypted in the browser.",
-      "highlight": "A doctor receives a record's key only after their visit is on the blockchain."
     },
     "uae-companies": {
       "tag": "Scraping",
@@ -96,7 +84,7 @@
   "skillOmit": ["rest", "graphql", "openapi"],
   "skillLines": [
     {
-      "label": "AI and ML",
+      "label": "Machine Learning",
       "groups": ["ai"]
     },
     {
@@ -104,7 +92,7 @@
       "groups": ["languages"]
     },
     {
-      "label": "Databases",
+      "label": "SQL and NoSQL",
       "groups": ["databases"]
     },
     {
